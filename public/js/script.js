@@ -596,3 +596,19 @@ function startNewSearch() {
         document.getElementById('countdown').innerText = '';
     });
 }
+
+
+
+
+// Vérifier si les cookies Instagram sont acceptés, afin de ne pas afficher la section "Actualités"
+var instagramSection = document.getElementById('actualites');
+
+if (document.cookie) {
+    instagramSection.style.display = 'none';
+    console.log('Le consentement aux cookies n a PAS été donné');
+} else {
+    instagramSection.style.display = '';
+    console.log('Le consentement aux cookies a été donné');
+}
+ 
+

@@ -7,6 +7,8 @@
                 Bienvenue 
             {% endblock %}
         </title>
+        <meta name="description" content="{% block meta_description %}{% endblock %}">
+
     
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.15.0/tarteaucitron.js" integrity="sha512-62eOEgHMZUJrhPye67OGYDBdRtoGKAQ3R9e770/990JWPvW9PxVT019z7juVdSc6itOy+zZ3yYOUmeggwmbo7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -31,7 +33,7 @@
                     "showAlertSmall": false, /* Show the small banner on bottom right */
                     "cookieslist": false, /* Show the cookie list */
                     
-                    "showIcon": false, /* Show cookie icon to manage cookies */
+                    "showIcon": true, /* Show cookie icon to manage cookies */
                     // "iconSrc": "", /* Optionnal: URL or base64 encoded image */
                     "iconPosition": "BottomRight", /* Position of the icon between BottomRight, BottomLeft, TopRight and TopLeft */
 
@@ -57,7 +59,9 @@
                 });
                 
                 (tarteaucitron.job = tarteaucitron.job || []).push('instagram');
-               
+
+                 
+
                 </script>
 
                
@@ -85,7 +89,7 @@
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/rangePlugin.min.js" integrity="sha512-44bA1YzQUqHACfLj2v0wEdX9z6EmlALcta6ENgPZnxH/aIiuBw92he+M/51kTCueY/2DsqEYM7mCwGUyO2q79w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-            {# <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">  #}
+            <link href="https://fonts.googleapis.com/css?family=Patrick+Hand+SC" rel="stylesheet">
             
             <link href="https://fonts.googleapis.com/css?family=Corinthia" rel="stylesheet"> 
 
@@ -100,7 +104,6 @@
     </head>
     <body>
         <header>
-
             <div class="videoContent">
                 <video class="videoHome" src="{{ asset('img/video-header.mp4') }}" type="video/mp4" autoplay muted loop></video>
             </div>
@@ -186,9 +189,11 @@
                 </ul>
             </nav>
 
+
+
             <!-- Bouton scroll pour remonter en haut de la page -->
             <div class="btn-scroll-to-top">
-        <i class="fa-solid fa-chevron-up"></i>
+                <i class="fa-solid fa-chevron-up"></i>
             </div>
 
         </header>

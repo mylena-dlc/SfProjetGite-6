@@ -63,7 +63,6 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
 
-
 // Fonction pour rechercher les réservations à venir
 
     public function findUpcomingReservations()

@@ -4,7 +4,6 @@ namespace App\Controller;
 
 use App\Repository\ReviewRepository;
 use App\Repository\PictureRepository;
-use App\Repository\CalendarRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -52,16 +51,12 @@ class HomeController extends AbstractController
     {
 
         // Affichage de la galerie d'images
-
-        // on récupère toutes les catégories
         $categories = $this->categoryRepository->findAll();
 
         $categoryFirstPictures = [];
 
         foreach($categories as $category) {
-
             $firstPicture = $this->pictureRepository->findOneBy(['category' => $category], ['id' => 'ASC']);
-        
             if ($firstPicture) {
                 $categoryFirstPictures[$category->getName()] = $firstPicture;
             }
@@ -88,34 +83,15 @@ class HomeController extends AbstractController
          // Affichage de la moyenne des notes
          $averageRating = $this->reviewRepository->averageRating();
 
+         $description = 'Bienvenue sur la page d\'accueil du gîte du Rain du Pair situé à Orbey en Alsace.';
 
-
-
-        // // Affichage des posts Instagram
-        //  $userId = '25081345021464048';
-        //  $accessToken = 'IGQWRPZAnhnQ05LT2pQSkNad3lERW0tNVotMDRRa282d0pINmN5MDNKUkxvU1phT29yWE5fMkw4b0V1X1NEM1BvS3FUbVA2ajhRTzE0dHl0bTVjdXdvdjB2MEV4Q3ZAVSEpVRmdFcFJvbzFKV2VwcFFQN05nMkRQY3MZD';
- 
-        // //  $response = $httpClient->request('GET', "https://graph.instagram.com/v12.0/{$userId}?fields=id,username,media&access_token={$accessToken}");
- 
-        // // $response = $httpClient->request('GET', "https://graph.instagram.com/v18.0/{$userId}?fields=id,username,media{thumbnail_url,caption}&access_token={$accessToken}");
-        // $response = $httpClient->request('GET', "https://graph.instagram.com/v18.0/{$userId}?fields=id,username,media.fields(thumbnail_url,caption)&access_token={$accessToken}");
-
-
-
-        //  $instagramData = $response->toArray();
-        //  $instagramMedia = $instagramData['media']['data'] ?? [];
-         
-// dump($instagramMedia); die;
-// dump($response->getContent());die;
-         
         return $this->render('home/index.html.twig', [
             'reservedDates' => $data,
             'categoryFirstPictures' => $categoryFirstPictures,
             'categories' => $categories,
             'reviews' => $reviews,
             'averageRating' => $averageRating,
-            // 'instagramMedia' => $instagramMedia,
-
+            'description' => $description,
         ]);
 }
 

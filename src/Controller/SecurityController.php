@@ -86,21 +86,41 @@ class SecurityController extends AbstractController
 
 
     /**
-    * Fonction pour afficher les détails d'un profil
+    * Fonction pour afficher les détails d'un profil et les réservations à venir
     */
     
     #[Route(path: '/profil/{id}', name: 'app_profil')]
 
     public function profil(User $user, Request $request): Response
     {
-        // Récupérez les réservations de l'utilisateur
-        $reservations = $this->reservationRepository->findBy(['user' => $user], ['departureDate' => 'DESC']  );
+    
+        // Récupérez les réservations à venir de l'utilisateur
+        $upcomingReservations = $this->reservationRepository->findUpcomingReservations();
 
         return $this->render('security/profil.html.twig', [
             'user' => $user,
-            'reservations' => $reservations,
+            'upcomingReservations' => $upcomingReservations
         ]);    
     }
+
+
+    /**
+    * Fonction pour afficher les détails d'un profil
+    */
+    
+    #[Route(path: '/profil/{id}/previous-reservations', name: 'app_profil_previous_reservations')]
+
+    public function previousReservation(User $user, Request $request): Response
+    {
+        // Récupérez les réservations passées de l'utilisateur
+        $previousReservations = $this->reservationRepository->findPreviousReservations();
+
+        return $this->render('security/previous-reservations.html.twig', [
+            'user' => $user,
+            'previousReservations' => $previousReservations
+        ]);    
+    }
+
 
 
     /**

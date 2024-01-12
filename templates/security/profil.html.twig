@@ -34,12 +34,6 @@
         <div class="profilContaint">
             <p class="profilEmail">Email</p> <p class="profilEmailAddress">{{ user.email }}</p> 
         
-        {# <p class="profilEmailAddress"><a href="{{ path('app_update_email', {'id': app.user.id}) }}" id="updateEmailLink" >Modifier l'adresse mail</a></p> #}
-        
-        {# <div id="updateEmailForm">
-            {% include 'dashboard/updateMail.html.twig' %}
-        </div>  #}
-
             <button class="btn deleteAccount" onclick="confirmDeleteAccount()"><i class="fa-solid fa-trash-can"></i> Supprimer mon compte</button>
         
         </div>
@@ -53,10 +47,8 @@
         <div class="resaContaint">
                   
                
-                    
-                      
                   
- {% if reservations is not empty %}
+ {% if upcomingReservations is not empty %}
 <table class="tableGite">
         <thead>
             <tr>
@@ -74,27 +66,31 @@
             </tr>
         </thead>
         <tbody>
-             {% for reservation in reservations %}
+             {% for upcomingReservation in upcomingReservations %}
             <tr>
                 <td>
                     {# Si l'utilisateur connecté peut écrire un avis, alors on affiche le bouton #}
-                    {% if app.user.canWriteReview(reservation) and reservation.departureDate|date('U') < 'now'|date('U') %}
-                        <button class="btn btnReview"><a href="{{ path('app_write_review', {'reservation_id': reservation.id}) }}">Écrire un avis</a></button>
+                    {% if app.user.canWriteReview(upcomingReservation) and upcomingReservation.departureDate|date('U') < 'now'|date('U') %}
+                        <button class="btn btnReview"><a href="{{ path('app_write_review', {'reservation_id': upcomingReservation.id}) }}">Écrire un avis</a></button>
                     {% endif %}
                 </td>
 
-                <td>{{ reservation.reference }}</td>
-                <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.numberAdult }}</td>
-                <td>{{ reservation.numberKid }}</td>
-                <td>{{ reservation.totalPrice }} €</td>
-                <td><a href="{{ path('show_reservation', {'id': reservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
+                <td>{{ upcomingReservation.reference }}</td>
+                <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
+                <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>
+                <td>{{ upcomingReservation.departureDate|date('d-m-Y') }}</td>
+                <td>{{ upcomingReservation.numberAdult }}</td>
+                <td>{{ upcomingReservation.numberKid }}</td>
+                <td>{{ upcomingReservation.totalPrice }} €</td>
+                <td><a href="{{ path('show_reservation', {'id': upcomingReservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
             </tr>   
                {% endfor %}
         </tbody>
     </table>        
+
+    <div class="center">      
+        <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id' : user.id}) }}">Mes anciens séjours</a></button>
+    </div>
 
 
             {% else %}

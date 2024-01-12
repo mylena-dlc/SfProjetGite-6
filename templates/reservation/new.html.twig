@@ -82,6 +82,14 @@
 
     <div class="row">
         {{ form_row(form.paymentMethod) }}
+
+        <div id="paypal-button-container"></div>
+
+<script>
+  paypal.Buttons().render('#paypal-button-container')
+</script>
+
+
         {{ form_row(form.isMajor) }}
     </div>
 

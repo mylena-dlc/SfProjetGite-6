@@ -244,15 +244,46 @@ header {
     z-index: 2; 
 }
 
+#first-section {
+    position: absolute;
+    top: -475px;
+    right: 50%;
+    z-index: 10;
+    text-transform: lowercase;
+    margin-bottom: 20px;
+}
 
+
+#first-section * {
+    font-family: 'Patrick Hand SC';
+}
+#first-section h1 {
+    font-size: 60px;
+}
+
+#first-section h2 {
+    font-size: 40px;
+}
+
+.first-section-person {
+    font-size: 30px;
+}
 /* ********************************************** NAVBAR PAGE D'ACCUEIL ********************************************** */
 
 .navbar {
-    /* position: fixed; */
-    position: relative;
+    position: fixed;
+    /* position: relative; */
     z-index: 100;
-    margin: 0 150px;
-    /* background-color: #333333c4; */
+    padding: 0 50px;
+    /* background-color: #504f4b; */
+    /* background: linear-gradient(to bottom, rgba(80, 79, 75, 1), rgba(255, 255, 255, 0)); */
+    width: 100%;
+
+
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 1)), url("../img/fond-banner.webp");
+    background-size: cover;
+    background-position: center; 
+    background-repeat: no-repeat;
 }
 
 .navLogo {
@@ -357,13 +388,13 @@ header {
     backdrop-filter: blur(5.2px);
     -webkit-backdrop-filter: blur(5.2px);
     border: 1px solid rgba(255, 255, 255, 0.29);
-    width: 70%;
+    width: 1100px;
     height: 250px;
     position: absolute;
     top: -430px;
     right: 50%;
     transform: translate(50%, 50%);
-    z-index: 100;
+    z-index: 10;
     font-size: 20px;
 }
 
@@ -645,6 +676,10 @@ header {
 .gite-description {
     width: 33%;
     text-align: center; 
+    text-align: left;
+    margin: 10px 0;
+    font-size: 20px;
+    text-align: justify;
 }
 
 .giteFigure {
@@ -728,11 +763,6 @@ header {
 }
 
 .banner2-p {
-    /* color: white;
-    font-size: 43px;
-    width: 70%;
-    text-align: center;*/
-
     z-index: 5; 
     color: var(--color1);
     font-size: 25px;
@@ -742,6 +772,7 @@ header {
     text-transform: uppercase;
     text-align: center;
     margin-top: 20px;
+    line-height: 50px;
 }
 
 .caracteristique-title {
@@ -1890,7 +1921,7 @@ th, td {
     border-color: var(--color1) !important;
 }
 
-.swal2-loader {
+/* .swal2-loader {
     border-color: var(--color1) !important;
     outline: none !important;
 }
@@ -1909,7 +1940,11 @@ th, td {
     background-color: var(--color1) !important;
     border-color: var(--color6) !important;
 
+} */
+div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5) !important;
 }
+
 /* ********************************************** FOOTER ********************************************** */
 
 #map {

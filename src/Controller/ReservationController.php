@@ -227,6 +227,7 @@ class ReservationController extends AbstractController
             // Récupérez la valeur de countdownTime depuis la session
             $countdownTime = $request->getSession()->get('countdownTime');
 
+     
             // Vérifiez si le countdownTime est égal à 0
             if ($countdownTime === 0) {
                  
@@ -300,7 +301,7 @@ class ReservationController extends AbstractController
     
     // Créez une session de paiement avec Stripe Checkout
     $session = Session::create([
-        'payment_method_types' => ['card'],
+        'mode' => ['payment'],
         'line_items' => [[
             'price_data' => [
                 'currency' => 'eur',

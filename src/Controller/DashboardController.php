@@ -143,7 +143,7 @@ class DashboardController extends AbstractController
             $form = $this->createForm(ReviewType::class, $review);
             $form->handleRequest($request);
 
-             // On récupère l'id de l'utilisateur connecté
+            // On récupère l'id de l'utilisateur connecté
             $user = $this->getUser();
             $review->setUser($user);
 
@@ -214,49 +214,6 @@ class DashboardController extends AbstractController
         // Rediriger vers la page des avis à vérifier
         return $this->redirectToRoute('app_review');
     }
-
-    /**
-    * Fonction pour modifier l'email d'un user
-    */
-    
-
-    // #[Route(path: '/profil/{id}/update-email', name: 'app_update_email')]
-    // public function updateEmail(Request $request): Response
-    // {
-    //     // Récupérez l'user connecté
-    //     $user = $this->getUser();
-
-    //     // S'il n'est pas connecté, le rediriger vers la page de connection
-    //     if (!$user) {
-    //         return $this->redirectToRoute('app_login');
-    //     }
-
-    //     // Créez et gérez le formulaire
-    //     $form = $this->createForm(UserEmailType::class, $user);
-    //     $form->handleRequest($request);
-
-    //     if ($form->isSubmitted() && $form->isValid()) {
-    //         $entityManager->persist($user);
-    //         $entityManager->flush();
-
-    //         $this->addFlash('success', 'Adresse e-mail mise à jour avec succès.');
-
-    //         return $this->redirectToRoute('app_profil');
-    //     }
-
-        
-    //     return $this->render('dashboard/profil.html.twig', [
-    //         'form' => $form->createView(),
-
-    //         // 'user' => $user,
-    //         // 'reservations' => $reservations
-    //     ]);    
-    // }
-
-
-
-
-
 
 }
 

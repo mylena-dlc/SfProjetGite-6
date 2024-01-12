@@ -1,6 +1,8 @@
 {% extends 'baseaccueil.html.twig' %}
 
-{% block title %}Accueil{% endblock %}
+{% block title %}Page d'accueil{% endblock %}
+
+{% block meta_description %} {{ description }} {% endblock %}
 
 {% block body %}
 
@@ -10,8 +12,10 @@
             icon: "error",
             title: "Erreur",
             text: "{{ flash_message }}",
+            customClass: {
+                confirmButton: 'btn-ok',
+            }
         });
-        
     </script>
 {% endfor %}
 {% for flash_message in app.flashes('success') %}
@@ -24,7 +28,14 @@
     </script>
 {% endfor %}
 
+        <section id="first-section">
 
+            <h1><strong>Logement de charme</strong></h1>
+            <h2>au coeur des Vosges Alsacienne</h2>
+
+            <p class="first-section-person">Jusqu'à 6 personnes</p>
+
+        </section>
 
 <section id="search">        
 
@@ -82,23 +93,23 @@
 
                
 
-                <div class="description-and-picture">
-             <div class="title gite-title">
-                    <h2>le gîte</h2>
-                </div>
-                    <p class="gite-description">Bienvenue au Gîte du Rain du Pair, 
-                    un havre de paix situé dans un ancien corps de ferme récemment rénové, perché sur les hauteurs d'Orbey, en Alsace. 
-                    <br><br>
-                    Notre gîte offre une expérience exceptionnelle tout au long de l'année, que ce soit pour les plaisirs de l'hiver 
-                    à proximité de la station de ski du Lac Blanc, les aventures estivales le long de la Route des Crêtes 
-                    et des vignobles alsaciens, ou simplement pour une retraite paisible au cœur de la nature.</p>
-                    <figure class="giteFigure">
-                        <img class="picture01" src="img/gite-alsace-01.jpg" alt="Photos du séjour du gîte"/>
-                    </figure>
-                
-    
-                    
-                </div>
+        <div class="description-and-picture">
+        <div class="title gite-title">
+            <h2>le <strong>gîte</strong></h2>
+        </div>
+            <p class="gite-description">Bienvenue au <strong>Gîte</strong> du Rain du Pair, 
+            un havre de paix situé dans un ancien corps de ferme récemment rénové, perché sur les hauteurs d'Orbey, en Alsace.
+
+            Notre <strong>gîte de charme</strong> offre une expérience exceptionnelle tout au long de l'année, que ce soit pour 
+            les plaisirs de l'hiver à proximité de la station de ski du Lac Blanc, les aventures estivales le long de la Route des Crêtes
+             et des vignobles alsaciens, ou simplement pour une retraite paisible au cœur de la nature.</p>
+
+            <figure class="giteFigure">
+                <img class="picture01" src="img/gite-alsace-01.jpg" alt="Photos du séjour du gîte"/>
+            </figure>
+
+            
+        </div>
 
 
             </div>
@@ -107,7 +118,7 @@
             <div class="icons">
                 <div class="icon">
                     <p class="banner-icon"><i class="fa-solid fa-bath"></i></p>
-                    <p class="banner-p">Bain nordique</p>
+                    <p class="banner-p"><strong>Bain nordique</strong></p>
                 </div>
                 <div class="icon">
                     <p class="banner-icon"><i class="fa-solid fa-bed"></i></p>
@@ -152,7 +163,8 @@
                
                
                 <p class="caracteristique-p">La terrasse privative offre une vue imprenable sur les montagnes environnantes et le village en contre bas. 
-            Vous pourrez vous détendre dans notre bain finlandais extérieur chauffé au feu de bois, une expérience relaxante dans un petit coin de paradis en plein air.</p>
+            Vous pourrez vous détendre dans notre <strong>bain nordique</strong> extérieur chauffé au feu de bois, 
+            une expérience relaxante dans un petit coin de paradis en plein air.</p>
             </div>
             <div class="caracteristique-right">                
                
@@ -167,15 +179,18 @@
 
 
          <div class="banner2">
-            <p class="banner2-p">Que vous veniez en couple,<br> en famille ou entre amis,<br>
-            "Le Rain du Pair" est l'endroit idéal<br> pour passer des moments inoubliables.</p>
+            <p class="banner2-p">
+            Découvrez l'Alsace avec notre <strong>location de vacances</strong>. <br>
+            Réservez votre <strong>hébergement à Orbey </strong> dès aujourd'hui <br>
+            et profitez d'un séjour inoubliable<br> dans notre <strong>gîte de charme.</strong>
+            </p>
         </div>
             
    
 
     <section id="galerie">
         <div class="galerie-contain">
-            <div class="title">
+            <div class="title"> 
                 <h2>Galerie</h2>
             </div>
 
@@ -221,29 +236,6 @@
                 <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px"></div>
     
             </div>
-
-{# 
-             {% for media in instagramMedia %}
-                <li>
-                     <img src="{{ media.thumbnail_url }}" alt="Post"> 
-                    <img src="https://example.com/thumbnails/{{ media.id }}.jpg" alt="Post"> 
-
-                    <p>{{ media.caption }}</p>
-                    <a href="https://www.instagram.com/p/{{ media.id }}" target="_blank">Voir sur Instagram</a>
-
-                </li>
-            {% endfor %}  #}
-
-
-
-            {# {% for post in instagramPosts %}
-    <div>
-        <img src="{{ post.thumbnail_url }}" alt="Instagram Post">
-        <p>{{ post.caption }}</p>
-        <a href="{{ post.permalink }}" target="_blank">Voir sur Instagram</a>
-    </div>
-{% endfor %} #}
-
 
         </div>
     </section>
