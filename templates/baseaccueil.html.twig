@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            {% block title %}
+                Bienvenue 
+            {% endblock %}
+        </title>
+    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.15.0/tarteaucitron.js" integrity="sha512-62eOEgHMZUJrhPye67OGYDBdRtoGKAQ3R9e770/990JWPvW9PxVT019z7juVdSc6itOy+zZ3yYOUmeggwmbo7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+        {% block javascripts_header %}
+ 
+            <script src="{{ asset('tarteaucitron/tarteaucitron.js') }}"></script>
+            
+            
+            <script>
+                tarteaucitron.init({
+                    "privacyUrl": "", /* Privacy policy url */
+                    "bodyPosition": "bottom", /* or top to bring it as fFirst element for accessibility */
+
+                    "hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
+                    "cookieName": "tarteaucitron", /* Cookie name */
+
+                    "orientation": "middle", /* Banner position (top - bottom - middle - popup) */
+
+                    "groupServices": false, /* Group services by category */
+                    "serviceDefaultState": "wait", /* Default state (true - wait - false) */
+
+                    "showAlertSmall": false, /* Show the small banner on bottom right */
+                    "cookieslist": false, /* Show the cookie list */
+                    
+                    "showIcon": false, /* Show cookie icon to manage cookies */
+                    // "iconSrc": "", /* Optionnal: URL or base64 encoded image */
+                    "iconPosition": "BottomRight", /* Position of the icon between BottomRight, BottomLeft, TopRight and TopLeft */
+
+                    "adblocker": true, /* Show a Warning if an adblocker is detected */
+
+                    "DenyAllCta" : true, /* Show the deny all button */
+                    "AcceptAllCta" : true, /* Show the accept all button when highPrivacy on */
+                    "highPrivacy": true, /* HIGHLY RECOMMANDED Disable auto consent */
+
+                    "handleBrowserDNTRequest": false, /* If Do Not Track == 1, disallow all */
+
+                    "removeCredit": false, /* Remove credit link */
+                    "moreInfoLink": true, /* Show more info link */
+                    "useExternalCss": false, /* If false, the tarteaucitron.css file will be loaded */
+                    "useExternalJs": false, /* If false, the tarteaucitron.services.js file will be loaded */
+
+                    //"cookieDomain": ".my-multisite-domaine.fr", /* Shared cookie for subdomain website */
+
+                    "readmoreLink": "", /* Change the default readmore link pointing to tarteaucitron.io */
+                    
+                    "mandatory": true, /* Show a message about mandatory cookies */
+                    "mandatoryCta": true /* Show the disabled accept button when mandatory on */
+                });
+                
+                (tarteaucitron.job = tarteaucitron.job || []).push('instagram');
+               
+                </script>
+
+               
+        
+        {% endblock %}
+
+        {% block stylesheets %}
+        
+            <!-- Affichage des étoiles pour les avis -->
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css" />
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+
+            <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/rangePlugin.min.js" integrity="sha512-44bA1YzQUqHACfLj2v0wEdX9z6EmlALcta6ENgPZnxH/aIiuBw92he+M/51kTCueY/2DsqEYM7mCwGUyO2q79w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+            {# <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">  #}
+            
+            <link href="https://fonts.googleapis.com/css?family=Corinthia" rel="stylesheet"> 
+
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+
+
+        {% endblock %}
+
+    </head>
+    <body>
+        <header>
+
+            <div class="videoContent">
+                <video class="videoHome" src="{{ asset('img/video-header.mp4') }}" type="video/mp4" autoplay muted loop></video>
+            </div>
+            <nav class="navbar">
+                {# boutton menu burger #}
+                {# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button> #}
+
+                    <ul class="nav-items"> <li class="nav-item-logo">
+                        <figure>
+                            <a class="link-home" href="{{ path('app_home') }}">
+                                <img src="{{ asset( 'img/logook.png' ) }}" alt="logo" class="navLogo">
+                            </a>
+                        </figure>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href="/#gite">
+                            Accueil HOME
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#galerie">
+                            galerie
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#alentours">
+                            aux alentours
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#review">
+                            avis
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ path('app_contact') }}">
+                            contact
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/#search">
+                            réservation
+                        </a>
+                    </li>
+
+                    {% if is_granted('ROLE_ADMIN') %}
+                        {# Si je suis admin #}
+                        <li class="nav-item">
+                            <a aria-current="page" href="{{ path('app_dashboard') }}">
+                                Tableau de bord
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    {# Si je suis connecté: #}
+                    {% if app.user %}           
+                        <li class="nav-item">
+                            <a aria-current="page" href="{{ path('app_profil', {'id': app.user.id}) }}">
+                                Mon profil
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a aria-current="page" href="{{ path('app_logout') }}">
+                                Se déconnecter
+                            </a>
+                        </li>
+            
+                    {% else %}
+                        <li class="nav-item">
+                            <a aria-current="page" href="{{ path('app_login') }}">
+                                Se connecter
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a aria-current="page" href="{{ path('app_register') }}">
+                                S'inscrire
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </nav>
+
+            <!-- Bouton scroll pour remonter en haut de la page -->
+            <div class="btn-scroll-to-top">
+        <i class="fa-solid fa-chevron-up"></i>
+            </div>
+
+        </header>
+
+        <main class="container pageaccueil">
+            {% block body %}{% endblock %}
+        </main>
+
+               <footer>
+
+
+
+            <div class="footerContaint">
+                <div class="footer-background"></div>
+                <div class="footerTop">
+                    <figure>
+                        <img src="{{ asset( 'img/logook2.png' ) }}" alt="logo" class="footerLogo"/>
+                    </figure>
+                    <div class="address">            
+                    
+                    {# Carte Leaflet #}
+                    <div id="map"></div>
+
+                        {# <p class="footerP">
+                            Gîte du Rain du Pair 
+                        </p>
+                        <p class="footerP">
+                            224 Rain du Pair 
+                        </p>
+                        <p class="footerP">
+                            68370 Orbey
+                        </p> #}
+                    </div>
+                    <div class="contact">
+                        <p class="footerP">
+                            <a href="https://www.instagram.com/giteraindupair/" class="footerLink" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                            <a href="https://www.facebook.com/profile.php?id=61555292307736" class="footerLink" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                        </p>
+                        <p class="footerP">
+                            contact@giteraindupair.fr
+                        </p>
+                        <p class="footerP">
+                            <i class="fa-solid fa-phone"></i>
+                            06 36 29 62 22
+                        </p>
+                    </div>
+                </div>
+                <div class="footer-line"></div>
+                <div class="footerBottom">
+                    <div class="footer-link">
+                        <div class="link-right">
+                            <p class="footerLink">
+                                Conditions générales de vente
+                            </p>
+                            <p class="footerLink">
+                                Politique de confidentialités
+                            </p>
+                            <p class="footerLink">
+                                Plan du site
+                            </p>
+                        </div>
+                        <div class="link-left">
+                            <p class="footerLink">
+                                &copy; 2023 Gîte du Rain du Pair - Tous droits réservés.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        {% block javascripts_footer %}
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
+
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+            <!-- SweetAlert CDN -->
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@6.1.9/index.global.min.js" integrity="sha256-9zSfnftul7UU4/TQ7fbXdZfHiB4xKjHMLRunC35rglc=" crossorigin="anonymous"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+            <script src="https://unpkg.com/flatpickr@4.6.9/dist/plugins/scrollPlugin.js"></script>
+
+            <script src="{{ asset('js/script.js') }}"></script>
+
+
+        {% endblock %}
+
+    </body>
+</html>

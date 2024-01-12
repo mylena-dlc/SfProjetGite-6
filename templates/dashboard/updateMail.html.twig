@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier l'adresse mail{% endblock %}
+
+{% block body %}
+
+    <div class="title gite-title center">
+         <h3>Modifier l'adresse mail</h3>
+    </div>
+
+
+    <div class="containt">
+
+        {{ form_start(form, { 'action': path('app_update_email', {'id': app.user.id})  }) }}
+        {{ form_widget(form) }}
+    <button type="submit">Mettre à jour l'adresse e-mail</button>
+    {{ form_end(form) }}
+        
+    </div>
+
+
+{% endblock %}

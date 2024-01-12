@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservations à venir{% endblock %}
+
+{% block body %}
+
+
+<div class="containerDashboard">
+<div class="slidebar">
+    <ul>
+        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="titleSlidebar"><i class="fa-solid fa-angles-right"></i> Accueil tableau de board</a></li>
+        <li class="titleSlidebar">gestion des réservations</li>
+        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations à venir</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations passées</a></li>
+        <li class="titleSlidebar">gestion du calendrier</li>
+        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les périodes</a></li>
+        <li class="titleSlidebar">gestion du gîte</li>
+        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Le gîte</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les photos</a></li>
+    </ul>
+</div>
+
+<div class="content">
+
+
+    <div class="title gite-title center">
+         <h1>Réservations à venir</h1>
+    </div> 
+
+
+{% if upcomingReservations is not empty %}
+
+<table class="tableGite tableReservation">
+        <thead>
+            <tr>
+                <th>Référence</th> 
+                <th>Date de réservation</th>                
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date d'arrivée</th>
+                <th>Date de départ</th>
+                <th>Prix total</th>
+                <th>Vue par le gérant</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for upcomingReservation in upcomingReservations %}
+            <tr>
+                <td>{{ upcomingReservation.reference }}</td>
+                <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
+                <td>{{ upcomingReservation.firstName }}</td>
+                <td>{{ upcomingReservation.LastName }}</td>
+                <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>
+                <td>{{ upcomingReservation.departureDate|date('d-m-Y') }}</td>
+                <td>{{ upcomingReservation.totalPrice }} €</td>
+
+
+
+                <!-- bouton checkbox pour changer le statut à "vu" par le gérant -->
+                <td class="td-checkbox">
+                    {# {{ form_start(form) }}
+    {% for reservation in reservations %}
+        {{ form_widget(form.view[reservation.id]) }}
+    {% endfor %}
+    {{ form_widget(form.save) }}
+    {{ form_end(form) }} #}
+
+                </td>   
+                <td><a href="{{ path('show_reservation', {'id': upcomingReservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
+
+            </tr>   
+
+               {% endfor %}
+        </tbody>
+    </table>    
+     
+    {% else %}
+        <p>Aucune réservation à venir.</p>
+    {% endif %}   
+
+</div>
+</div>
+
+{% endblock %}

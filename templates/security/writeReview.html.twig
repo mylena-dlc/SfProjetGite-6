@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Écrire un avis{% endblock %}
+
+{% block body %}
+
+<div class="title gite-title center">
+    <h1>Écrire un avis</h1>
+</div> 
+
+<div class="cardReviews writeReview">
+<h2 class="reviewTitle">Merci d'avoir choisi notre gîte pour votre séjour !</h2><br>
+<p class="reviewText">Votre retour nous aide à comprendre ce que vous avez aimé et comment nous pouvons améliorer notre service.<br> Que vous ayez eu une expérience exceptionnelle ou que vous ayez des suggestions pour nous aider à nous améliorer, nous sommes impatients de les entendre.</p>
+<p class="reviewText">Nous apprécions sincèrement le temps que vous prenez pour partager votre expérience.</p>
+<p class="reviewText">Nous sommes impatients de vous accueillir à nouveau et de rendre votre prochain séjour aussi agréable que possible.</p><br>
+<hr class="reviewLigne">
+    {{ form_start(form) }}
+    <p class="reviewRatingBlock"> Note <div id="rating"></div> </p>
+
+   {{ form_row(form.rating) }}
+
+    <div class="comment-field">
+        <p class="comment-label">{{ form_label(form.comment) }}</p>
+        {{ form_widget(form.comment) }}
+    </div>
+
+    {{ form_row(form.Ajouter) }}
+
+    {{ form_end(form) }}    
+
+</div>
+
+
+    
+{% endblock %}
+

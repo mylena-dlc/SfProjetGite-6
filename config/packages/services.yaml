@@ -1,0 +1,6 @@
+# # config/services.yaml
+
+# services:
+#     App\Service\DompdfService:
+#         arguments:
+#             $pdfOptions: []

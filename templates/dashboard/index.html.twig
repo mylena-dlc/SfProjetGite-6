@@ -1,0 +1,88 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+
+
+<div class="containerDashboard">
+<div class="slidebar">
+    <ul>
+        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="titleSlidebar"><i class="fa-solid fa-angles-right"></i> Accueil tableau de board</a></li>
+        <li class="titleSlidebar">gestion des réservations</li>
+        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations à venir</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations passées</a></li>
+        <li class="titleSlidebar">gestion du calendrier</li>
+        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les périodes</a></li>
+        <li class="titleSlidebar">gestion du gîte</li>
+        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Le gîte</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les photos</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les avis</a></li>
+    </ul>
+</div>
+
+<div class="content">
+
+<div class="circleResa">
+    <p>Dernières réservations éffectuées</p>
+</div> 
+
+    <div class="title gite-title center">
+         <h1>Tableau de bord Administrateur</h1>
+    </div> 
+
+
+<table class="tableGite tableReservation">
+        <thead>
+            <tr>
+                <th>Référence</th> 
+                <th>Date de réservation</th>                
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date d'arrivée</th>
+                <th>Date de départ</th>
+                <th>Prix total</th>
+                <th>Vue par le gérant</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.reference }}</td>
+                <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.firstName }}</td>
+                <td>{{ reservation.LastName }}</td>
+                <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.totalPrice }} €</td>
+
+
+
+                <!-- bouton checkbox pour changer le statut à "vu" par le gérant -->
+                <td class="td-checkbox">
+
+
+<div class="checkbox-wrapper" data-reservation-id="{{ reservation.id }}">
+                            <input type="checkbox" name="reservation_view_{{ reservation.id }}" id="custom-checkbox-{{ reservation.id }}" class="custom-checkbox {% if reservation.view %}vue{% else %}nonvue{% endif %}">
+                            <label for="custom-checkbox-{{ reservation.id }}" class="checkbox-label">{% if reservation.view %}<i class="fa-solid fa-check"></i> Vue !{% else %}<i class="fa-solid fa-triangle-exclamation"></i> Non vue !{% endif %}</label>
+                            <button class="submit-checkbox" type="button" style="display: none;">OK</button>
+                        </div>
+
+
+
+                </td>   
+                <td><a href="{{ path('show_reservation', {'id': reservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
+
+            </tr>   
+
+               {% endfor %}
+        </tbody>
+    </table>        
+
+
+
+</div>
+</div>
+
+{% endblock %}

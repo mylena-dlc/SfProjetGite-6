@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avis des voyageurs{% endblock %}
+
+{% block body %}
+
+<div class="content">
+
+    <div class="title gite-title center">
+         <h1>Avis des voyageurs</h1>
+    </div> 
+
+    <div class="allReviews">
+    {% for review in reviews %}
+    <div class="item itemAllReviews">
+
+        <p class="reviewName">{{ review.reservation.lastName }} {{ review.reservation.firstName }}</p>
+        <p class="reviewDate">posté le {{ review.creationDate|date('d-m-Y') }}</p> 
+        
+        {# Utilisation de RateYo pour afficher les étoiles #}
+            <div id="rating-{{ review.id }}"></div>
+        <script>
+            $(document).ready(function () {
+                $("#rating-{{ review.id }}").rateYo({
+                    rating: {{ review.rating }},
+                    readOnly: true, // Pour rendre les étoiles en lecture seule #}
+                        starWidth: "20px",
+                    precision: 0,
+                });
+            });
+        </script>
+        <p class="commentAllReviews">{{ review.comment }}</p>
+        <p class="reviewDate"> Réponse du propriétaire : </p>
+        <p class="commentAllReviews">{{ review.response }}</p>
+    </div>
+            
+    {% endfor %}
+
+</div>
+
+{# Affichez la pagination #}
+<div class="pagination">
+    {% if pagination.page > 1 %}
+        <a href="{{ path(pagination.route, { 'page': pagination.page - 1 }) }}" class="previous"><i class="fa-solid fa-chevron-left"></i></a>
+    {% endif %}
+
+    {# // Ajoute la class active au numéro de page actuel #}
+    {% for page in 1..pagination.pages %} 
+        <a href="{{ path(pagination.route, { 'page': page }) }}" {% if page == pagination.page %}class="active"{% endif %}>{{ page }}</a>
+    {% endfor %}
+
+    {% if pagination.page < pagination.pages %}
+        <a href="{{ path(pagination.route, { 'page': pagination.page + 1 }) }}" class="next"><i class="fa-solid fa-chevron-right"></i></a>
+    {% endif %}
+</div>
+
+
+
+</div>
+
+
+{% endblock %}

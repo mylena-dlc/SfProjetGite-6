@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails d'une réservation{% endblock %}
+
+{% block body %}
+
+<div class="contain">
+
+
+    <div class="title gite-title center">
+        <h1>Réservation {{ reservation.reference }}</h1>
+    </div>
+
+<div class="showReservation">
+
+    <div class="actionButton">
+        <a href="{{ path('download_invoice', {'id': reservation.id}) }}" class="btn download">Télécharger la facture</a>
+    </div>
+
+    <table class="reservation-details">
+        <tbody class="reservaion-details-table">
+        <tr>
+            <td>Date de Réservation:</td>
+            <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
+        </tr>
+        
+            <tr class="side-by-side">
+                <td >Date d'Arrivée:</td>
+                <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td><td>Date de Départ:</td>
+                <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
+            </tr> 
+        <tr class="side-by-side">
+            <td>Nom:</td>
+            <td>{{ reservation.lastName }}</td>
+            <td>Prénom:</td>
+            <td>{{ reservation.firstName }}</td>
+        </tr>
+        <tr>
+            <td>Adresse:</td>
+            <td>{{ reservation.address }}</td>
+            <td>Code postal:</td>
+            <td>{{ reservation.cp }}</td>
+        </tr>
+        <tr>
+            
+        </tr>
+        <tr>
+            <td>Pays:</td>
+            <td>{{ reservation.country }}</td>        
+            <td>Numéro de téléphone:</td>
+            <td>{{ reservation.phone }}</td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td>{{ reservation.user.email }}</td>
+            <td>Prix Total:</td>
+            <td>{{ reservation.totalPrice }} €</td>
+        </tr>
+        <tr>
+            <td>Nombre d'adulte(s):</td>
+            <td>{{ reservation.numberAdult }}</td> 
+            <td>Nombre d'enfant(s):</td>
+            <td>{{ reservation.numberKid }}</td>
+        </tr>
+        <tr>
+           
+        </tr>
+        <tr>
+            
+        </tr>
+        </tbody>
+    </table>
+
+
+
+    </div>
+        </div>
+
+{% endblock %}

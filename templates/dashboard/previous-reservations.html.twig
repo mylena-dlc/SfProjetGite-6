@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservations passées{% endblock %}
+
+{% block body %}
+
+
+<div class="containerDashboard">
+<div class="slidebar">
+    <ul>       
+    
+        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="titleSlidebar"><i class="fa-solid fa-angles-right"></i> Accueil tableau de board</a></li>
+        <li class="titleSlidebar">gestion des réservations</li>
+        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations à venir</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations passées</a></li>
+        <li class="titleSlidebar">gestion du calendrier</li>
+        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les périodes</a></li>
+        <li class="titleSlidebar">gestion du gîte</li>
+        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Le gîte</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les photos</a></li>
+    </ul>
+</div>
+
+<div class="content">
+
+
+    <div class="title gite-title center">
+         <h1>Réservations passées</h1>
+    </div> 
+
+
+{% if previousReservations is not empty %}
+
+<table class="tableGite tableReservation">
+        <thead>
+            <tr>
+                <th>Référence</th> 
+                <th>Date de réservation</th>                
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Date d'arrivée</th>
+                <th>Date de départ</th>
+                <th>Prix total</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for previousReservation in previousReservations %}
+            <tr>
+                <td>{{ previousReservation.reference }}</td>
+                <td>{{ previousReservation.reservationDate|date('d-m-Y') }}</td>
+                <td>{{ previousReservation.firstName }}</td>
+                <td>{{ previousReservation.LastName }}</td>
+                <td>{{ previousReservation.arrivalDate|date('d-m-Y') }}</td>
+                <td>{{ previousReservation.departureDate|date('d-m-Y') }}</td>
+                <td>{{ previousReservation.totalPrice }} €</td>
+                <td><a href="{{ path('show_reservation', {'id': previousReservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
+
+            </tr>   
+
+               {% endfor %}
+        </tbody>
+    </table>    
+     
+    {% else %}
+        <p>Aucune réservation passée.</p>
+    {% endif %}   
+
+</div>
+</div>
+
+{% endblock %}

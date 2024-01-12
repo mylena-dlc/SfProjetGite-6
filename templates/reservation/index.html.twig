@@ -1,0 +1,148 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ReservationController!{% endblock %}
+
+{% block body %}
+
+
+
+
+    <div class="title gite-title center">
+        <h1>Demande de réservation</h1>
+    </div>
+
+{# Affichage du compte à rebours #}
+<div id="countdown"></div>
+
+    <div class="confirmReservation">
+        <div class="confirm">
+
+            <h2 class="reservation-title">Détails du prix</h2>
+            <p class="total-p"> {{ nightPrice }} € x {{ numberNight }} nuit(s) <span class="medium">{{ nightPrice * numberNight }} €</span></p>
+            <p class="total-p">Forfait ménage : <span class="medium"> {{ cleaningCharge }}€</span></p>
+            <hr class="confirmLine">
+            <p class="total-p pBold">Total : <span class="medium">{{ totalPrice }} €</span></p>
+            <button class="btn btnReservation"><a href="{{ path ('new_reservation')}}">Réserver</a></button>
+        </div>
+
+
+        <div class="detail">
+
+            <h2 class="reservation-title">Vos dates</h2>
+            <p>Date d'arrivée : {{ startDate|date('d-m-Y') }}</p>
+            <p class="italic">(arrivée à partir de 17H00)</p>
+            <p>Date de départ : {{ endDate|date('d-m-Y') }}</p>
+            <p class="italic">(départ maximun à 11H00)</p>
+
+            <h2 class="reservation-title">Nombre de personnes (s)</h2>
+            <p> {{ numberAdult }} adulte(s)</p>
+            <p> {{ numberKid }} enfant(s)</p>
+
+        </div>
+    </div>
+        <div class="title gite-title center resatitle">
+            <h2 class="reservation-title">Description</h2>
+        </div>
+
+    <div class="description01">
+        <div class="descriptionLeft">
+
+            <p class="descriptionIcon"><i class="ri-bard-line"></i> Bain nordique en extérieur</p>
+    <br>
+            <p class="descriptionIcon"><i class="ri-key-2-line"></i> Arrivée Autonome</p>
+    <br>
+            <p class="descriptionIcon"><i class="ri-hotel-bed-line"></i> 2 chambres</p>
+    <br>
+            <p class="descriptionIcon"><i class="fa-solid fa-shower"></i> 2 salles d'eau</p>
+    <br>
+            <p class="descriptionIcon"><i class="ri-landscape-line"></i> Jolie vue sur les montagnes</p>
+
+    </div>
+
+
+    <div class="descriptionRight">
+        <h3 class="titleDescription"><i class="ri-information-line"></i> informations</h3>
+        <p class="info bold"><i class="ri-time-line"></i> Heure d'arrivée:</p> <p class="info"> à partir de 17h</p>
+        <p class="info bold"><i class="ri-time-line"></i> Heure de départ:</p> <p class="info"> avant 11h</p>
+        <br>
+        <p class="info paraCenter">Les lits sont faits à l'arrivée et le linge de bain est inclus</p>
+        <p class="info bold">Logement non fumeur</p>
+        <p class="info bold">Animaux non admis</p>
+        <p class="info bold">Fête interdite</p>
+    </div>
+</div>
+
+<div class="description02">
+    <h5 class="titleH5">Bienvenue au Gîte du Rain du Pair sur les hauteurs d’Orbey !<br>
+        Venez profiter d’un logement aménagé et décoré avec soin.</h5>
+
+    <div class="descriptionLists">
+        <ul>
+         <li class="titleList"><h4 class="descriptionList">Équipement extérieur</h4></li>
+            <li><i class="ri-arrow-drop-right-line"></i> Bain nordique privé et ilimité</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Terasse et table à manger</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Plancha à gaz</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Parking privé</li>
+        </ul>
+
+        <ul>
+        <li class="titleList"><h4 class="descriptionList">Équipement intérieur</h4></li>
+            <li><i class="ri-arrow-drop-right-line"></i> Chauffage au sol au RDC</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Radiateur électrique à létage</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Seche-serviette électrique</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Lave-vaiselle</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Four</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Micro-onde</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Plaque de cuisson induction</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Machine à café Senseo</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Bouilloire électrique</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Grille-pain</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Appareil à raclette</li>
+        </ul>
+       
+        <ul>
+         <li class="titleList"><h4 class="descriptionList"><span class="invisible">texte</span> </h4></li>
+            <li><i class="ri-arrow-drop-right-line"></i> Aspirateur</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Lave-linge et étendoir</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Fer à repasser</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Sèche-cheveux</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Couvertures supplémentaires</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Télévision</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Wifi</li>
+            <li><i class="ri-arrow-drop-right-line"></i> Détecteur de fumée</li>
+        </ul>
+</div>
+</div>
+
+    
+
+    <div class="situation">
+
+        <div class="title gite-title center resatitle">
+                <h2 class="reservation-title">Situation</h2>
+        </div>
+
+        <h5 class="titleH5">Le logement se trouve à Orbey,<br> village alsacien de moyenne montagne niché 
+        à 550 m d’altitude,<br> à proximité du magnifique massif vosgien.</h5>
+
+    <div class="sectionSituations">
+        <div class="sectionSituation">
+            <p class="paragrapheSituation">Tout près :</p>
+            <ul>
+                <li><i class="ri-arrow-drop-right-line"></i> Station du Lac Blanc</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Kaysersberg (13 km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Colmar (25 km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Eguisheim (26km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Gérardmer (36 km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> La Bresse (36 km)</li>
+                <li><i class="ri-arrow-drop-right-line"></i> Strasbourg (90 km)</li>
+            </ul>
+
+        </div>
+        <figure class="situationFigure">
+            <img src="{{ asset( 'img/carte-alsace.jpg' )}}" alt="Carte touristique d'Alsace"/>
+        </figure>
+    </div>
+
+
+{% endblock %}

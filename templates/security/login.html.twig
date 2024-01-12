@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+<form method="post">
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Connection</a>
+        </div>
+    {% endif %}
+
+
+
+        <div class="title gite-title center">
+            <h1>Connection</h1>
+        </div>
+
+    {# Affichage du compte à rebours #}
+<div id="countdown"></div> 
+
+    <div class="registerForm">
+
+    <label for="inputEmail">Email</label>
+    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="inputRegister" autocomplete="email" required autofocus>
+    
+    <label for="inputPassword">Mot de passe</label>
+    <input type="password" name="password" id="inputPassword" class="inputRegister" autocomplete="current-password" required>
+
+    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+<div class="btn-register">
+        <button type="submit" class="btn register">Valider</button>
+    <p class="p-link">Pas encore de compte? Inscrivez-vous <a class="link" href="{{ path('app_register')}}">ici</a> </p>
+</div>
+
+
+
+
+</div>
+</form>
+
+{% endblock %}

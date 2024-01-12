@@ -1,0 +1,125 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+
+{% for flash_message in app.flashes('error') %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+
+{% for flash_message in app.flashes('success') %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+
+
+    <div class="title gite-title center">
+         <h1>Mon compte</h1>
+    </div>
+
+
+    <div class="containt">
+        <div class="profilContaint">
+            <p class="profilEmail">Email</p> <p class="profilEmailAddress">{{ user.email }}</p> 
+        
+        {# <p class="profilEmailAddress"><a href="{{ path('app_update_email', {'id': app.user.id}) }}" id="updateEmailLink" >Modifier l'adresse mail</a></p> #}
+        
+        {# <div id="updateEmailForm">
+            {% include 'dashboard/updateMail.html.twig' %}
+        </div>  #}
+
+            <button class="btn deleteAccount" onclick="confirmDeleteAccount()"><i class="fa-solid fa-trash-can"></i> Supprimer mon compte</button>
+        
+        </div>
+
+
+
+        <div class="title gite-title center">
+            <h2>Mes réservations</h2>
+        </div>
+
+        <div class="resaContaint">
+                  
+               
+                    
+                      
+                  
+ {% if reservations is not empty %}
+<table class="tableGite">
+        <thead>
+            <tr>
+                <th>
+                   
+                </th>
+                <th>Référence de la réservation</th>  
+                <th>Date de réservation</th> 
+                <th>Date d'arrivée</th>
+                <th>Date de départ</th>
+                <th>Nombre d'adulte(s)</th>
+                <th>Nombre d'enfant(s)</th>
+                <th>Prix total</th>
+                <th>Détails</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for reservation in reservations %}
+            <tr>
+                <td>
+                    {# Si l'utilisateur connecté peut écrire un avis, alors on affiche le bouton #}
+                    {% if app.user.canWriteReview(reservation) and reservation.departureDate|date('U') < 'now'|date('U') %}
+                        <button class="btn btnReview"><a href="{{ path('app_write_review', {'reservation_id': reservation.id}) }}">Écrire un avis</a></button>
+                    {% endif %}
+                </td>
+
+                <td>{{ reservation.reference }}</td>
+                <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.numberAdult }}</td>
+                <td>{{ reservation.numberKid }}</td>
+                <td>{{ reservation.totalPrice }} €</td>
+                <td><a href="{{ path('show_reservation', {'id': reservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
+            </tr>   
+               {% endfor %}
+        </tbody>
+    </table>        
+
+
+            {% else %}
+                <p class="profilResa">Vous n'avez aucune réservation.</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    </div>
+
+        <script>
+        function confirmDeleteAccount() {
+            Swal.fire({
+                title: 'Voulez-vous supprimer votre compte?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Oui',
+                cancelButtonText: 'Non',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Si l'utilisateur clique sur "Oui", redirigez vers la suppression du compte
+                    window.location.href = "{{ path('app_delete_account') }}";
+                }
+            });
+        }
+    </script>
+{% endblock %}

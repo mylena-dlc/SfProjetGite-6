@@ -1,0 +1,7 @@
+# # config/packages/parameters.yaml
+
+# parameters:
+#     dompdf.options:
+#         isHtml5ParserEnabled: true
+#         isPhpEnabled: true
+#         isJavascriptEnabled: true

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello InstagramController!{% endblock %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    
+
+    This friendly message is coming from:
+  
+    {{ dump(app.session.flashbag.all()) }}
+
+       
+</div>
+{% endblock %}

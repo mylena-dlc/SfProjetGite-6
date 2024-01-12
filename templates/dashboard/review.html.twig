@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Avis des voyageurs{% endblock %}
+
+{% block body %}
+
+{% for flash_message in app.flashes('error') %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+{% for flash_message in app.flashes('success') %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+
+
+<div class="containerDashboard">
+    <div class="slidebar">
+        <ul>
+        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="titleSlidebar"><i class="fa-solid fa-angles-right"></i> Accueil tableau de board</a></li>
+            <li class="titleSlidebar">gestion des réservations</li>
+            <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations à venir</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations passées</a></li>
+            <li class="titleSlidebar">gestion du calendrier</li>
+            <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les périodes</a></li>
+            <li class="titleSlidebar">gestion du gîte</li>
+            <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Le gîte</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les photos</a></li>
+        </ul>
+    </div>
+
+<div class="content">
+
+    <div class="title gite-title center">
+         <h1>Avis des voyageurs</h1>
+    </div> 
+
+    <section class="unverifiedReview">
+        <h2 class="center">Avis non validé(s)</h2>
+
+        {% if unverifiedReviews is empty %}
+            <p class="center">Il n'y a aucun avis à valider.</p>
+        {% else %}
+
+        {% for unverifiedReview in unverifiedReviews %}
+        <div class="cardReviews">
+            <p class="reviewName">{{ unverifiedReview.reservation.lastName }} {{ unverifiedReview.reservation.firstName }}</p>
+            <p class="reviewComment">{{ unverifiedReview.creationDate|date('d-m-Y') }}</p>
+            {# <p class="reviewRating">Note : {{ unverifiedReview.rating }}</p> #}
+
+            {# Utilisation de RateYo pour afficher les étoiles #}
+            <div id="rating-{{ unverifiedReview.id }}"></div>
+            <script>
+                $(document).ready(function () {
+                    $("#rating-{{ unverifiedReview.id }}").rateYo({
+                        rating: {{ unverifiedReview.rating }},
+                        readOnly: true, // Pour rendre les étoiles en lecture seule
+                        starWidth: "20px",
+                        precision: 0,
+                    });
+                });
+            </script>
+            
+            <p class="reviewComment">{{ unverifiedReview.comment }}</p>
+            
+            {# Formulaire pour valider l'avis et ajouter une réponse #}
+            <form method="post" action="{{ path('app_verify_review', {'id': unverifiedReview.id}) }}" id="reviewForm">
+            
+                <label for="response">Réponse du propriétaire:</label><br>
+                <textarea id="response" name="response"></textarea><br>
+
+                <button type="submit" class="btn btn-primary">Valider l'avis</button>
+
+            </form>
+
+        </div>
+
+        {% endfor %}
+    {% endif %}
+
+</section>
+
+<section class="verifiedReview">
+    <h2 class="center">Tous les avis</h2>
+
+        <div class="sectionCenter">
+            <button class="btn btnReviews"><a href="{{ path('app_all_reviews') }}">Voir tous les avis</a></button>
+        </div>
+
+</section>
+
+</div>
+</div>
+{% endblock %}

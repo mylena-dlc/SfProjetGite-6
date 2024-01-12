@@ -1,0 +1,436 @@
+{% extends 'baseaccueil.html.twig' %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block body %}
+
+{% for flash_message in app.flashes('error') %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message }}",
+        });
+        
+    </script>
+{% endfor %}
+{% for flash_message in app.flashes('success') %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+
+
+
+<section id="search">        
+
+<h2 class="title-search">Réserver</h2>
+
+    <form id="reservationForm" action="{{ path('app_reservation') }}" method="post" onsubmit="return validateForm()">
+        <div class="start-containt">
+          <label for="start" class="start">Date d'arrivée</label>
+          <input type="text" id="start" class="start-input" name="start" required placeholder="Sélectionnez votre date d'arrivée" data-reserved-dates="{{ reservedDates }}">
+        </div>
+
+        <div class="end-containt">
+          <label for="end" class="end">Date de départ</label>
+          <input type="text" id="end" class="end-input" name="end" required placeholder="Sélectionnez votre date de départ" data-reserved-dates="{{ reservedDates }}">
+        </div>
+
+        <div class="person-containt">
+            <div class="adult">
+                <label for="numberAdult" class="numberAdult">Adulte</label>
+                <div class="action">
+                    <p class="decrement"><i class="fa-solid fa-circle-minus"></i></p>
+                    <input type="number" id="numberAdult" class="inputPerson" name="numberAdult" value="1" min="1" max="6" readonly>
+                    <p class="increment"><i class="fa-solid fa-circle-plus"></i></p>
+                </div>
+            </div>
+            <div class="kid">
+                <label for="numberKid" class="numberKid">Enfant</label>
+                <div class="action">
+                    <p class="decrement"><i class="fa-solid fa-circle-minus"></i></p>
+                    <input type="number" id="numberKid" class="inputPerson" name="numberKid" value="0" min="0" max="5" readonly>
+                    <p class="increment"><i class="fa-solid fa-circle-plus"></i></p>
+                </div>
+            </div>    
+            <div class="person">
+                <label for="totalPerson" class="labelPerson">Voyageurs</label>
+                <div class="action">
+                    <input type="number" id="totalPerson" class="inputPerson" value="1" min="1" max="6" readonly>
+                </div> 
+            </div> 
+        </div>
+
+        <div class="submit-containt">
+         <input type="submit" class="btn search" value="Rechercher" id="timerbtn" onclick="startNewSearch()">
+        </div>
+
+    </form>
+</section>
+
+
+    <section id="gite">
+            <div class="gite-contain">
+
+    <div class="background-image"></div>
+
+
+               
+
+                <div class="description-and-picture">
+             <div class="title gite-title">
+                    <h2>le gîte</h2>
+                </div>
+                    <p class="gite-description">Bienvenue au Gîte du Rain du Pair, 
+                    un havre de paix situé dans un ancien corps de ferme récemment rénové, perché sur les hauteurs d'Orbey, en Alsace. 
+                    <br><br>
+                    Notre gîte offre une expérience exceptionnelle tout au long de l'année, que ce soit pour les plaisirs de l'hiver 
+                    à proximité de la station de ski du Lac Blanc, les aventures estivales le long de la Route des Crêtes 
+                    et des vignobles alsaciens, ou simplement pour une retraite paisible au cœur de la nature.</p>
+                    <figure class="giteFigure">
+                        <img class="picture01" src="img/gite-alsace-01.jpg" alt="Photos du séjour du gîte"/>
+                    </figure>
+                
+    
+                    
+                </div>
+
+
+            </div>
+
+        <div class="banner">
+            <div class="icons">
+                <div class="icon">
+                    <p class="banner-icon"><i class="fa-solid fa-bath"></i></p>
+                    <p class="banner-p">Bain nordique</p>
+                </div>
+                <div class="icon">
+                    <p class="banner-icon"><i class="fa-solid fa-bed"></i></p>
+                    <p class="banner-p">Linge de maison</p>
+                </div>
+            <div class="icon">
+                <p class="banner-icon"><i class="fa-solid fa-wifi"></i></p>
+                <p class="banner-p">Wifi gratuit</p>
+            </div>
+            <div class="icon">
+                <p class="banner-icon"><i class="fa-solid fa-square-parking"></i></p>
+                <p class="banner-p">Parking privé</p>
+            </div>
+            </div>
+        </div>
+
+
+
+        <div class="caracteristique-title">
+            <h2>Entre <br>nature et <br>tranquillité</h2>
+        </div>
+
+        <div class="caracteristique">
+            <div class="caracteristique-left">
+                <p class="caracteristique-p">Réparti sur deux étages, le logement offre un espace confortable pouvant accueillir jusqu'à 6 personnes. 
+                    Au rez-de chaussée, vous profiterez d’une cuisine entièrement équipée ouverte sur le séjour, ainsi qu’un wc séparé. 
+                    À l’étage, vous trouverez deux chambres élégamment aménagées, 
+                    chacune avec sa propre salle d'eau attenante pour plus d'intimité et un wc séparé.
+                    L'intérieur est chaleureux, accueillant et décoré avec soin pour vous offrir un séjour agréable et authentique.</p>
+
+                <div class="caracteristique-galery">
+                    <figure class="figure-picture03">
+                        <img src="img/gite-alsace-03.jpg" alt="Photo d'une chambre du gîte" class="picture03"/>
+                    </figure>
+                    <figure class="figure-picture05">
+                        <img src="img/gite-alsace-05.jpg" alt="Photo du nom du gîte sur un tableau" class="picture05"/>
+                    </figure>
+                    <figure class="figure-picture03">
+                        <img src="img/gite-alsace-04.jpg" alt="Photo de l'entrée du gîte" class="picture04"/>
+                    </figure>
+                </div>
+               
+               
+                <p class="caracteristique-p">La terrasse privative offre une vue imprenable sur les montagnes environnantes et le village en contre bas. 
+            Vous pourrez vous détendre dans notre bain finlandais extérieur chauffé au feu de bois, une expérience relaxante dans un petit coin de paradis en plein air.</p>
+            </div>
+            <div class="caracteristique-right">                
+               
+                    <figure class="figure-picture02">
+                    <img src="img/gite-alsace-06.jpg" alt="Photo d'une chambre du gîte" class="picture02"/>
+                </figure>
+
+            </div>
+
+        </div>
+ </section>
+
+
+         <div class="banner2">
+            <p class="banner2-p">Que vous veniez en couple,<br> en famille ou entre amis,<br>
+            "Le Rain du Pair" est l'endroit idéal<br> pour passer des moments inoubliables.</p>
+        </div>
+            
+   
+
+    <section id="galerie">
+        <div class="galerie-contain">
+            <div class="title">
+                <h2>Galerie</h2>
+            </div>
+
+            <div class="categories"> 
+
+            {% for categoryName, firstPicture in categoryFirstPictures %}
+                {# Générez une classe unique en ajoutant le compteur à la classe 'category' #}
+                {% set categoryClass = 'category-' ~ loop.index %}
+                    <div class="{{ categoryClass }}">
+                        <a class="hover-link" href="{{ path('show_category', {'id': firstPicture.getCategory().getId()}) }}">
+                            <figure class="categoryFigure">
+                                <img class="categoryImg" src="{{ firstPicture.getUrl() }}" alt="">
+                                <p class="voirPlus"><i class="fa-solid fa-magnifying-glass-plus"></i> Voir plus</p> 
+                            </figure>
+                            <figcaption class="titleGalerie">{{ categoryName }}</figcaption>
+                        </a>
+                    </div>
+            {% endfor %} 
+            </div>
+
+        </div>
+
+</section>
+
+    <section id="alentours">
+        <div class="alentours-containt">
+            <div class="title">
+                <h2>Aux alentours</h2>
+            </div> 
+    </section>
+
+    <section id="actualites">
+        <div class="actualites-containt">
+            <div class="title">
+                <h2>Actualités</h2>
+            </div> 
+
+            <div class="posts">
+                <div class="instagram_post" postID="C1sSsHzNAAF" width="width" height="500px" scrolling="no" style="overflow: hidden"></div>
+
+                <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px" ></div>
+
+                <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px"></div>
+    
+            </div>
+
+{# 
+             {% for media in instagramMedia %}
+                <li>
+                     <img src="{{ media.thumbnail_url }}" alt="Post"> 
+                    <img src="https://example.com/thumbnails/{{ media.id }}.jpg" alt="Post"> 
+
+                    <p>{{ media.caption }}</p>
+                    <a href="https://www.instagram.com/p/{{ media.id }}" target="_blank">Voir sur Instagram</a>
+
+                </li>
+            {% endfor %}  #}
+
+
+
+            {# {% for post in instagramPosts %}
+    <div>
+        <img src="{{ post.thumbnail_url }}" alt="Instagram Post">
+        <p>{{ post.caption }}</p>
+        <a href="{{ post.permalink }}" target="_blank">Voir sur Instagram</a>
+    </div>
+{% endfor %} #}
+
+
+        </div>
+    </section>
+
+
+    <section id="review">
+        <div class="title">
+            <h2>Avis</h2>
+        </div>
+
+    {# <div class="container"> #}
+        <div id="carousel">
+
+            {% for review in reviews %}
+            <div class="item">
+
+                <p class="reviewName">{{ review.reservation.lastName }} {{ review.reservation.firstName }}</p>
+                <p class="reviewDate">posté le {{ review.creationDate|date('d-m-Y') }}</p> 
+                
+                {# Utilisation de RateYo pour afficher les étoiles #}
+                    <div id="rating-{{ review.id }}"></div>
+                <script>
+                    $(document).ready(function () {
+                        $("#rating-{{ review.id }}").rateYo({
+                            rating: {{ review.rating }},
+                            readOnly: true, // Pour rendre les étoiles en lecture seule #}
+                                starWidth: "20px",
+                            precision: 0,
+                        });
+                    });
+                </script>
+                <p class="reviewComment">{{ review.comment }}</p>
+                <p class="reviewDate"> Réponse du propriétaire : </p>
+                <p class="reviewCommentAdmin">{{ review.response }}</p>
+            </div>     
+            {% endfor %}
+        </div> 
+
+        <div class="sectionCenter">
+            <button class="btn btnReviews"><a href="{{ path('app_all_reviews') }}">Voir tous les avis</a></button>
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block javascript %}
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+
+
+<script>
+
+// AFFICHAGE DU CALENDRIER DANS LA BARRE DE RECHERCHE
+
+    // Recherche des éléments HTML
+    const startInput = document.getElementById("start");
+    const endInput = document.getElementById("end");
+  
+    // Récupération les dates déjà réservées depuis l'attribut "data-reserved-dates" 
+    const reservedDatesDataStart = startInput.getAttribute("data-reserved-dates");
+    const reservedDatesDataEnd = endInput.getAttribute("data-reserved-dates");
+    // Analyse cette chaîne JSON en objet JS
+    const reservedDatesStart = JSON.parse(reservedDatesDataStart);
+    const reservedDatesEnd = JSON.parse(reservedDatesDataEnd);
+
+    // Configuration du calendrier pour le champs date d'arrivée
+    const startPicker = flatpickr(startInput, {
+    altInput: true,
+    altFormat: "j F Y",
+    dateFormat: "Y-m-d",
+    minDate: "today",
+    locale: {
+      firstDayOfWeek: 1,
+      weekdays: {
+        shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+        longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+      },
+      months: {
+        shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+        longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+      },
+    }, 
+    disable: reservedDatesStart.map(date => ({
+        from: date.arrivalDate,
+        // On enlève un jour à la date de départ afin qu'elle reste disponible pour une autre arrivée
+         to: date.departureDate
+      })),
+      plugins: [new rangePlugin({ input: endInput })], 
+  });
+
+    // Configuration du calendrier pour le champs date de départ
+    const endPicker = flatpickr(endInput, {
+    altInput: true,
+    altFormat: "j F Y",
+    dateFormat: "Y-m-d",
+    minDate: startInput.value,   
+     locale: {
+      firstDayOfWeek: 1,
+      weekdays: {
+        shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
+        longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+      },
+      months: {
+        shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
+        longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+      }
+    },
+   disable: [
+        {
+            from: startInput.value,
+            to: startInput.value
+        },
+        {
+          ...reservedDatesEnd.map(date => ({
+          from: date.arrivalDate,
+          to: date.departureDate
+          })),
+        }
+   ],
+       plugins: [new rangePlugin({ input: startInput })],
+
+  });
+
+
+  // Gestionnaire d'événements pour le champ de date d'arrivée
+    startInput.addEventListener("change", function() {
+    const arrivalDate = new Date(startInput.value);
+    const departureDate = new Date(endInput.value);
+
+    // Si la date d'arrivée est postérieure à la date de départ
+    if (arrivalDate > departureDate) {
+        // Message d'erreur 
+        Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "La date d'arrivée ne peut pas être postérieure à la date de départ.",
+        });
+
+        // Réinitialisation des dates
+        endInput.value = "";
+        startInput.value = "";
+    }
+    });
+
+    // Gestionnaire d'événements pour le champ de date de départ
+    endInput.addEventListener("change", function() {
+    const arrivalDate = new Date(startInput.value);
+    const departureDate = new Date(endInput.value);
+
+    // Si la date de départ est antérieure à la date d'arrivée
+    if (departureDate < arrivalDate) {
+        // Message d'erreur
+        Swal.fire({
+        icon: "error",
+        title: "Erreur",
+        text: "La date de départ ne peut pas être antérieure à la date d'arrivée.",
+        });
+        // Réinitialisation des dates
+        startInput.value = "";
+        endInput.value = "";
+    }
+    });
+
+</script>
+
+
+
+
+{% endblock %}
+
+
+{% endblock %}
+
+
+

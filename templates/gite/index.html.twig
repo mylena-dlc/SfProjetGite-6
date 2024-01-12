@@ -1,0 +1,95 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+
+        <div class="title gite-title center">
+            <h1>Listes des gîtes</h1>
+        </div>
+
+
+    <table class="tableGite">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Code postal</th>
+                <th>Ville</th>
+                <th>Capacité</th>
+                <th>Description</th>
+                <th>Prix de la nuitée</th>
+                <th>Forfait ménage</th>
+                <th>Modifier / Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for gite in gites %}
+            <tr>
+                <td>{{ gite.name }}</td>
+                <td>{{ gite.address }}</td>
+                <td>{{ gite.cp}}</td>
+                <td>{{ gite.city}}</td>
+                <td>{{ gite.capacity }} personnes</td>
+                <td class="tdDescription">{{ gite.description }}</td>
+                <td>{{ gite.price }} €</td>
+                <td>{{ gite.cleaningCharge }} €</td>
+                <td>      
+                    <a href="{{ path ('edit_gite', {'id': gite.id}) }}" class="btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="{{ path ('delete_gite', {'id': gite.id}) }}" class="btn delete"><i class="fa-solid fa-trash-can"></i></a>
+                </td>
+            </tr>   
+
+               {% endfor %}
+        </tbody>
+    </table>        
+
+
+            
+    <div class="action">
+    
+        
+        {# <button class="btn add"><a href="" class="link-add">Ajouter une période rouge</a></button> #}
+                {# <button class="btn add"><a href="{{ path ('new_period')}}" class="link-add">Ajouter une période rouge</a></button> #}
+
+
+
+<button class="btn add"><a href="{{ path ('new_gite')}}" class="link-add">Ajouter un gite</a></button>
+<button class="btn add"><a href="{{ path('new_gite') }}" class="link-add">Ajouter un gîte</a></button>
+<button class="btn add"><a href="{{ path('new_category') }}" class="link-add">Ajouter une catégorie de photos</a></button>
+
+        <div class="registerForm giteForm">
+
+         {# {{ form_start(form) }} #}
+
+         {# <div class="row-center"> #}
+            {# {{ form_row(form.startDate) }}  #}
+
+
+            {# {{ form_row(form.address) }} 
+         </div>
+
+            <div class="row-add">
+               {{ form_row(form.cp) }} 
+               {{ form_row(form.city) }} 
+         </div> #}
+
+            </div>
+
+        {# {{ form_end(form) }} #}
+
+
+
+    
+
+
+
+ 
+
+
+  
+
+
+
+{% endblock %}

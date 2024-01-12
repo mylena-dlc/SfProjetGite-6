@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello DashboardController!{% endblock %}
+
+{% block body %}
+
+    <div class="title gite-title center">
+         <h1>Tableau de bord</h1>
+    </div>
+
+<div class="slidebar">
+    <ul>
+        <li><a href="" class="linkAdmin">Les réservations</a></li>
+        <li><a href="{{ path('app_period') }}" class="linkAdmin">Les périodes</a></li>
+        <li><a href="{{ path('app_gite') }}" class="linkAdmin">Le gîte</a></li>
+        <li><a href="{{ path('app_category') }}" class="linkAdmin">Les photos</a></li>
+    </ul>
+</div>
+
+<div class="containt">
+
+<table class="tableGite">
+        <thead>
+            <tr>
+                <th>Date de réservation</th>
+                <th>Date d'arrivée</th>
+                <th>Date de départ</th>
+                <th>Nombre d'adulte(s)</th>
+                <th>Nombre d'enfant(s)</th>
+                <th>Prix total</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>Adresse</th>
+                <th>CP</th>
+                <th>Ville</th>
+                <th>Pays</th>
+                <th>Numéro de téléphone</th>
+                <th>Adresse mail</th>
+                <th>Vue par le gérant</th>
+            </tr>
+        </thead>
+        <tbody>
+             {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
+                <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
+                    {# <a href="{{ path ('edit_gite', {'id': gite.id}) }}" class="btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                    <a href="{{ path ('delete_gite', {'id': gite.id}) }}" class="btn delete"><i class="fa-solid fa-trash-can"></i></a> #}
+                </td>
+            </tr>   
+               {% endfor %}
+        </tbody>
+    </table>        
+
+</div>
+
+{% endblock %}

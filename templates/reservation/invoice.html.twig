@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facture de Réservation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .invoiceLogo {
+            width: 100px; 
+        }
+
+        .giteInfo {
+            background-color: #fcf7f1;
+            width: 40%;
+            padding: 20px;
+            border-radius: 30px;
+        }
+
+        .customerInfo {
+            max-width: 400px;
+            width: 40%;
+            float: right; 
+        }
+
+        .title {
+            margin: 100px 30px;
+            color:#504f4b;
+        }
+
+        .reservation-details {
+            width: 90%;
+            margin: auto;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .reservation-details th, .reservation-details td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .total {
+            text-align: right;
+            font-weight: bold;
+        }
+        .textEnd {
+            text-align: center;
+            color: rgb(181, 136, 105);
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <figure>
+        <img src="{{ logo }}" alt="logo" class="invoiceLogo"> 
+    </figure>
+
+    <div class="giteInfo">
+        <p>{{ gite.name }}</p>
+        <p>{{ gite.address }}</p>
+        <p>{{ gite.cp }} {{ gite.city }}</p>
+        <p>contact@leraindupair.fr</p>
+    </div>
+    <div class="customerInfo">
+        <p> {{ reservation.lastName }} {{ reservation.firstName }}</p>
+        <p>Adresse: {{ reservation.address }} {{ reservation.cp }} {{ reservation.country }}</p>
+        <p>Téléphone: {{ reservation.phone }}</p>
+        <p>Email: {{ reservation.user.email }}</p>
+        
+    </div>
+</div>
+
+<div class="title">
+    <h1>FACTURE</h1>
+    <p>{{ reservation.reference }}</p>
+    <p>Réservation effectuée le {{ reservation.reservationDate|date('d-m-Y')  }} </p>
+</div>
+
+<table class="reservation-details">
+    <thead>
+        <tr>
+            <th>Description</th>
+            <th>Montant HT</th>
+            <th>Montant TTC</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="2">Séjour de {{ numberNight }} nuit(s) pour {{ reservation.numberAdult }} adulte(s) et {{ reservation.numberKid }} enfant(s)<br>
+                Du {{ reservation.arrivalDate|date('d-m-Y') }} au {{ reservation.departureDate|date('d-m-Y') }} </td>
+            <td> {{ priceHt }} €</td>
+        </tr>
+        <tr>
+            <td colspan="2">Frais de ménage</td>
+            <td>{{ gite.cleaningCharge }} €</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr class="total">
+            <td colspan="2">Montant total</td>
+            <td>{{ reservation.totalPrice }} €</td>
+        </tr>
+    </tfoot>
+</table>
+
+    <p class="textEnd">Nous vous remercions de votre confiance.</p>
+</body>
+</html>

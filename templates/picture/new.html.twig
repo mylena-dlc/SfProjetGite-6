@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une photo{% endblock %}
+
+{% block body %}
+
+    <div class="title gite-title center">
+            <h1>Ajouter une image</h1>
+        </div>
+        
+{% for type, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+        <div class="alert alert-{{ type }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+   
+<div class="registerForm ">
+
+    {{ form_start(form) }}
+
+    {{ form_row(form.picture) }}
+    {{ form_row(form.description) }}
+    <div class="formPictureCategory">
+        {{ form_row(form.category) }}
+    </div>
+    <div class="pictureFormSubmit">
+        {{ form_row(form.valider) }}
+    </div>
+    
+    {{ form_end(form) }}
+</div>
+
+
+{% endblock %}
