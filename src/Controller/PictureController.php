@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Picture;
+use App\Entity\Category;
+use App\Form\CategoryType;
 use App\Form\PictureType;
 use App\Repository\GiteRepository;
 use App\Repository\PictureRepository;
@@ -57,6 +59,98 @@ class PictureController extends AbstractController
         ]);
     }
 
+
+    /**
+    * Fonction pour voir toutes les catégories d'images
+    */
+
+    #[Route('/category', name: 'app_category')]
+    public function showCategories(): Response
+    {
+        $categories = $this->categoryRepository->findBy([], ['name' => 'ASC']);
+
+        $description = 'Explorez notre gîte de charme en Alsace à travers des catégories d\'images uniques. Découvrez chaque détail de l\'hébergement et de son environnement enchanteur.';
+        
+        return $this->render('category/index.html.twig', [
+            'categories' => $categories,
+            'desciption' => $description
+        ]);
+    }
+
+
+
+    /**
+    * Fonction pour ajouter ou éditer une catégorie
+    */
+
+    #[Route('/category/new', name: 'new_category')]
+    #[Route('/category/{id}/edit', name: 'edit_category')]
+
+    public function new_edit(Category $category = null, Request $request): Response {
+    
+        if(!$category) {
+            $category = new Category();
+        }
+    
+        $form = $this->createForm(CategoryType::class, $category);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $category = $form->getData(); 
+            // prepare en PDO
+            $this->em->persist($category);
+            // execute PDO
+            $this->em->flush();
+
+            return $this->redirectToRoute('app_category');
+        }
+
+        return $this->render('category/new.html.twig', [
+            'formAddCategory' => $form,
+            'edit' => $category->getId(),
+        ]);
+    }   
+
+
+
+    /**
+    * Fonction pour supprimer une category
+    */
+   
+    #[Route('/category/{id}/delete', name: 'delete_category')]
+    public function delete(Category $category) {
+
+        // pour préparé l'objet $category à supprimer (enlever cet objet de la collection)
+        $this->em->remove($category);
+        // flush va faire la requête SQL et concretement supprimer l'objet de la BDD
+        $this->em->flush();
+
+        return $this->redirectToRoute('app_category');
+    }
+
+
+
+    /**
+    * Fonction pour voir les photos d'une catégorie
+    */
+
+    #[Route('home/category/{id}', name: 'show_category')]
+    public function show(Category $category, $id): Response {
+
+        $pictures = $this->pictureRepository ->findBy(['category' => $id]);
+        
+        $description = 'Explorez notre gîte de charme à Orbey à travers notre galerie photos. Découvrez chaque catégorie et préparez-vous à vivre une expérience exceptionnelle en Alsace.';
+
+        return $this->render('/category/show.html.twig', [
+            'category' => $category,
+            'pictures' => $pictures,
+            'description' => $description
+        ]);
+    }
+
+    
     /**
     * Fonction pour ajouter une photo
     */
@@ -69,9 +163,6 @@ class PictureController extends AbstractController
         
         // on crée un formulaire en utilisant la classe pictureType et associe la picture à ce formulaire
         $form = $this->createForm(PictureType::class, $picture);
-
-        // on cherche l'id de la catégorie
-        // $category = $this->categoryRepository->find($category_id);
 
         // on recupère l'id du gite
         $gite = $this->giteRepository->find(4);

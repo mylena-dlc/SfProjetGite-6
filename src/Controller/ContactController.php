@@ -13,6 +13,7 @@ use Symfony\Component\Mime\Email;
 
 class ContactController extends AbstractController
 {
+
     /**
     * Fonction pour afficher la page contact
     */
@@ -20,8 +21,12 @@ class ContactController extends AbstractController
     #[Route('/contact', name: 'app_contact')]
     public function pageContact(): Response
     {
+        $description = 'Contactez-nous pour toute question sur notre gîte de charme en Alsace. Nous sommes à votre disposition pour rendre votre séjour inoubliable. Réservez dès maintenant !';
+        
         // Affichez la vue contact
-        return $this->render('contact/index.html.twig');
+        return $this->render('contact/index.html.twig', [
+            'description' => $description
+        ]);
     }
 
 

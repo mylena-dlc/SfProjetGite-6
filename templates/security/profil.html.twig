@@ -29,8 +29,12 @@
          <h1>Mon compte</h1>
     </div>
 
+ <div class="containt">
 
-    <div class="containt">
+    {% if app.user and app.user.isVerified == true  %}
+
+
+   
         <div class="profilContaint">
             <p class="profilEmail">Email</p> <p class="profilEmailAddress">{{ user.email }}</p> 
         
@@ -47,60 +51,65 @@
         <div class="resaContaint">
                   
                
-                  
- {% if upcomingReservations is not empty %}
-<table class="tableGite">
-        <thead>
-            <tr>
-                <th>
-                   
-                </th>
-                <th>Référence de la réservation</th>  
-                <th>Date de réservation</th> 
-                <th>Date d'arrivée</th>
-                <th>Date de départ</th>
-                <th>Nombre d'adulte(s)</th>
-                <th>Nombre d'enfant(s)</th>
-                <th>Prix total</th>
-                <th>Détails</th>
-            </tr>
-        </thead>
-        <tbody>
-             {% for upcomingReservation in upcomingReservations %}
-            <tr>
-                <td>
-                    {# Si l'utilisateur connecté peut écrire un avis, alors on affiche le bouton #}
-                    {% if app.user.canWriteReview(upcomingReservation) and upcomingReservation.departureDate|date('U') < 'now'|date('U') %}
-                        <button class="btn btnReview"><a href="{{ path('app_write_review', {'reservation_id': upcomingReservation.id}) }}">Écrire un avis</a></button>
-                    {% endif %}
-                </td>
+                    
+    {% if upcomingReservations is not empty %}
+    <table class="tableGite">
+            <thead>
+                <tr>
+                    <th>
+                    
+                    </th>
+                    <th>Référence de la réservation</th>  
+                    <th>Date de réservation</th> 
+                    <th>Date d'arrivée</th>
+                    <th>Date de départ</th>
+                    <th>Nombre d'adulte(s)</th>
+                    <th>Nombre d'enfant(s)</th>
+                    <th>Prix total</th>
+                    <th>Détails</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for upcomingReservation in upcomingReservations %}
+                <tr>
+                    <td>
+                        {# Si l'utilisateur connecté peut écrire un avis, alors on affiche le bouton #}
+                        {% if app.user.canWriteReview(upcomingReservation) and upcomingReservation.departureDate|date('U') < 'now'|date('U') %}
+                            <button class="btn btnReview"><a href="{{ path('app_write_review', {'reservation_id': upcomingReservation.id}) }}">Écrire un avis</a></button>
+                        {% endif %}
+                    </td>
 
-                <td>{{ upcomingReservation.reference }}</td>
-                <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
-                <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>
-                <td>{{ upcomingReservation.departureDate|date('d-m-Y') }}</td>
-                <td>{{ upcomingReservation.numberAdult }}</td>
-                <td>{{ upcomingReservation.numberKid }}</td>
-                <td>{{ upcomingReservation.totalPrice }} €</td>
-                <td><a href="{{ path('show_reservation', {'id': upcomingReservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
-            </tr>   
-               {% endfor %}
-        </tbody>
-    </table>        
+                    <td>{{ upcomingReservation.reference }}</td>
+                    <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
+                    <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>
+                    <td>{{ upcomingReservation.departureDate|date('d-m-Y') }}</td>
+                    <td>{{ upcomingReservation.numberAdult }}</td>
+                    <td>{{ upcomingReservation.numberKid }}</td>
+                    <td>{{ upcomingReservation.totalPrice }} €</td>
+                    <td><a href="{{ path('show_reservation', {'id': upcomingReservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
+                </tr>   
+                {% endfor %}
+            </tbody>
+        </table>        
 
-    <div class="center">      
-        <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id' : user.id}) }}">Mes anciens séjours</a></button>
-    </div>
-
-
-            {% else %}
-                <p class="profilResa">Vous n'avez aucune réservation.</p>
-            {% endif %}
+        <div class="center">      
+            <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id' : user.id}) }}">Mes anciens séjours</a></button>
+        </div>
+                {% else %}
+                    <p class="profilResa">Vous n'avez aucune réservation.</p>
+                {% endif %}
+            </div>
         </div>
 
-    </div>
+
+{% else %}
+<div class="section-profil">
+    <p class="profilResa"><i class="fa-solid fa-triangle-exclamation"></i> Votre compte n'est pas activé,<br> renvoyer le lien d'activation sur votre boîte mail <a href="{{ path('resend_verif') }}">ici </a></p>
+</div>
+{% endif %}
 
     </div>
+
 
         <script>
         function confirmDeleteAccount() {
@@ -118,4 +127,5 @@
             });
         }
     </script>
+
 {% endblock %}

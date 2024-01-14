@@ -83,7 +83,7 @@ class HomeController extends AbstractController
          // Affichage de la moyenne des notes
          $averageRating = $this->reviewRepository->averageRating();
 
-         $description = 'Bienvenue sur la page d\'accueil du gîte du Rain du Pair situé à Orbey en Alsace.';
+         $description = 'Réservez votre location de vacances en Alsace, dans notre gîte de charme à Orbey. Hébergement rénové avec bain nordique pour un séjour inoubliable au cœur de la nature.';
 
         return $this->render('home/index.html.twig', [
             'reservedDates' => $data,
@@ -125,10 +125,12 @@ class HomeController extends AbstractController
             'route' => 'app_all_reviews', 
         ];
 
+        $description = 'Découvrez les avis authentiques des voyageurs qui ont séjourné dans notre gîte de charme en Alsace. Un hébergement de qualité pour vos futures vacances à Orbey.';
+
         return $this->render('home/reviews.html.twig', [
             'reviews' => $reviews,
             'pagination' => $pagination,
-
+            'description' => $description
         ]);
     }
 

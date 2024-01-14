@@ -15,7 +15,25 @@
         </div>
     {% endif %}
 
+    {% for flash_message in app.flashes('error') %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
 
+{% for flash_message in app.flashes('success') %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
 
         <div class="title gite-title center">
             <h1>Connection</h1>
@@ -34,6 +52,8 @@
 
 <div class="btn-register">
         <button type="submit" class="btn register">Valider</button>
+    <p class="p-link"><a class="link" href="{{ path('app_reset_password')}}">Mot de passe oublié ?</a> </p>
+
     <p class="p-link">Pas encore de compte? Inscrivez-vous <a class="link" href="{{ path('app_register')}}">ici</a> </p>
 </div>
 

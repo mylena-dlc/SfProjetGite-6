@@ -1,6 +1,6 @@
 {% extends 'baseaccueil.html.twig' %}
 
-{% block title %}Page d'accueil{% endblock %}
+{% block title %}Location de Gîte à Orbey, Alsace | Gîte du Rain du Pair{% endblock %}
 
 {% block meta_description %} {{ description }} {% endblock %}
 
@@ -31,15 +31,40 @@
         <section id="first-section">
 
             <h1><strong>Logement de charme</strong></h1>
-            <h2>au coeur des Vosges Alsacienne</h2>
+            <h2>au coeur des Vosges Alsacienne </h2>
 
-            <p class="first-section-person">Jusqu'à 6 personnes</p>
+            <p><span class="first-section-person"> Jusqu'à 6 personnes </span><p>
+
+
 
         </section>
 
-<section id="search">        
 
-<h2 class="title-search">Réserver</h2>
+
+<section id="search">     
+
+{# <div class="averageRating">
+    <div>Avis des voyageurs {{ averageRating | round }}</div>
+</div> #}
+
+<div class="averageRating">
+    <div>Avis des voyageurs {{ averageRating | round }}</div>
+    <div id="rating-average"></div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#rating-average").rateYo({
+            rating: {{ averageRating | round }},
+            readOnly: true,
+            starWidth: "20px",
+            precision: 0,
+        });
+    });
+</script>
+
+
+{# <h2 class="title-search">Réserver</h2> #}
 
     <form id="reservationForm" action="{{ path('app_reservation') }}" method="post" onsubmit="return validateForm()">
         <div class="start-containt">
@@ -78,9 +103,8 @@
         </div>
 
         <div class="submit-containt">
-         <input type="submit" class="btn search" value="Rechercher" id="timerbtn" onclick="startNewSearch()">
+            <input type="submit" class="btn search" value="Rechercher" id="timerbtn" onclick="startNewSearch()">
         </div>
-
     </form>
 </section>
 
@@ -118,7 +142,7 @@
             <div class="icons">
                 <div class="icon">
                     <p class="banner-icon"><i class="fa-solid fa-bath"></i></p>
-                    <p class="banner-p"><strong>Bain nordique</strong></p>
+                    <p class="banner-p"><strong class="banner-strong">Bain nordique</strong></p>
                 </div>
                 <div class="icon">
                     <p class="banner-icon"><i class="fa-solid fa-bed"></i></p>
@@ -178,12 +202,10 @@
  </section>
 
 
-         <div class="banner2">
-            <p class="banner2-p">
-            Découvrez l'Alsace avec notre <strong>location de vacances</strong>. <br>
-            Réservez votre <strong>hébergement à Orbey </strong> dès aujourd'hui <br>
-            et profitez d'un séjour inoubliable<br> dans notre <strong>gîte de charme.</strong>
-            </p>
+        <div class="banner2">
+            <p class="banner2-p"> Découvrez l'Alsace avec notre <strong>location de vacances</strong>. <br>
+                                Réservez votre <strong>hébergement à Orbey</strong> dès aujourd'hui <br>
+                                et profitez d'un séjour inoubliable<br> dans notre <strong>gîte de charme</strong>. </p>
         </div>
             
    
@@ -229,7 +251,7 @@
             </div> 
 
             <div class="posts">
-                <div class="instagram_post" postID="C1sSsHzNAAF" width="width" height="500px" scrolling="no" style="overflow: hidden"></div>
+                <div class="instagram_post" postID="C1-Bg99MpvF" width="width" height="500px" scrolling="no" style="overflow: hidden"></div>
 
                 <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px" ></div>
 
@@ -262,11 +284,12 @@
                         $("#rating-{{ review.id }}").rateYo({
                             rating: {{ review.rating }},
                             readOnly: true, // Pour rendre les étoiles en lecture seule #}
-                                starWidth: "20px",
+                            starWidth: "20px",
                             precision: 0,
                         });
                     });
                 </script>
+
                 <p class="reviewComment">{{ review.comment }}</p>
                 <p class="reviewDate"> Réponse du propriétaire : </p>
                 <p class="reviewCommentAdmin">{{ review.response }}</p>
@@ -335,7 +358,6 @@
     }, 
     disable: reservedDatesStart.map(date => ({
         from: date.arrivalDate,
-        // On enlève un jour à la date de départ afin qu'elle reste disponible pour une autre arrivée
          to: date.departureDate
       })),
       plugins: [new rangePlugin({ input: endInput })], 

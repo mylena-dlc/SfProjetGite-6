@@ -146,6 +146,8 @@ class ReservationController extends AbstractController
             ]);
         }
 
+        $description = 'Planifiez votre séjour dans notre gîte de charme à Orbey en Alsace. Consultez les disponibilités, tarifs, et réservez vos dates en quelques clics. Profitez d\'une escapade inoubliable !';
+        
         return $this->render('reservation/index.html.twig', [
             'startDate' => $startDate,
             'endDate' => $endDate,
@@ -155,7 +157,8 @@ class ReservationController extends AbstractController
             'nightPrice' => $nightPrice,
             'cleaningCharge' => $cleaningCharge,
             'supplement' => $supplement,
-            'totalPrice' => $totalPrice
+            'totalPrice' => $totalPrice,
+            'description' => $description
         ]);
     }
 
@@ -178,10 +181,6 @@ class ReservationController extends AbstractController
     // Récupérez les données stockées en session
     $session = $request->getSession();
 
-    
-    // Si l'utilisateur n'est pas majeur, ill ne peut pas réserver 
-
-    
     $arrivalDate = $session->get('reservation_details')['startDate'];
     $departureDate = $session->get('reservation_details')['endDate'];
     $numberAdult = $session->get('reservation_details')['numberAdult'];
@@ -252,6 +251,8 @@ class ReservationController extends AbstractController
                 }
             }
         }
+
+        $description = 'Validez votre réservation pour notre gîte à Orbey. Vérifiez les détails, les tarifs, et complétez vos coordonnées en toute sécurité. Séjournez dans notre charmant hébergement en Alsace.';
         
         // Affichez le formulaire dans la vue Twig
         return $this->render('reservation/new.html.twig', [
@@ -263,6 +264,7 @@ class ReservationController extends AbstractController
             'numberNight' => $numberNight,
             'nightPrice' => $nightPrice,
             'totalPrice' => $totalPrice,
+            'description' => $description
         ]);
     }   
 
@@ -322,6 +324,7 @@ class ReservationController extends AbstractController
 }
 
 
+
     /**
     * Fonction pour afficher la vue de confirmation d'une réservation
     */
@@ -351,9 +354,12 @@ class ReservationController extends AbstractController
         $data = [
             'message' => 'La réservation a été enregistrée avec succès.',
         ];
+
+        $description = 'Votre réservation dans notre gîte de charme à Orbey en Alsace est confirmée. Préparez-vous à vivre une expérience exceptionnelle dans notre maison de vacances!';
     
         return $this->render('reservation/confirm.html.twig', [
-            'data' => $data
+            'data' => $data,
+            'description' => $description
         ]);
 }
 
@@ -390,9 +396,12 @@ class ReservationController extends AbstractController
     // Récupérez la réservation depuis la base de données
     $reservation = $this->reservationRepository->find($id);
 
+    $description = 'Détails de votre séjour passé dans notre gîte à Orbey. Retrouvez les dates, tarifs, et toutes les informations liées à votre réservation. Revivez vos moments de vacances en Alsace.';
+
     // Passez les données de la réservation à la vue
     return $this->render('reservation/show.html.twig', [
         'reservation' => $reservation,
+        'description' => $description
     ]);
 }
 

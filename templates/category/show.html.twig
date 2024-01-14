@@ -1,60 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PictureController!{% endblock %}
+{% block title %}Galerie photos{% endblock %}
+
+{% block meta_description %} {{ description }} {% endblock %}
+
 
 {% block body %}
+
+{% for flash_message in app.flashes('error') %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+{% for flash_message in app.flashes('success') %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "{{ flash_message }}",
+        });
+    </script>
+{% endfor %}
+
     <div class="title gite-title center">
           <h1> {{ category }} </h1>
     </div>
 
 
-
-    {# div des messages flash #}
-    <div class="alert">
-        {% for flashMessage in app.flashes('success') %}
-        <p class="alert-success">{{ flashMessage }}</p>
-        {% endfor %}
-        {% for flashMessage in app.flashes('error') %}
-        <p class="alert-danger">{{ flashMessage }}</p>
-        {% endfor %}
-    </div>
-
-
-
-    <div id="imageModal" class="modal">
-        <span id="closeModal" class="close">&times;</span>
-        <img id="modalImage" class="modal-content">
-    </div>
-
     <div class="gallery">
         {% for picture in pictures %}
             <div class="gallery-item">
-                <img src="{{ asset(picture.url) }}" alt="{{ picture.description }}">
+                <img src="{{ asset(picture.url) }}" alt="{{ picture.description }}" class="modal-trigger">
             </div>
         {% endfor %}
     </div>
 
-
-
-
-{#     
-
-<div class="gallery">
-
-    {% for picture in pictures %}
-            <div class="gallery-item">
-
-            <img src="{{ asset(picture.url )}}" alt=" {{ picture.description }}"><br>
-                
-            {% if is_granted('ROLE_ADMIN') %}
-                <p><a href="{{ path ('edit_picture', {'id': picture.id, 'category_id': category.id}) }}" class="btn edit"><i class="fa-regular fa-pen-to-square"></i></a></p>
-                {# <p><a href="{{ path ('delete_picture', {'id': picture.id}) }}" class="btn delete">Supprimer une photo</a></p> 
-            {% endif %}
-      </div>
-    
-
- 
- {% endfor %}#}
 
 </div>
     {% if is_granted('ROLE_ADMIN') %}
@@ -64,4 +48,5 @@
 
         
     {% endif %}
+
 {% endblock %}

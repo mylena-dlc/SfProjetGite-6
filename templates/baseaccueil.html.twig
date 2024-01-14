@@ -2,11 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>
-            {% block title %}
-                Bienvenue 
-            {% endblock %}
-        </title>
+        <title> {% block title %}{% endblock %} </title>
         <meta name="description" content="{% block meta_description %}{% endblock %}">
 
     
@@ -108,6 +104,8 @@
                 <video class="videoHome" src="{{ asset('img/video-header.mp4') }}" type="video/mp4" autoplay muted loop></video>
             </div>
             <nav class="navbar">
+
+
                 {# boutton menu burger #}
                 {# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
@@ -116,7 +114,7 @@
                     <ul class="nav-items"> <li class="nav-item-logo">
                         <figure>
                             <a class="link-home" href="{{ path('app_home') }}">
-                                <img src="{{ asset( 'img/logook.png' ) }}" alt="logo" class="navLogo">
+                                <img src="{{ asset( 'img/logook2.png' ) }}" alt="logo" class="navLogo">
                             </a>
                         </figure>
                     </li>
@@ -210,22 +208,11 @@
                 <div class="footer-background"></div>
                 <div class="footerTop">
                     <figure>
-                        <img src="{{ asset( 'img/logook2.png' ) }}" alt="logo" class="footerLogo"/>
+                        <img src="{{ asset( 'img/logo-blanc.png' ) }}" alt="logo" class="footerLogo"/>
                     </figure>
                     <div class="address">            
-                    
-                    {# Carte Leaflet #}
-                    <div id="map"></div>
-
-                        {# <p class="footerP">
-                            Gîte du Rain du Pair 
-                        </p>
-                        <p class="footerP">
-                            224 Rain du Pair 
-                        </p>
-                        <p class="footerP">
-                            68370 Orbey
-                        </p> #}
+                        {# Carte Leaflet #}
+                        <div id="map"></div>
                     </div>
                     <div class="contact">
                         <p class="footerP">

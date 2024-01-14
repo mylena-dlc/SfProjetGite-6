@@ -42,6 +42,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'User', targetEntity: Review::class)]
     private Collection $reviews;
 
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $resetToken = null;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
@@ -118,7 +121,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function isVerified(): bool
+    public function getIsVerified(): bool
     {
         return $this->isVerified;
     }
@@ -202,6 +205,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             }
         }
         return true;
+    }
+
+    public function getResetToken(): ?string
+    {
+        return $this->resetToken;
+    }
+
+    public function setResetToken(?string $resetToken): static
+    {
+        $this->resetToken = $resetToken;
+
+        return $this;
     }
    
     

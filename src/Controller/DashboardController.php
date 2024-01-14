@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Period;
 use App\Entity\Review;
 use App\Form\UserType;
+use App\Form\PeriodType;
 use App\Form\ReviewType;
 use App\Form\ReservationViewType;
 use App\Repository\GiteRepository;
@@ -59,6 +61,8 @@ class DashboardController extends AbstractController
         $this->pictureRepository = $pictureRepository;
         $this->reservationRepository = $reservationRepository;
         $this->reviewRepository = $reviewRepository;
+        $this->periodRepository = $periodRepository;
+
     }
 
     #[Route('admin/dashboard', name: 'app_dashboard')]
@@ -67,7 +71,6 @@ class DashboardController extends AbstractController
     {
         // Recherche des 5 réservations les plus récentes pour l'index du dashboard
         $reservations = $this->reservationRepository->findBy([], ['reservationDate' => 'ASC'], 5);
-
 
         // Créez un formulaire pour le bouton "Enregistrer" unique
         $form = $this->createFormBuilder()
@@ -87,7 +90,6 @@ class DashboardController extends AbstractController
         
             $this->addFlash('success', 'Les états "vue" des réservations ont été modifiés avec succès.');
 
-
             $viewForms[$reservation->getId()] = $form->createView();
         }
 
@@ -97,6 +99,124 @@ class DashboardController extends AbstractController
 
         ]);
     }
+
+    /**
+    * Fonction pour afficher les infos du gîte
+    */
+
+    #[Route('/gite', name: 'app_gite')]
+    public function showGite(): Response
+    {
+        $gites = $this->giteRepository->findAll();
+        return $this->render('gite/index.html.twig', [
+            'gites' => $gites,
+        ]);
+    }
+
+
+    /**
+    * Fonction pour ajouter ou éditer un gîte
+    */
+
+    #[Route('/gite/new', name: 'new_gite')]
+    #[Route('/gite/{id}/edit', name: 'edit_gite')]
+
+    public function newEditGite(Gite $gite = null, Request $request): Response {
+    
+        if(!$gite) {
+            $gite = new Gite();
+        }
+    
+        $form = $this->createForm(GiteType::class, $gite);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $gite = $form->getData(); 
+            // prepare en PDO
+            $this->em->persist($gite);
+            // execute PDO
+            $this->em->flush();
+
+            return $this->redirectToRoute('app_gite');
+        }
+
+        return $this->render('gite/new.html.twig', [
+            'form' => $form,
+            'edit' => $gite->getId(),
+        ]);
+    }  
+
+    
+    /**
+    * Fonction pour supprimer un gîte
+    */
+
+    #[Route('/gite/{id}/delete', name: 'delete_gite')]
+    public function deleteGite(Gite $gite) {
+
+        // pour préparé l'objet $gite à supprimer (enlever cet objet de la collection)
+        $this->em->remove($gite);
+        // flush va faire la requête SQL et concretement supprimer l'objet de la BDD
+        $this->em->flush();
+
+        $this->addFlash('success', "Gîte supprimé avec succès !");
+
+        return $this->redirectToRoute('app_gite');
+    }
+
+
+
+    // /**
+    // * Fonction pour afficher, ajouter ou éditer une période
+    // */
+
+    #[Route('/period', name: 'app_period')]
+
+    public function newPeriod(Request $request): Response {
+
+        $periods = $this->periodRepository->findAll([], ['startDate' => 'ASC']);
+
+        $newPeriod = new Period();
+        
+        // on recupère l'id du gite
+        $gite = $this->giteRepository->find(4);
+
+        // Associez le gîte à la période
+        $newPeriod->setGite($gite);
+
+        $form = $this->createForm(PeriodType::class, $newPeriod);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $newPeriod = $form->getData(); 
+  
+            $startDate = $newPeriod->getStartDate();
+            $endDate = $newPeriod->getEndDate();
+
+            // Vérification des dates en BDD
+            $overlappingPeriods = $this->periodRepository->findOverlappingPerriods($startDate, $endDate, $newPeriod->getId());
+
+            if (!empty($overlappingPeriods)) {
+                $this->addFlash('error', 'Les dates de début et de fin chevauchent une période existante.');
+            } else {
+            // Si le formulaire est valide et qu'il n'y a pas de chevauchement, enregistrez la nouvelle période
+            $this->em->persist($newPeriod);
+            $this->em->flush();
+
+            $this->addFlash('success', 'La période a été ajoutée avec succès.');
+            return $this->redirectToRoute('app_period');
+        }
+    }
+
+        return $this->render('period/index.html.twig', [
+            'form' => $form,
+            'periods' => $periods
+        ]);
+    }  
 
 
 
@@ -131,6 +251,7 @@ class DashboardController extends AbstractController
     }
 
 
+
     /**
     * Fonction pour ajouter un avis
     */
@@ -138,36 +259,36 @@ class DashboardController extends AbstractController
     #[Route('security/whriteReview{reservation_id}', name: 'app_write_review')]
     public function writeReview(Request $request, $reservation_id): Response
     {
-            $review = new Review();
+        $review = new Review();
 
-            $form = $this->createForm(ReviewType::class, $review);
-            $form->handleRequest($request);
+        $form = $this->createForm(ReviewType::class, $review);
+        $form->handleRequest($request);
 
-            // On récupère l'id de l'utilisateur connecté
-            $user = $this->getUser();
-            $review->setUser($user);
+        // On récupère l'id de l'utilisateur connecté
+        $user = $this->getUser();
+        $review->setUser($user);
 
-            // On récupère l'id de la réservation concernée
-            $reservation = $this->reservationRepository->find($reservation_id);
-            $review->setReservation($reservation);
+        // On récupère l'id de la réservation concernée
+        $reservation = $this->reservationRepository->find($reservation_id);
+        $review->setReservation($reservation);
 
-            if ($form->isSubmitted() && $form->isValid()) {
-            
-                $review = $form->getData();
-                $this->em->persist($review);
-                $this->em->flush();
-                $this->addFlash('success', "Avis ajouté avec succès. Merci d\'avoir partagé votre expérience avec nous.", false);
+        if ($form->isSubmitted() && $form->isValid()) {
+        
+            $review = $form->getData();
+            $this->em->persist($review);
+            $this->em->flush();
+            $this->addFlash('success', "Avis ajouté avec succès. Merci d\'avoir partagé votre expérience avec nous.", false);
 
-                $userId = $user->getId();
-                return $this->redirectToRoute('app_profil', ['id' => $userId]); 
-            }
-
+            $userId = $user->getId();
+            return $this->redirectToRoute('app_profil', ['id' => $userId]); 
+        }
 
         return $this->render('security/writeReview.html.twig', [
             'form' => $form->createView(),
         ]);
     
     }
+
 
 
     /**
@@ -183,6 +304,7 @@ class DashboardController extends AbstractController
         // Recherche de tous les avis déjà vérifiés
         $reviews = $this->reviewRepository->findBy(['is_verified' => 1]);
     
+        
         return $this->render('dashboard/review.html.twig', [
             'unverifiedReviews' => $unverifiedReviews,
             'reviews' => $reviews,
