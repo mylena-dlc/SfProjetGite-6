@@ -230,16 +230,6 @@ createNavigation () {
         return
     }
     this.onMove(index => {
-        // if (index === 0) {
-        //     prevButton.classList.add('carousel__prev--hidden')
-        // } else {
-        //     prevButton.classList.remove('carousel__prev--hidden')
-        // }
-        // if (this.items[this.currentItem + this.options.slidesVisible] === undefined) {
-        //     nextButton.classList.add('carousel__next--hidden')
-        // } else {
-        //     nextButton.classList.remove('carousel__next--hidden')
-        // }
         if (index <= 0) {
             prevButton.classList.add('carousel__prev--hidden');
         } else {
@@ -251,9 +241,7 @@ createNavigation () {
         } else {
             nextButton.classList.remove('carousel__next--hidden');
         }
-        
     })
-
 }
 
 next () {
@@ -280,7 +268,6 @@ gotoItem (index) {
     this.container.style.transform = 'translate3d(' + translateX + '%, 0, 0)'
     this.currentItem = index
     this.moveCallbacks.forEach(cb => cb(index))
-
 }
 
 /**
@@ -303,6 +290,7 @@ onMove(cb) {
     }
 }
 
+// Carousel pour les avis
 document.addEventListener('DOMContentLoaded', function () {
     // Sélectionnez l'élément #carousel
     const carouselElement = document.querySelector('#carousel');
@@ -316,6 +304,36 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 });
+
+// Carousel pour les images modales
+function openModal(imgSrc) {
+    var modal = document.getElementById('myModal');
+    var modalImg = document.getElementById('modalImg');
+    var modalCarouselElement = document.getElementById('modalCarousel');
+
+    modal.style.display = 'block';
+    modalImg.src = imgSrc;
+
+    var closeBtn = document.getElementsByClassName('close')[0];
+    closeBtn.onclick = function() {
+      modal.style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+      if (event.target === modal) {
+        modal.style.display = 'none';
+      }
+    };
+
+        // Affichez les flèches uniquement si vous avez plus d'une image
+        if (allPictures.length > 1) {
+            document.querySelector('.modal-prev').style.display = 'block';
+            document.querySelector('.modal-next').style.display = 'block';
+        } else {
+            document.querySelector('.modal-prev').style.display = 'none';
+            document.querySelector('.modal-next').style.display = 'none';
+        }
+    }
 
 
 

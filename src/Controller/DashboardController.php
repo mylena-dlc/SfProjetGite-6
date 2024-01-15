@@ -72,31 +72,8 @@ class DashboardController extends AbstractController
         // Recherche des 5 réservations les plus récentes pour l'index du dashboard
         $reservations = $this->reservationRepository->findBy([], ['reservationDate' => 'ASC'], 5);
 
-        // Créez un formulaire pour le bouton "Enregistrer" unique
-        $form = $this->createFormBuilder()
-            ->add('save', SubmitType::class, ['label' => 'Enregistrer'])
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($reservations as $reservation) {
-                // Mettez à jour l'état "view" uniquement pour les réservations dont la case à cocher est cochée
-                if ($request->request->get('reservation_view_' . $reservation->getId())) {
-                    $reservation->setView(true);                        
-                    $this->em->flush();
-                }
-            }     
-        
-            $this->addFlash('success', 'Les états "vue" des réservations ont été modifiés avec succès.');
-
-            $viewForms[$reservation->getId()] = $form->createView();
-        }
-
         return $this->render('dashboard/index.html.twig', [
             'reservations' => $reservations,
-            'form' => $form->createView(), // Ajoutez ce formulaire à la vue
-
         ]);
     }
 

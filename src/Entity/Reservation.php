@@ -65,14 +65,9 @@ class Reservation
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $reservationDate = null;
 
-    #[ORM\Column]
-    private ?bool $view = false;
-
     #[ORM\Column(length: 255)]
     private ?string $reference = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $paymentMethod = null;
 
     #[ORM\Column(length: 180)]
     private ?string $email = null;
@@ -272,18 +267,6 @@ class Reservation
         $this->reservationDate = new \DateTime();
     }
 
-    public function isView(): ?bool
-    {
-        return $this->view;
-    }
-
-    public function setView(bool $view): static
-    {
-        $this->view = $view;
-
-        return $this;
-    }
-
     public function getReference(): ?string
     {
         return $this->reference;
@@ -296,18 +279,6 @@ class Reservation
             $timeReservation = date('ymdHis');
             $this->reference = 'RES_' . $timeReservation;
         }
-
-        return $this;
-    }
-
-    public function getPaymentMethod(): ?string
-    {
-        return $this->paymentMethod;
-    }
-
-    public function setPaymentMethod(string $paymentMethod): static
-    {
-        $this->paymentMethod = $paymentMethod;
 
         return $this;
     }

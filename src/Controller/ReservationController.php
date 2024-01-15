@@ -8,12 +8,14 @@ use App\Entity\Reservation;
 use Stripe\Checkout\Session;
 use App\Form\ReservationType;
 use App\Service\DompdfService;
+use App\Service\SendMailService;
 use App\Repository\GiteRepository;
 use App\Repository\UserRepository;
 use App\Repository\PeriodRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -211,8 +213,7 @@ class ReservationController extends AbstractController
     $reservation->setUser($user);
     $reservation->setEmail($email);
 
-
-   $form = $this->createForm(ReservationType::class, $reservation);
+    $form = $this->createForm(ReservationType::class, $reservation);
 
     // Gérez la soumission du formulaire
         $form->handleRequest($request);
@@ -221,35 +222,12 @@ class ReservationController extends AbstractController
 
             $reservation = $form->getData(); 
 
-            $paymentMethod = $form->get('paymentMethod')->getData();
+            // prepare en PDO
+            $this->em->persist($reservation);
+            // execute PDO
+            $this->em->flush();
 
-            // Récupérez la valeur de countdownTime depuis la session
-            $countdownTime = $request->getSession()->get('countdownTime');
-
-     
-            // Vérifiez si le countdownTime est égal à 0
-            if ($countdownTime === 0) {
-                 
-                // Message d'erreur
-                $this->addFlash('error', 'Le temps est écoulé. Veuillez recommencer votre réservation.');
-
-                // Redirection vers la page d'accueil
-                return $this->redirectToRoute('app_home');
-
-            } else {
-
-                // prepare en PDO
-                $this->em->persist($reservation);
-                // execute PDO
-                $this->em->flush();
-
-                // En fonction de $paymentMethod, redirigez l'utilisateur vers la page de paiement appropriée
-                if ($paymentMethod === 'stripe') {
-                    return $this->redirectToRoute('paiement', ['id' => $reservation->getId()]);
-                } else if ($paymentMethod === 'paypal') {
-                    return $this->redirectToRoute('page_paiement_paypal');
-                }
-            }
+            return $this->redirectToRoute('paiement', ['id' => $reservation->getId()]);
         }
 
         $description = 'Validez votre réservation pour notre gîte à Orbey. Vérifiez les détails, les tarifs, et complétez vos coordonnées en toute sécurité. Séjournez dans notre charmant hébergement en Alsace.';
@@ -280,24 +258,7 @@ class ReservationController extends AbstractController
 
     // Récupérez les détails de la réservation
     $totalPrice = $reservation->getTotalPrice() * 100; // Conversion du prix en centimes
-
-    // Récupérez la valeur de countdownTime depuis la session
-    $countdownTime = $request->getSession()->get('countdownTime');
-
-    // Vérifiez si le countdownTime est égal à 0
-    if ($countdownTime === 0) {
-               
-        // Suppression de la réservation en BDD
-        $this->em->remove($reservation);
-        $this->em->flush();
-                
-        // Message d'erreur
-        $this->addFlash('error', 'Le temps est écoulé. Veuillez recommencer votre réservation.');
-
-        // Redirection vers la page d'accueil
-        return $this->redirectToRoute('app_home');
-    }
-
+ 
     // Configurez Stripe
     Stripe::setApiKey($this->stripeSecretKey);
     
@@ -319,8 +280,8 @@ class ReservationController extends AbstractController
         'cancel_url' => $this->generateUrl('payment_error', ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
     ]);
 
-    // Redirigez l'utilisateur vers la page de paiement de Stripe
-    return $this->redirect($session->url);
+        // Redirigez l'utilisateur vers la page de paiement de Stripe
+        return $this->redirect($session->url);
 }
 
 
@@ -330,35 +291,65 @@ class ReservationController extends AbstractController
     */
 
     #[Route('/reservation/{id}/confirm', name: 'confirm_reservation')]
-    public function confirm(int $id, Request $request): Response {
+    public function confirm(int $id, Request $request, SendMailService $mail, DompdfService $dompdfService): Response {
 
         $reservation = $this->reservationRepository->findOneBy(['id' => $id]);
+        $gite = $this->giteRepository->find(4);
 
-        // Récupérez la valeur de countdownTime depuis la session
-        $countdownTime = $request->getSession()->get('countdownTime');
+        // Obtenez les dates de début et de fin de la réservation
+        $startDate = $reservation->getArrivalDate();
+        $endDate = $reservation->getDepartureDate();
 
-        // Vérifiez si le countdownTime est égal à 0
-        if ($countdownTime === 0) {
-                
-            // Suppression de la réservation en BDD
-            $this->em->remove($reservation);
-            $this->em->flush();
-                    
-            // Message d'erreur
-            $this->addFlash('error', 'Le temps est écoulé. Veuillez recommencer votre réservation.');
+        // Calcule du nombre de nuit
+        $diff = $startDate->diff($endDate);
+        $numberNight = $diff->format('%a');
 
-            // Redirection vers la page d'accueil
-            return $this->redirectToRoute('app_home');
-        }
-        
-        $data = [
-            'message' => 'La réservation a été enregistrée avec succès.',
-        ];
+        // Calcul du prix sans le forfait de ménage
+        $cleaningCharge = $gite->getcleaningCharge();
+        $priceHt = $reservation->getTotalPrice() - $cleaningCharge;
+
+        // Récupérer le contenu du template de la facture
+        $invoiceContent = $this->renderView('reservation/invoice.html.twig', [
+        'reservation' => $reservation,
+        'numberNight' => $numberNight,
+        'gite' => $gite,
+        'priceHt' => $priceHt,
+        'logo' => $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png'),
+    ]);
+
+        // Générez le PDF à partir du HTML
+        $pdfContent = $dompdfService->generatePdf($invoiceContent);
+
+        // Convertir le contenu du PDF en une chaîne Base64
+        $pdfBase64 = base64_encode($pdfContent);
+
+        // Envoyer le mail de confirmation
+        $mail->send(
+            'contact@giteraindupair.fr',
+            $reservation->getEmail(), 
+            'Confirmation de réservation',
+            'confirm-reservation',
+            [
+                'reservation' => $reservation,
+                'pdfBase64' => $pdfBase64, 
+                'logo' => $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png'),
+            ],
+        );
+
+        // Envoyer un e-mail à l'administrateur
+        $mail->sendAdminNotification(
+            'contact@giteraindupair.fr',
+            'admin@giteraindupair.com',
+            'Nouvelle réservation',
+            'admin-notification',
+            [
+                'reservation' => $reservation,
+            ],
+        );
 
         $description = 'Votre réservation dans notre gîte de charme à Orbey en Alsace est confirmée. Préparez-vous à vivre une expérience exceptionnelle dans notre maison de vacances!';
     
         return $this->render('reservation/confirm.html.twig', [
-            'data' => $data,
             'description' => $description
         ]);
 }
@@ -437,7 +428,6 @@ class ReservationController extends AbstractController
             'gite' => $gite,
             'priceHt' => $priceHt,
             'logo' => $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png'),
-            
         ]);
 
         // Générez le PDF à partir du HTML
@@ -447,7 +437,6 @@ class ReservationController extends AbstractController
         $response = new Response($pdfContent);
         $response->headers->set('Content-Type', 'application/pdf');
         $response->headers->set('Content-Disposition', 'attachment;filename=facture.pdf');
-
         return $response;
     }
 

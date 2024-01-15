@@ -14,9 +14,21 @@ class ResetPasswordFormType extends AbstractType
     {
         $builder
             ->add('password', PasswordType::class, [
-                'label' => 'Entrez votre mot de passe',
+                'label' => 'Entrez votre nouveau mot de passe',
                 'attr' => [
-                ]
+                    'class' => 'inputRegister'
+                ],
+                "mapped" => false,
+                'required' => true,
+
+                'constraints' => [ 
+                    new Regex([
+                        'pattern' => '~^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*()-_+=<>?])(?!.*\s).{12}$~',
+                        // au moins 1 majuscule - au moins 1 minuscule - au moins 1 chiffre - au moins un caractère special - aucun espace - au moins 12 caractères
+                        'match' => true, // la valeur soumise doit correspondre entièrement à la Regex
+                        'message' => 'Le mot de passe doit contenir au moins une majuscule, une minuscule, un chiffre et avoir au moins 12 caractères.',
+                    ]),
+                ],
             ])
         ;
     }

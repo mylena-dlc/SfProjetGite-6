@@ -61,7 +61,7 @@
     </div>
 
 
-     {{ form_start(form) }}
+    {{ form_start(form) }}
 
     <div class="resaForm">
         <div class="row">
@@ -79,25 +79,12 @@
             {{ form_row(form.country) }}
             {{ form_row(form.phone) }}
         </div>
-    </div>
-
-
-    <div class="row">
-        {{ form_row(form.paymentMethod) }}
-
-        <div id="paypal-button-container"></div>
-
-<script>
-  paypal.Buttons().render('#paypal-button-container')
-</script>
-
-
+        <div class="row">
         {{ form_row(form.isMajor) }}
+        </div>
+
+        {{ form_row(form.payer) }}
     </div>
-
-    {{ form_row(form.payer) }}
-
-</div>
 {{ form_end(form) }}
 
 

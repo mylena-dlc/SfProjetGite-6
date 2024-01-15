@@ -58,16 +58,6 @@ class ReservationType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('paymentMethod', ChoiceType::class, [
-                'label' => 'Méthode de paiement',
-                'choices' => [
-                    'Carte bancaire (Stripe)' => 'stripe',
-                    'PayPal' => 'paypal',
-                ],
-                'expanded' => true, // pour afficher comme des radios
-                'multiple' => false, // pour permettre la sélection d'une seule option
-                "required" => true
-            ])
             ->add('payer', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn submit'

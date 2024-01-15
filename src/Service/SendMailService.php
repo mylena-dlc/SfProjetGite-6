@@ -37,4 +37,25 @@ class SendMailService
         // Envoi du mail
         $this->mailer->send($email);
     }
+
+    public function sendAdminNotification(
+        string $from,
+        string $adminEmail,
+        string $subject,
+        string $template,
+        array $context
+    ): void {
+        
+        // Création du mail pour l'administrateur
+        $email = (new TemplatedEmail())
+            ->from($from)
+            ->to($adminEmail)
+            ->subject($subject)
+            ->htmlTemplate("emails/$template.html.twig")
+            ->context($context);
+
+        // Envoi du mail à l'administrateur
+        $this->mailer->send($email);
+    }
+
 }

@@ -97,6 +97,39 @@ class HomeController extends AbstractController
 
 
     /**
+    * Fonction de redirection vers les mentions légales
+    */
+
+    #[Route('/mentions-legales', name: 'app_mentions_legales')]
+    public function mentionsLegales(): Response
+    {
+        return $this->render('home/mentions-legales.html.twig');
+    }
+
+
+    /**
+    * Fonction de redirection vers la politique de confidentialité
+    */
+
+    #[Route('/politique-confidentialite', name: 'app_politique-confidentialite')]
+    public function politiqueConfidentialite(): Response
+    {
+        return $this->render('home/politique-confidentialite.html.twig');
+    }
+
+
+    /**
+    * Fonction de redirection vers les conditions générales de vente
+    */
+
+    #[Route('/conditions-generales-vente', name: 'app_condition_generales_vente')]
+    public function conditionsGeneralesVente(): Response
+    {
+        return $this->render('home/cgv.html.twig');
+    }
+
+
+    /**
     * Fonction pour afficher tous les avis
     */
 
@@ -125,7 +158,9 @@ class HomeController extends AbstractController
             'route' => 'app_all_reviews', 
         ];
 
-        $description = 'Découvrez les avis authentiques des voyageurs qui ont séjourné dans notre gîte de charme en Alsace. Un hébergement de qualité pour vos futures vacances à Orbey.';
+        $description = 'Découvrez les avis authentiques des voyageurs
+         qui ont séjourné dans notre gîte de charme en Alsace. 
+         Un hébergement de qualité pour vos futures vacances à Orbey.';
 
         return $this->render('home/reviews.html.twig', [
             'reviews' => $reviews,

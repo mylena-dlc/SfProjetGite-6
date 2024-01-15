@@ -219,20 +219,23 @@
                 <div class="footer-line"></div>
                 <div class="footerBottom">
                     <div class="footer-link">
-                        <div class="link-right">
-                            <p class="footerLink">
-                                Conditions générales de vente
-                            </p>
-                            <p class="footerLink">
-                                Politique de confidentialités
-                            </p>
-                            <p class="footerLink">
-                                Plan du site
-                            </p>
-                        </div>
+                    <div class="link-right">
+                    <p class="footerLink">
+                    <a href="{{ path('app_condition_generales_vente') }}">Conditions générales de vente</a>
+                    </p>
+                    <p class="footerLink">
+                        <a href="{{ path('app_politique-confidentialite') }}">Politique de confidentialités</a>
+                    </p>
+                    <p class="footerLink">
+                        <a href="{{ path('app_mentions_legales') }}">Mentions légales</a>
+                    </p>
+                    <p class="footerLink">
+                        Plan du site
+                    </p>
+                </div>
                         <div class="link-left">
                             <p class="footerLink">
-                                &copy; 2023 Gîte du Rain du Pair - Tous droits réservés.
+                                &copy; 2024 Gîte du Rain du Pair - Tous droits réservés.
                             </p>
                         </div>
                     </div>
@@ -241,6 +244,7 @@
         </footer>
 
         {% block javascripts_footer %}
+        
 
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

@@ -173,14 +173,24 @@
                     chacune avec sa propre salle d'eau attenante pour plus d'intimité et un wc séparé.
                     L'intérieur est chaleureux, accueillant et décoré avec soin pour vous offrir un séjour agréable et authentique.</p>
 
-                <div class="caracteristique-galery">
-                    <figure class="figure-picture03">
+                    <div id="myModal" class="modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-content" id="modalImg">
+                    </div>
+
+                <div class="caracteristique-galery">                    
+                
+                    <figure class="figure-picture03 picture" onclick="openModal('img/gite-alsace-03.jpg')">
+
                         <img src="img/gite-alsace-03.jpg" alt="Photo d'une chambre du gîte" class="picture03"/>
                     </figure>
-                    <figure class="figure-picture05">
+       
+                    <figure class="figure-picture05 picture" onclick="openModal('img/gite-alsace-05.jpg')">
                         <img src="img/gite-alsace-05.jpg" alt="Photo du nom du gîte sur un tableau" class="picture05"/>
                     </figure>
-                    <figure class="figure-picture03">
+
+         
+                    <figure class="figure-picture03 picture" onclick="openModal('img/gite-alsace-04.jpg')">
                         <img src="img/gite-alsace-04.jpg" alt="Photo de l'entrée du gîte" class="picture04"/>
                     </figure>
                 </div>
@@ -192,7 +202,7 @@
             </div>
             <div class="caracteristique-right">                
                
-                    <figure class="figure-picture02">
+                <figure class="figure-picture02 picture-02" onclick="openModal('img/gite-alsace-06.jpg')">
                     <img src="img/gite-alsace-06.jpg" alt="Photo d'une chambre du gîte" class="picture02"/>
                 </figure>
 
@@ -372,14 +382,26 @@
      locale: {
       firstDayOfWeek: 1,
       weekdays: {
-        shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-        longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
+        shorthand: [
+            "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"
+        ],
+        longhand: [
+            "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", 
+            "Vendredi", "Samedi"
+        ]
       },
       months: {
-        shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
-        longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
+        shorthand: [
+            "Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", 
+            "Août", "Sept", "Oct", "Nov", "Déc"
+        ],
+        longhand: [
+            "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", 
+            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+        ]
       }
     },
+    
    disable: [
         {
             from: startInput.value,

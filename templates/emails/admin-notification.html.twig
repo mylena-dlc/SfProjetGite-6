@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Nouvelle réservation</title>
+</head>
+<body>
+    <h1>Nouvelle réservation effectuée</h1>
+    
+    <p>Une nouvelle réservation a été effectuée dans votre gîte. Voici les détails :</p>
+    
+    <ul>
+        <li>Numéro de réservation : {{ reservation.reference }}</li>
+        <li>Nom du client : {{ reservation.lastname }} {{ reservation.firstname }}</li>
+        <li>Email du client : {{ reservation.email }}</li>
+        <li>Adresse : {{ reservation.address }}</li>
+        <li>Code postal : {{ reservation.cp }}</li>
+        <li>Pays : {{ reservation.country }}</li>
+        <li>Numéro de téléphone : {{ reservation.phone }}</li>
+        <li>Date d'arrivée : {{ reservation.arrivalDate|date('Y-m-d') }}</li>
+        <li>Date de départ : {{ reservation.departureDate|date('Y-m-d') }}</li>
+        <li>Nombre d'adultes : {{ reservation.numberAdult }}</li>
+        <li>Nombre d'enfants : {{ reservation.numberKid }}</li>
+        <li>Prix total : {{ reservation.totalPrice }} €</li>
+    </ul>
+    
+    <p>Merci de prendre les mesures nécessaires pour accueillir le client.</p>
+</body>
+</html>

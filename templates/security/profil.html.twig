@@ -78,7 +78,6 @@
                             <button class="btn btnReview"><a href="{{ path('app_write_review', {'reservation_id': upcomingReservation.id}) }}">Écrire un avis</a></button>
                         {% endif %}
                     </td>
-
                     <td>{{ upcomingReservation.reference }}</td>
                     <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
                     <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>

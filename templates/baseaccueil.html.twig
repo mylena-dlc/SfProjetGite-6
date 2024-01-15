@@ -2,6 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
+        
         <title> {% block title %}{% endblock %} </title>
         <meta name="description" content="{% block meta_description %}{% endblock %}">
 
@@ -66,6 +67,8 @@
 
         {% block stylesheets %}
         
+    
+
             <!-- Affichage des étoiles pour les avis -->
             <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
@@ -220,7 +223,7 @@
                             <a href="https://www.facebook.com/profile.php?id=61555292307736" class="footerLink" target="_blank"><i class="fa-brands fa-facebook"></i></a>
                         </p>
                         <p class="footerP">
-                            contact@giteraindupair.fr
+                            <a href="mailto:contact@giteraindupair.fr" target="_blank">contact@giteraindupair.fr</a>
                         </p>
                         <p class="footerP">
                             <i class="fa-solid fa-phone"></i>
@@ -233,10 +236,13 @@
                     <div class="footer-link">
                         <div class="link-right">
                             <p class="footerLink">
-                                Conditions générales de vente
+                            <a href="{{ path('app_condition_generales_vente') }}">Conditions générales de vente</a>
                             </p>
                             <p class="footerLink">
-                                Politique de confidentialités
+                                <a href="{{ path('app_politique-confidentialite') }}">Politique de confidentialités</a>
+                            </p>
+                            <p class="footerLink">
+                                <a href="{{ path('app_mentions_legales') }}">Mentions légales</a>
                             </p>
                             <p class="footerLink">
                                 Plan du site
@@ -244,7 +250,7 @@
                         </div>
                         <div class="link-left">
                             <p class="footerLink">
-                                &copy; 2023 Gîte du Rain du Pair - Tous droits réservés.
+                                &copy; 2024 Gîte du Rain du Pair - Tous droits réservés.
                             </p>
                         </div>
                     </div>
@@ -253,6 +259,7 @@
         </footer>
 
         {% block javascripts_footer %}
+        
 
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -270,6 +277,9 @@
             <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
             <script src="https://unpkg.com/flatpickr@4.6.9/dist/plugins/scrollPlugin.js"></script>
+
+       
+
 
             <script src="{{ asset('js/script.js') }}"></script>
 

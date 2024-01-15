@@ -96,7 +96,7 @@ class SecurityController extends AbstractController
     */
 
     #[Route(path: '/reset-password', name: 'app_reset_password')]
-    public function resetPassword(Request $request, UserRepository $userRepository, TokenGeneratorInterface $tokenGeneratorInterface, EntityManagerInterface $em, SendMailService $mail): Response
+    public function resetPassword(Request $request, UserRepository $userRepository, TokenGeneratorInterface $tokenGeneratorInterface, SendMailService $mail): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
 
@@ -111,8 +111,8 @@ class SecurityController extends AbstractController
                 // On génère un token de réinitialisation qu'on modifie pour l'user en BDD
                 $token = $tokenGeneratorInterface->generateToken();
                 $user->setResetToken($token);
-                $em->persist($user);
-                $em->flush();
+                $this->em->persist($user);
+                $this->em->flush();
 
                 // On génère un lien de réinitialisation du mot de passe
                 $url = $this->generateUrl('reset_pass', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
@@ -129,7 +129,7 @@ class SecurityController extends AbstractController
                     $context
                 );
 
-                $this->addFlash('succes', 'Email envoyé avec succès');
+                $this->addFlash('success', 'Email envoyé avec succès');
                 return $this->redirectToRoute('app_login');
 
             }
@@ -145,12 +145,14 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/reset-password/{token}', name: 'reset_pass')]
-    public function resetPass(string $token, Request $request, UserRepository $userRepository, EntityManager $em, UserPasswordHasherInterface $passwordHasher): Response {
+    public function resetPass(string $token, Request $request, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher): Response {
 
         // On vérifie si on a ce token dans la base
-        $user = $userRepository->findOnByResetToken($token);
+        $user = $userRepository->findOneBy(['resetToken' => $token]);
 
-        $form->handlerequest($request);
+        $form = $this->createForm(ResetPasswordFormType::class);
+
+        $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
             // On efface le token
@@ -161,10 +163,10 @@ class SecurityController extends AbstractController
                     $form->get('password')->getData()
                 )
             );
-            $em->persist($user);
-            $em->flush();
+            $this->em->persist($user);
+            $this->em->flush();
 
-            $this->addFlash('succes', 'Mot de passe modifié avec succès.');
+            $this->addFlash('success', 'Mot de passe modifié avec succès.');
             return $this->redirectToRoute('app_login');
         }
 

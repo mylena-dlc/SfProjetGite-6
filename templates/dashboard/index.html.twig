@@ -33,52 +33,37 @@
 
 
 <table class="tableGite tableReservation">
-        <thead>
-            <tr>
-                <th>Référence</th> 
-                <th>Date de réservation</th>                
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Date d'arrivée</th>
-                <th>Date de départ</th>
-                <th>Prix total</th>
-                <th>Vue par le gérant</th>
-                <th>Détails</th>
-            </tr>
-        </thead>
-        <tbody>
-             {% for reservation in reservations %}
-            <tr>
-                <td>{{ reservation.reference }}</td>
-                <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.firstName }}</td>
-                <td>{{ reservation.LastName }}</td>
-                <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
-                <td>{{ reservation.totalPrice }} €</td>
-
-
-
-                <!-- bouton checkbox pour changer le statut à "vu" par le gérant -->
-                <td class="td-checkbox">
-
-
-<div class="checkbox-wrapper" data-reservation-id="{{ reservation.id }}">
-                            <input type="checkbox" name="reservation_view_{{ reservation.id }}" id="custom-checkbox-{{ reservation.id }}" class="custom-checkbox {% if reservation.view %}vue{% else %}nonvue{% endif %}">
-                            <label for="custom-checkbox-{{ reservation.id }}" class="checkbox-label">{% if reservation.view %}<i class="fa-solid fa-check"></i> Vue !{% else %}<i class="fa-solid fa-triangle-exclamation"></i> Non vue !{% endif %}</label>
-                            <button class="submit-checkbox" type="button" style="display: none;">OK</button>
-                        </div>
-
-
-
-                </td>   
-                <td><a href="{{ path('show_reservation', {'id': reservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
-
-            </tr>   
-
-               {% endfor %}
-        </tbody>
-    </table>        
+    <thead>
+        <tr>
+            <th>Référence</th> 
+            <th>Date de réservation</th>                
+            <th>Nom</th>
+            <th>Prénom</th>
+            <th>Date d'arrivée</th>
+            <th>Date de départ</th>
+            <th>Prix total</th>
+            <th>Détails</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for reservation in reservations %}
+        <tr>
+            <td>{{ reservation.reference }}</td>
+            <td>{{ reservation.reservationDate|date('d-m-Y') }}</td>
+            <td>{{ reservation.firstName }}</td>
+            <td>{{ reservation.LastName }}</td>
+            <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
+            <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
+            <td>{{ reservation.totalPrice }} €</td> 
+            <td>
+                <a href="{{ path('show_reservation', {'id': reservation.id}) }}">
+                    <i class="fa-solid fa-circle-info"></i>
+                </a>
+            </td>
+        </tr>   
+            {% endfor %}
+    </tbody>
+</table>        
 
 
 

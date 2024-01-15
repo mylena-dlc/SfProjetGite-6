@@ -33,7 +33,6 @@ class ContactController extends AbstractController
     #[Route('/contact/email', name: 'app_contact_email')]
     public function sendEmailContact(MailerInterface $mailer, Request $request): Response
     {
-        
         // Récupérez les données du formulaire
         if ($request->isMethod('POST')) {
             $emailFrom = $request->get('email');
@@ -46,7 +45,7 @@ class ContactController extends AbstractController
                 ->to('contact@giteraindupair.fr')
                 ->subject($subject)
                 ->html($messageContent);
-//  dump($email);die;
+
             try {
                 $mailer->send($email);
                 $this->addFlash('success', 'Votre message a été envoyé avec succès. Merci pour votre demande, nous vous répondrons dans les plus brefs délais.');
@@ -55,7 +54,6 @@ class ContactController extends AbstractController
                 $this->addFlash('error', 'Echec de l\'envoi du message. Veuillez réessayer.');
             }
         } 
-
     }    
 }
 
