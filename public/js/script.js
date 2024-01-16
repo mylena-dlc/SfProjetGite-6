@@ -95,7 +95,9 @@ btn.addEventListener('click', () => {
 
     // Créez une icône personnalisée avec une couleur différente
     var customIcon = L.icon({
-        iconUrl: '../img/icon-localisation.png',  // Remplacez par le chemin de votre propre icône
+        iconUrl: '../img/icon-localisation.png', 
+        // iconUrl: '{{ asset( img/icon-localisation.png ) }}',
+        
         iconSize: [38, 38],  // Taille de l'icône en pixels
         iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
         popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
@@ -116,33 +118,6 @@ btn.addEventListener('click', () => {
 
 
 
-        // Bouton checkbox pour la vue de l'admin
-        document.addEventListener('DOMContentLoaded', function () {
-            const customCheckboxes = document.querySelectorAll('.custom-checkbox');
-
-            customCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', () => {
-                    if (checkbox.classList.contains('verrouille')) {
-                        checkbox.classList.remove('verrouille');
-                        checkbox.classList.add('actif');
-                        const label = checkbox.nextElementSibling;
-                        label.innerHTML = '<i class="fa-solid fa-check"></i> Vue !';
-                    } else {
-                        checkbox.classList.remove('actif');
-                        checkbox.classList.add('verrouille');
-                        const label = checkbox.nextElementSibling;
-                        label.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Non vue !';
-                    }
-                    showSubmitButton(checkbox);
-                });
-            });
-
-            function showSubmitButton(checkbox) {
-                const checkboxWrapper = checkbox.closest('.checkbox-wrapper');
-                const submitButton = checkboxWrapper.querySelector('.submit-checkbox');
-                submitButton.style.display = 'block';
-            }
-        });
         
 
 
@@ -305,35 +280,65 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
-// Carousel pour les images modales
+
+
+/**
+ * Images modales et carousel dans la galerie
+ */
+
+var modalImages = []; // Tableau pour stocker les URL des images
+var currentImageIndex = 0; // Index de l'image actuelle
+
+// Fonction pour ouvrir la modal
 function openModal(imgSrc) {
     var modal = document.getElementById('myModal');
     var modalImg = document.getElementById('modalImg');
-    var modalCarouselElement = document.getElementById('modalCarousel');
 
+    // Affiche la modal et définit l'URL de l'image à afficher
     modal.style.display = 'block';
     modalImg.src = imgSrc;
 
+    // Stocke les URL des images de la galerie dans le tableau modalImages
+    modalImages = document.querySelectorAll('.gallery-item img');
+    modalImages = Array.from(modalImages).map(img => img.src);
+
+    // Récupère le bouton de fermeture de la modal
     var closeBtn = document.getElementsByClassName('close')[0];
     closeBtn.onclick = function() {
-      modal.style.display = 'none';
+        closeModal();
     };
 
+    // Définit le gestionnaire d'événements pour le clic en dehors de la modal
     window.onclick = function(event) {
-      if (event.target === modal) {
-        modal.style.display = 'none';
-      }
-    };
-
-        // Affichez les flèches uniquement si vous avez plus d'une image
-        if (allPictures.length > 1) {
-            document.querySelector('.modal-prev').style.display = 'block';
-            document.querySelector('.modal-next').style.display = 'block';
-        } else {
-            document.querySelector('.modal-prev').style.display = 'none';
-            document.querySelector('.modal-next').style.display = 'none';
+        if (event.target === modal) {
+            closeModal();
         }
+    };
+}
+
+// Fonction pour changer l'image affichée dans la modal
+function changeModalImage(direction) {
+
+    // Incrémente ou décrémente l'index de l'image actuelle
+    currentImageIndex += direction;
+    // Vérifie les limites du tableau
+    if (currentImageIndex < 0) {
+        currentImageIndex = modalImages.length - 1;
+    } else if (currentImageIndex >= modalImages.length) {
+        currentImageIndex = 0;
     }
+
+    // Met à jour l'image dans la modal
+    var modalImg = document.getElementById('modalImg');
+    modalImg.src = modalImages[currentImageIndex];
+}
+
+// Fonction pour fermer la modal
+function closeModal() {
+    var modal = document.getElementById('myModal');
+    modal.style.display = 'none';
+}
+
 
 
 
@@ -346,80 +351,101 @@ let countdownInterval; // Intervalle de temps
 
 // Fonction pour mettre à jour le compte à rebours
 function updateCountdown() {
-    const currentTime = new Date().getTime(); // Obtient le temps actuel
-    const elapsedTime = currentTime - searchStartTime; // Calcule le temps écoulé depuis le début de la recherche
-    // Calcul le temps restant dans le compte à rebours en soustrayant le temps écoulé de 20min (1200secondes)
-    const timeLeftInSeconds = Math.max(0, 1200 - Math.floor(elapsedTime / 1000)); 
 
-    // Mise à jour de l'affichage du compte à rebours
-    document.getElementById('countdown').innerHTML = `<i class="fa-solid fa-hourglass-half"></i> Il vous reste ${Math.floor(timeLeftInSeconds / 60)}:${(timeLeftInSeconds % 60).toString().padStart(2, '0')} minute(s) pour valider votre réservation`;
-    
-    // Stocke le compte à rebours en session
-    sessionStorage.setItem('countdownTime', timeLeftInSeconds);
+    const countdownElement = document.getElementById('countdown');
 
-    // Si le temps est écoulé, ajout d'un message d'erreur
-    if (timeLeftInSeconds === 0) {
-        clearInterval(countdownInterval); // Stop l'execution de la fonction
-        sessionStorage.clear(); // Efface les données de la session
+    if (countdownElement !== null) {
+        const currentTime = new Date().getTime(); // Obtient le temps actuel
+        const elapsedTime = currentTime - searchStartTime; // Calcule le temps écoulé depuis le début de la recherche
+        // Calcul le temps restant dans le compte à rebours en soustrayant le temps écoulé de 20min (1200secondes)
+        const timeLeftInSeconds = Math.max(0, 1200 - Math.floor(elapsedTime / 1000)); 
 
-        // Lorsque le timer se termine, redirection vers la page d'accueil
-        Swal.fire({
-            icon: "error",
-            title: "Erreur",
-            text: "Le temps est écoulé. Veuillez recommancer votre réservation.",
-            didClose: () => {
-                window.location.href = "/";
+        // Mise à jour de l'affichage du compte à rebours
+        document.getElementById('countdown').innerHTML = `<i class="fa-solid fa-hourglass-half"></i> Il vous reste ${Math.floor(timeLeftInSeconds / 60)}:${(timeLeftInSeconds % 60).toString().padStart(2, '0')} minute(s) pour valider votre réservation`;
+        
+        // Stocke le compte à rebours en session
+        sessionStorage.setItem('countdownTime', timeLeftInSeconds);
+
+        // Si le temps est écoulé, ajout d'un message d'erreur
+        if (timeLeftInSeconds === 0) {
+            clearInterval(countdownInterval); // Stop l'execution de la fonction
+            sessionStorage.clear(); // Efface les données de la session
+
+            // Lorsque le timer se termine, redirection vers la page d'accueil
+            Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: "Le temps est écoulé. Veuillez recommancer votre réservation.",
+                didClose: () => {
+                    window.location.href = "/";
                 }
+            });
+        }
+    }
+}
+
+
+    // Vérifiez si une recherche est en cours au chargement de la page
+        document.addEventListener('DOMContentLoaded', function () {
+        searchStartTime = localStorage.getItem('searchStartTime');
+
+        if (searchStartTime !== null) {
+            searchStartTime = parseInt(searchStartTime, 10);
+            updateCountdown();
+
+            // Lancez un intervalle pour mettre à jour le compte à rebours toutes les secondes
+            countdownInterval = setInterval(updateCountdown, 1000);
+        }
         });
 
+    // Fonction pour démarrer une nouvelle recherche
+    function startNewSearch() {
+        searchStartTime = new Date().getTime(); // Enregistre le temps actuel comme le début de recherche
+        localStorage.setItem('searchStartTime', searchStartTime); // Stocke le temps en session
+
+        // Lance un intervalle pour mettre à jour le compte à rebours toutes les secondes
+        countdownInterval = setInterval(updateCountdown, 1000);
+
+        // Simule le processus de recherche, then assure que le reste ne s'exécutera qu'après la fin de cete simulation
+        simulateSearch().then(function () {
+            // Arrête l'intervalle après la recherche
+            clearInterval(countdownInterval);
+
+            // Réinitiation des valeurs
+            searchStartTime = null;
+            localStorage.removeItem('searchStartTime');
+            document.getElementById('countdown').innerText = '';
+        });
     }
-}
-
-// Vérifiez si une recherche est en cours au chargement de la page
-document.addEventListener('DOMContentLoaded', function () {
-    searchStartTime = localStorage.getItem('searchStartTime');
-
-    if (searchStartTime !== null) {
-        searchStartTime = parseInt(searchStartTime, 10);
-        updateCountdown();
-
-        // Lancez un intervalle pour mettre à jour le compte à rebours toutes les secondes
-         countdownInterval = setInterval(updateCountdown, 1000);
-    }
-});
-
-// Fonction pour démarrer une nouvelle recherche
-function startNewSearch() {
-    searchStartTime = new Date().getTime(); // Enregistre le temps actuel comme le début de recherche
-    localStorage.setItem('searchStartTime', searchStartTime); // Stocke le temps en session
-
-    // Lance un intervalle pour mettre à jour le compte à rebours toutes les secondes
-    countdownInterval = setInterval(updateCountdown, 1000);
-
-    // Simule le processus de recherche, then assure que le reste ne s'exécutera qu'après la fin de cete simulation
-    simulateSearch().then(function () {
-        // Arrête l'intervalle après la recherche
-        clearInterval(countdownInterval);
-
-        // Réinitiation des valeurs
-        searchStartTime = null;
-        localStorage.removeItem('searchStartTime');
-        document.getElementById('countdown').innerText = '';
-    });
-}
 
 
+        let cookieInsta = getCookie('tarteaucitron')
+
+        function getCookie(name) {
+            const cookies = document.cookie.split('; ')
+            const value = cookies
+                .find(c => c.startsWith(name + "="))
+                ?.split('=')[2]
+            if (value === undefined) {
+                return null
+            } 
+            return decodeURIComponent(value)
+        }
+
+    // Vérifier si les cookies Instagram sont acceptés, afin de ne pas afficher la section "Actualités"
+    var instagramSection = document.getElementById('actualites');
+
+    if (cookieInsta == 'true') {
+        instagramSection.style.display = 'block';
+        console.log('Le consentement aux cookies a été donné');
+
+      
+    } 
+    if (cookieInsta == 'false') {
+        instagramSection.style.display = 'none';
+        console.log('Le consentement aux cookies PAS été donné');
+
+    } 
 
 
-// Vérifier si les cookies Instagram sont acceptés, afin de ne pas afficher la section "Actualités"
-var instagramSection = document.getElementById('actualites');
-
-if (document.cookie) {
-    instagramSection.style.display = 'none';
-    console.log('Le consentement aux cookies n a PAS été donné');
-} else {
-    instagramSection.style.display = '';
-    console.log('Le consentement aux cookies a été donné');
-}
- 
 

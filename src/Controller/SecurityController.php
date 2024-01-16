@@ -49,13 +49,19 @@ class SecurityController extends AbstractController
      */
     private $reservationRepository;
 
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
-    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository)
+
+    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, UserRepository $userRepository)
     {
         $this->giteRepository = $giteRepository;
         $this->em = $em;
         $this->pictureRepository = $pictureRepository;
         $this->reservationRepository = $reservationRepository;
+        $this->userRepository = $userRepository;
     }
 
 
@@ -190,16 +196,27 @@ class SecurityController extends AbstractController
     
     #[Route(path: '/profil/{id}', name: 'app_profil')]
 
-    public function profil(User $user, Request $request): Response
+    public function profil(User $user): Response
     {
-    
-        // Récupérez les réservations à venir de l'utilisateur
-        $upcomingReservations = $this->reservationRepository->findUpcomingReservations();
+        $userSession = $this->getUser();
 
-        return $this->render('security/profil.html.twig', [
-            'user' => $user,
-            'upcomingReservations' => $upcomingReservations
-        ]);    
+        if($userSession == $user) {
+            // Récupérez les réservations à venir de l'utilisateur
+            $upcomingReservations = $this->reservationRepository->findUpcomingReservations();
+
+            return $this->render('security/profil.html.twig', [
+                'user' => $user,
+                'upcomingReservations' => $upcomingReservations
+            ]);  
+        }
+
+        if($userSession != $user) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('app_home');
+        }
+
+        return $this->redirectToRoute('app_login');
+
     }
 
 
@@ -209,18 +226,28 @@ class SecurityController extends AbstractController
     
     #[Route(path: '/profil/{id}/previous-reservations', name: 'app_profil_previous_reservations')]
 
-    public function previousReservation(User $user, Request $request): Response
+    public function previousReservation(User $user): Response
     {
-        // Récupérez les réservations passées de l'utilisateur
-        $previousReservations = $this->reservationRepository->findPreviousReservations();
+        $userSession = $this->getUser();
 
-        return $this->render('security/previous-reservations.html.twig', [
-            'user' => $user,
-            'previousReservations' => $previousReservations
-        ]);    
+        if($userSession == $user) {
+            // Récupérez les réservations passées de l'utilisateur
+            $previousReservations = $this->reservationRepository->findPreviousReservations();
+
+            return $this->render('security/previous-reservations.html.twig', [
+                'user' => $user,
+                'previousReservations' => $previousReservations
+            ]);    
+    }
+    
+    if($userSession != $user) {
+        $this->addFlash('error', 'Accès refusé');
+        return $this->redirectToRoute('app_home');
     }
 
+    return $this->redirectToRoute('app_login');
 
+}
 
     /**
     * Fonction de suppresion d'un compte

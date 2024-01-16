@@ -83,8 +83,8 @@ class PictureController extends AbstractController
     * Fonction pour ajouter ou éditer une catégorie
     */
 
-    #[Route('/category/new', name: 'new_category')]
-    #[Route('/category/{id}/edit', name: 'edit_category')]
+    #[Route('admin/category/new', name: 'new_category')]
+    #[Route('admin/category/{id}/edit', name: 'edit_category')]
 
     public function new_edit(Category $category = null, Request $request): Response {
     
@@ -119,7 +119,7 @@ class PictureController extends AbstractController
     * Fonction pour supprimer une category
     */
    
-    #[Route('/category/{id}/delete', name: 'delete_category')]
+    #[Route('admin/category/{id}/delete', name: 'delete_category')]
     public function delete(Category $category) {
 
         // pour préparé l'objet $category à supprimer (enlever cet objet de la collection)
@@ -155,7 +155,7 @@ class PictureController extends AbstractController
     * Fonction pour ajouter une photo
     */
 
-    #[Route('/category/newpicture', name: 'new_picture')]
+    #[Route('admin/category/newpicture', name: 'new_picture')]
     public function newPicture(Picture $picture = null, Request $request): Response {
        
         // on crée une nouvelle instance
@@ -229,7 +229,7 @@ class PictureController extends AbstractController
     * Fonction pour modifier une photo dans une catégorie d'image
     */
 
-    #[Route('/{category_id}/picture/{id}/edit', name: 'edit_picture')]
+    #[Route('admin/{category_id}/picture/{id}/edit', name: 'edit_picture')]
 
     public function edit(Picture $picture = null, Request $request, $category_id): Response {
        

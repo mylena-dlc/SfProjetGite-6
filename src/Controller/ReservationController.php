@@ -56,7 +56,6 @@ class ReservationController extends AbstractController
     protected $stripeSecretKey;
     protected $stripePublishableKey;
 
-
     
     public function __construct(ReservationRepository $reservationRepository, GiteRepository $giteRepository, EntityManagerInterface $em, UserRepository $userRepository, PeriodRepository $periodRepository, string $stripeSecretKey, string $stripePublishableKey )
     {

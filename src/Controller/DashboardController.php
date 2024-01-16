@@ -2,14 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\Gite;
 use App\Entity\User;
 use App\Entity\Period;
 use App\Entity\Review;
+use App\Form\GiteType;
 use App\Form\UserType;
 use App\Form\PeriodType;
 use App\Form\ReviewType;
 use App\Form\ReservationViewType;
 use App\Repository\GiteRepository;
+use App\Repository\UserRepository;
 use App\Repository\PeriodRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\PictureRepository;
@@ -54,7 +57,12 @@ class DashboardController extends AbstractController
      */
     private $reviewRepository;
 
-    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, PeriodRepository $periodRepository, ReviewRepository $reviewRepository)
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
+
+    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, PeriodRepository $periodRepository, ReviewRepository $reviewRepository, UserRepository $userRepository)
     {
         $this->giteRepository = $giteRepository;
         $this->em = $em;
@@ -62,7 +70,7 @@ class DashboardController extends AbstractController
         $this->reservationRepository = $reservationRepository;
         $this->reviewRepository = $reviewRepository;
         $this->periodRepository = $periodRepository;
-
+        $this->userRepository = $userRepository;
     }
 
     #[Route('admin/dashboard', name: 'app_dashboard')]
@@ -81,7 +89,7 @@ class DashboardController extends AbstractController
     * Fonction pour afficher les infos du gîte
     */
 
-    #[Route('/gite', name: 'app_gite')]
+    #[Route('admin/gite', name: 'app_gite')]
     public function showGite(): Response
     {
         $gites = $this->giteRepository->findAll();
@@ -95,8 +103,8 @@ class DashboardController extends AbstractController
     * Fonction pour ajouter ou éditer un gîte
     */
 
-    #[Route('/gite/new', name: 'new_gite')]
-    #[Route('/gite/{id}/edit', name: 'edit_gite')]
+    #[Route('admin/gite/new', name: 'new_gite')]
+    #[Route('admin/gite/{id}/edit', name: 'edit_gite')]
 
     public function newEditGite(Gite $gite = null, Request $request): Response {
     
@@ -130,7 +138,7 @@ class DashboardController extends AbstractController
     * Fonction pour supprimer un gîte
     */
 
-    #[Route('/gite/{id}/delete', name: 'delete_gite')]
+    #[Route('admin/gite/{id}/delete', name: 'delete_gite')]
     public function deleteGite(Gite $gite) {
 
         // pour préparé l'objet $gite à supprimer (enlever cet objet de la collection)
@@ -149,7 +157,7 @@ class DashboardController extends AbstractController
     // * Fonction pour afficher, ajouter ou éditer une période
     // */
 
-    #[Route('/period', name: 'app_period')]
+    #[Route('admin/period', name: 'app_period')]
 
     public function newPeriod(Request $request): Response {
 
@@ -233,39 +241,50 @@ class DashboardController extends AbstractController
     * Fonction pour ajouter un avis
     */
 
-    #[Route('security/whriteReview{reservation_id}', name: 'app_write_review')]
-    public function writeReview(Request $request, $reservation_id): Response
+    #[Route('security/{id}/writeReview{reservation_id}', name: 'app_write_review')]
+    public function writeReview(User $user, Request $request, int $id, $reservation_id): Response
     {
-        $review = new Review();
+        $userSession = $this->getUser();
+        $user = $this->userRepository->findOneBy(['id' => $id]);
 
-        $form = $this->createForm(ReviewType::class, $review);
-        $form->handleRequest($request);
+        if($userSession == $user) {
+            $review = new Review();
 
-        // On récupère l'id de l'utilisateur connecté
-        $user = $this->getUser();
-        $review->setUser($user);
+            $form = $this->createForm(ReviewType::class, $review);
+            $form->handleRequest($request);
 
-        // On récupère l'id de la réservation concernée
-        $reservation = $this->reservationRepository->find($reservation_id);
-        $review->setReservation($reservation);
+            // On récupère l'id de l'utilisateur connecté
+            $user = $this->getUser();
+            $review->setUser($user);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-        
-            $review = $form->getData();
-            $this->em->persist($review);
-            $this->em->flush();
-            $this->addFlash('success', "Avis ajouté avec succès. Merci d\'avoir partagé votre expérience avec nous.", false);
+            // On récupère l'id de la réservation concernée
+            $reservation = $this->reservationRepository->find($reservation_id);
+            $review->setReservation($reservation);
 
-            $userId = $user->getId();
-            return $this->redirectToRoute('app_profil', ['id' => $userId]); 
+            if ($form->isSubmitted() && $form->isValid()) {
+            
+                $review = $form->getData();
+                $this->em->persist($review);
+                $this->em->flush();
+                $this->addFlash('success', "Avis ajouté avec succès. Merci d\'avoir partagé votre expérience avec nous.", false);
+
+                $userId = $user->getId();
+                return $this->redirectToRoute('app_profil', ['id' => $userId]); 
+            }
+
+            return $this->render('security/writeReview.html.twig', [
+                'form' => $form->createView(),
+            ]);
         }
+        
+        if($userSession != $user) {
+            $this->addFlash('error', 'Accès refusé');
+            return $this->redirectToRoute('app_home');
+        }
+        
+        return $this->redirectToRoute('app_login');
 
-        return $this->render('security/writeReview.html.twig', [
-            'form' => $form->createView(),
-        ]);
-    
     }
-
 
 
     /**
@@ -278,13 +297,9 @@ class DashboardController extends AbstractController
         // Recherche de tous les avis non vérifiés par l'admin
         $unverifiedReviews = $this->reviewRepository->findBy(['is_verified' => 0]);
 
-        // Recherche de tous les avis déjà vérifiés
-        $reviews = $this->reviewRepository->findBy(['is_verified' => 1]);
-    
         
         return $this->render('dashboard/review.html.twig', [
-            'unverifiedReviews' => $unverifiedReviews,
-            'reviews' => $reviews,
+            'unverifiedReviews' => $unverifiedReviews
         ]);
     }
   

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suite à une réservation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color:#504f4b;            
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .invoiceLogo {
+            width: 200px; 
+        }
+
+        .signature {
+            display: flex;
+            align-items: center;
+        }  
+
+        .signature-p {
+            color: #85634d;
+            font-weight: 600;
+            margin-left: 30px;
+        }
+
+        .btn-invoice {
+            height: 60px;
+            width: 200px;
+            border-radius: 5px;
+            background:linear-gradient(to bottom, #85634d, #b58869);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            border: none;
+        }
+
+        .btn-invoice a {
+            color: white;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+
+
+        <p>Bonjour {{ reservation.firstName }} {{ reservation.lastName }},</p><br>
+
+        <p>Merci d'avoir choisi le Gîte du Rain du Pair pour votre récent séjour. Nous espérons que votre expérience a été à la hauteur
+        de vos attentes et que vous avez passé des moments mémorables.</p>
+
+        <p>Votre satisfaction est notre priorité et nous aimerions recueillir vos impressions pour continuer à améliorer nos services.</p>
+
+        <p>Si vous avez quelques instants, pourriez-vous s'il vous plaît partager votre expérience en nous laissant un avis sur notre site?</p>
+
+
+        <br>
+        <button class="btn-invoice"> 
+            <a href="{{ reviewLink }}">Laisser un avis</a>      
+        </button>
+        <br>
+
+        <p>Nous espérons avoir le plaisir de vous accueillir à nous veau très bientôt !</p>
+
+
+        <div class="signature">
+            <figure>
+                <img src="{{ logo }}" alt="logo" class="invoiceLogo"> 
+            </figure>
+            <p class="signature-p">Cordialement,<br>
+            L'équipe du Gîte Rain du pair</p>
+        </div>
+           
+
+
+    </div>
+</body>
+</html>

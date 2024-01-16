@@ -56,9 +56,6 @@
     <table class="tableGite">
             <thead>
                 <tr>
-                    <th>
-                    
-                    </th>
                     <th>Référence de la réservation</th>  
                     <th>Date de réservation</th> 
                     <th>Date d'arrivée</th>
@@ -72,12 +69,6 @@
             <tbody>
                 {% for upcomingReservation in upcomingReservations %}
                 <tr>
-                    <td>
-                        {# Si l'utilisateur connecté peut écrire un avis, alors on affiche le bouton #}
-                        {% if app.user.canWriteReview(upcomingReservation) and upcomingReservation.departureDate|date('U') < 'now'|date('U') %}
-                            <button class="btn btnReview"><a href="{{ path('app_write_review', {'reservation_id': upcomingReservation.id}) }}">Écrire un avis</a></button>
-                        {% endif %}
-                    </td>
                     <td>{{ upcomingReservation.reference }}</td>
                     <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
                     <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>
@@ -92,7 +83,7 @@
         </table>        
 
         <div class="center">      
-            <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id' : user.id}) }}">Mes anciens séjours</a></button>
+            <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id': user.id}) }}">Mes anciens séjours</a></button>
         </div>
                 {% else %}
                     <p class="profilResa">Vous n'avez aucune réservation.</p>

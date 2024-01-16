@@ -35,7 +35,7 @@
                 <td>
                     {# Si l'utilisateur connecté peut écrire un avis, alors on affiche le bouton #}
                     {% if app.user.canWriteReview(previousReservation) and previousReservation.departureDate|date('U') < 'now'|date('U') %}
-                        <button class="btn btnReview"><a href="{{ path('app_write_review', {'reservation_id': previousReservation.id}) }}">Écrire un avis</a></button>
+                            <button class="btn btnReview"><a href="{{ path('app_write_review', {'id': app.user.id, 'reservation_id': previousReservation.id}) }}">Écrire un avis</a></button>
                     {% endif %}
                 </td>
 

@@ -31,22 +31,21 @@
     </div>
 
     <div id="myModal" class="modal">
-<span class="close">&times;</span>
-<img class="modal-content" id="modalImg">
-<div id="modalCarousel" class="carousel__container"></div>
-<button class="modal-prev" onclick="changeModalImage(-1)">&#10094;</button>
-<button class="modal-next" onclick="changeModalImage(1)">&#10095;</button>
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImg">
+        <div class="modal-prev" onclick="changeModalImage(-1)"></div> 
+        <div class="modal-next" onclick="changeModalImage(1)"></div> 
+    </div>
 
-</div>
-
-
+<div id="carouselModal">
     <div class="gallery">
         {% for picture in pictures %}
-            <div class="gallery-item">
+            <div class="gallery-item"> 
                 <img src="{{ asset(picture.url) }}" alt="{{ picture.description }}" class="modal-trigger" onclick="openModal('{{ asset(picture.url) }}')">
             </div>
         {% endfor %}
     </div>
+</div>
 
 
 </div>
@@ -55,7 +54,6 @@
             <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}" class="btn add">Ajouter une image</a></button>
         </div>
 
-        <img src="{{ asset(picture.url) }}" alt="{{ picture.description }}"/>
         
     {% endif %}
 

@@ -78,4 +78,20 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
 
+    // Fonction pour rechercher quelles réservations sont passées et n'ont pas encore eu d'avis, afin d'envoyer le mail automatique
+
+    public function getReservationToSendMail()
+    {
+        $today = new \DateTime('now');
+
+        $qb = $this->createQueryBuilder('r')
+        ->leftJoin('r.reviews', 'a')  // Utilisez le nom de la relation définie dans la classe Reservation
+        ->where('r.departureDate < :today')
+        ->andWhere('a.id IS NULL') // Condition pour les réservations sans avis
+        ->setParameter('today', $today)
+        ->orderBy('r.departureDate', 'DESC')
+        ->getQuery();
+
+        return $qb->getResult();
+    }
 }
