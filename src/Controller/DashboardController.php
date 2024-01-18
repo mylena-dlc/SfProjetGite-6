@@ -8,14 +8,17 @@ use App\Entity\Period;
 use App\Entity\Review;
 use App\Form\GiteType;
 use App\Form\UserType;
+use App\Entity\Activity;
 use App\Form\PeriodType;
 use App\Form\ReviewType;
+use App\Form\ActivityType;
 use App\Form\ReservationViewType;
 use App\Repository\GiteRepository;
 use App\Repository\UserRepository;
 use App\Repository\PeriodRepository;
 use App\Repository\ReviewRepository;
 use App\Repository\PictureRepository;
+use App\Repository\ActivityRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,7 +65,12 @@ class DashboardController extends AbstractController
      */
     private $userRepository;
 
-    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, PeriodRepository $periodRepository, ReviewRepository $reviewRepository, UserRepository $userRepository)
+    /**
+     * @var ActivityRepository
+     */
+    private $activityRepository;
+
+    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, PeriodRepository $periodRepository, ReviewRepository $reviewRepository, UserRepository $userRepository, ActivityRepository $activityRepository)
     {
         $this->giteRepository = $giteRepository;
         $this->em = $em;
@@ -71,6 +79,7 @@ class DashboardController extends AbstractController
         $this->reviewRepository = $reviewRepository;
         $this->periodRepository = $periodRepository;
         $this->userRepository = $userRepository;
+        $this->activityRepository = $activityRepository;
     }
 
     #[Route('admin/dashboard', name: 'app_dashboard')]
@@ -165,10 +174,8 @@ class DashboardController extends AbstractController
 
         $newPeriod = new Period();
         
-        // on recupère l'id du gite
+        // On recupère l'id du gite et on l'associe à la période
         $gite = $this->giteRepository->find(4);
-
-        // Associez le gîte à la période
         $newPeriod->setGite($gite);
 
         $form = $this->createForm(PeriodType::class, $newPeriod);
@@ -328,6 +335,65 @@ class DashboardController extends AbstractController
         // Rediriger vers la page des avis à vérifier
         return $this->redirectToRoute('app_review');
     }
+
+
+    /**
+    * Fonction pour afficher ou ajouter une activité
+    */
+
+    #[Route('admin/activity/', name: 'app_activity')]
+
+    public function newActivity(Request $request): Response {
+    
+        $activities = $this->activityRepository->findAll();
+
+        $newActivity = new Activity();
+
+        // On recupère l'id du gite et on l'associe à l'activité
+        $gite = $this->giteRepository->find(4);
+        $newActivity->setGite($gite);
+
+        $form = $this->createForm(ActivityType::class, $newActivity);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $pictureFile = $form->get('picture')->getData();
+
+            if ($pictureFile) {
+                $newFilename = uniqid().'.'.$pictureFile->guessExtension();
+                $newFilePath = $this->getParameter('pictures_directory').'/'.$newFilename;
+
+                try {
+                    $pictureFile->move(
+                        $this->getParameter('pictures_directory'),
+                        $newFilename
+                    );                
+                    
+                    $newActivity->setpicture('uploads/' . $newFilename);
+
+                } catch (FileException $e) {
+                    $this->addFlash('error', 'Une erreur est survenue lors du téléchargement du fichier.');
+                } catch (AccessDeniedException $e) {
+                    $this->addFlash('error', 'Accès refusé au répertoire de stockage des images.');
+                }
+            }
+
+            $newActivity = $form->getData(); 
+
+            $this->em->persist($newActivity);
+            $this->em->flush();
+
+            $this->addFlash('success', 'L\'activité a été ajoutée avec succès !');
+            return $this->redirectToRoute('app_activity');
+        }
+
+        return $this->render('activity/index.html.twig', [
+            'form' => $form,
+            'activities' => $activities,
+        ]);
+    }  
 
 }
 

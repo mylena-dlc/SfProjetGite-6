@@ -22,13 +22,16 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
     // Fonction pour vérifier les chevauchements de dates de réservation en base de données
-    public function findOverlappingReservations(\DateTimeInterface $arrivalDate, \DateTimeInterface $departureDate, int $excludeReservationId = null) 
+    public function findOverlappingReservations(\DateTimeInterface $arrivalDate, 
+    \DateTimeInterface $departureDate) 
     {
     // Initialise un objet QueryBuilder lié à l'entité des réservations
     $qb = $this->createQueryBuilder('r')
-        // Vérifie si la date d'arrivée de la réservation en base est inférieure ou égale à la date de départ spécifiée
+        // Vérifie si la date d'arrivée de la réservation en base 
+        // est inférieure ou égale à la date de départ spécifiée
         ->where('r.departureDate >= :arrivalDate')
-        // Vérifie si la date de départ de la réservation en base est supérieure ou égale à la date d'arrivée spécifiée
+        // Vérifie si la date de départ de la réservation en base 
+        // est supérieure ou égale à la date d'arrivée spécifiée
         ->andWhere('r.arrivalDate <= :departureDate')
         // Définit les valeurs des paramètres
         ->setParameters([
@@ -36,15 +39,9 @@ class ReservationRepository extends ServiceEntityRepository
             'departureDate' => $departureDate,
         ]);
 
-    // Si un ID de réservation est fourni, exclut cette réservation de la recherche
-    if ($excludeReservationId) {
-        $qb->andWhere('r.id != :excludeReservationId')
-            ->setParameter('excludeReservationId', $excludeReservationId);
+        // Exécute la requête et renvoie les résultats
+        return $qb->getQuery()->getResult();
     }
-
-    // Exécute la requête et renvoie les résultats
-    return $qb->getQuery()->getResult();
-}
 
 
 

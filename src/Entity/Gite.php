@@ -49,11 +49,15 @@ class Gite
     #[ORM\OneToMany(mappedBy: 'gite', targetEntity: Period::class)]
     private Collection $periods;
 
+    #[ORM\OneToMany(mappedBy: 'Gite', targetEntity: Activity::class)]
+    private Collection $activities;
+
     public function __construct()
     {
         $this->pictures = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->periods = new ArrayCollection();
+        $this->activities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -246,6 +250,36 @@ class Gite
             // set the owning side to null (unless already changed)
             if ($period->getGite() === $this) {
                 $period->setGite(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Activity>
+     */
+    public function getActivities(): Collection
+    {
+        return $this->activities;
+    }
+
+    public function addActivity(Activity $activity): static
+    {
+        if (!$this->activities->contains($activity)) {
+            $this->activities->add($activity);
+            $activity->setGite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeActivity(Activity $activity): static
+    {
+        if ($this->activities->removeElement($activity)) {
+            // set the owning side to null (unless already changed)
+            if ($activity->getGite() === $this) {
+                $activity->setGite(null);
             }
         }
 

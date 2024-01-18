@@ -77,6 +77,9 @@ class ReservationController extends AbstractController
             $startDate = $request->get('start');
             $endDate = $request->get('end');
             $dateRange = $request->get('start');
+            $numberAdult = $request->get('numberAdult');
+            $numberKid = $request->get('numberKid'); 
+
 
             // Si les dates ne sont pas sélectionnées, redirection et message d'erreur
             if(!$startDate) {
@@ -90,9 +93,6 @@ class ReservationController extends AbstractController
             // Récupérez les dates de début et de fin de la réservation
             $startDate = new \DateTime($startDate);
             $endDate = new \DateTime($endDate);
-            
-            $numberAdult = $request->get('numberAdult');
-            $numberKid = $request->get('numberKid');    
             
 
             // Vérifiez si les dates sélectionnées chevauchent d'autres réservations en BDD
@@ -117,15 +117,16 @@ class ReservationController extends AbstractController
                 }
             }
 
-            // on recupère l'id du gite
+            // On recupère l'id du gite
             $gite = $this->giteRepository->find(4);
 
-            // on recherche le prix du forfait ménage
+            // On recherche le prix du forfait ménage
             $cleaningCharge = $gite->getCleaningCharge();
-            // on recherche le prix de la nuit
+
+            // On recherche le prix de la nuit
             $nightPrice = $gite->getPrice() + $supplement;
 
-            // on compte le nombre de nuit
+            // On compte le nombre de nuit
             $diff = $startDate->diff($endDate);
             $numberNight = $diff->format('%a');
 
@@ -190,7 +191,8 @@ class ReservationController extends AbstractController
     $nightPrice = $session->get('reservation_details')['nightPrice'];
     $totalPrice = $session->get('reservation_details')['totalPrice'];
 
-    // Créez une instance de l'entité Reservation et définissez les données initiales
+    // Créez une instance de l'entité Reservation 
+    // et définissez les données initiales
     $reservation = new Reservation();
 
     $reservation->setArrivalDate($arrivalDate); 
@@ -215,12 +217,11 @@ class ReservationController extends AbstractController
     $form = $this->createForm(ReservationType::class, $reservation);
 
     // Gérez la soumission du formulaire
-        $form->handleRequest($request);
+    $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
             $reservation = $form->getData(); 
-
             // prepare en PDO
             $this->em->persist($reservation);
             // execute PDO
@@ -251,37 +252,40 @@ class ReservationController extends AbstractController
     */
 
     #[Route('/reservation/{id}/paiement', name: 'paiement')]
-    public function paiement( int $id, Request $request): Response {
+    public function paiement( int $id, Request $request): Response 
+    {
 
-    $reservation = $this->reservationRepository->findOneBy(['id' => $id]);
+        $reservation = $this->reservationRepository->findOneBy(['id' => $id]);
 
-    // Récupérez les détails de la réservation
-    $totalPrice = $reservation->getTotalPrice() * 100; // Conversion du prix en centimes
- 
-    // Configurez Stripe
-    Stripe::setApiKey($this->stripeSecretKey);
+        // Récupérez les détails de la réservation
+        $totalPrice = $reservation->getTotalPrice() * 100; // Conversion du prix en centimes
     
-    // Créez une session de paiement avec Stripe Checkout
-    $session = Session::create([
-        'mode' => ['payment'],
-        'line_items' => [[
-            'price_data' => [
-                'currency' => 'eur',
-                'product_data' => [
-                    'name' => 'Réservation de gîte',
+        // Configurez Stripe
+        Stripe::setApiKey($this->stripeSecretKey);
+        
+        // Créez une session de paiement avec Stripe Checkout
+        $session = Session::create([
+            'mode' => ['payment'],
+            'line_items' => [[
+                'price_data' => [
+                    'currency' => 'eur',
+                    'product_data' => [
+                        'name' => 'Réservation de gîte',
+                    ],
+                    'unit_amount' => $totalPrice,
                 ],
-                'unit_amount' => $totalPrice,
-            ],
-            'quantity' => 1,
-        ]],
-        'mode' => 'payment',
-        'success_url' => $this->generateUrl('confirm_reservation', ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-        'cancel_url' => $this->generateUrl('payment_error', ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
-    ]);
+                'quantity' => 1,
+            ]],
+            'mode' => 'payment',
+            'success_url' => $this->generateUrl('confirm_reservation', 
+            ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+            'cancel_url' => $this->generateUrl('payment_error', 
+            ['id' => $reservation->getId()], UrlGeneratorInterface::ABSOLUTE_URL),
+        ]);
 
-        // Redirigez l'utilisateur vers la page de paiement de Stripe
-        return $this->redirect($session->url);
-}
+            // Redirigez l'utilisateur vers la page de paiement de Stripe
+            return $this->redirect($session->url);
+    }
 
 
 
@@ -290,7 +294,8 @@ class ReservationController extends AbstractController
     */
 
     #[Route('/reservation/{id}/confirm', name: 'confirm_reservation')]
-    public function confirm(int $id, Request $request, SendMailService $mail, DompdfService $dompdfService): Response {
+    public function confirm(int $id, Request $request, SendMailService $mail, 
+    DompdfService $dompdfService): Response {
 
         $reservation = $this->reservationRepository->findOneBy(['id' => $id]);
         $gite = $this->giteRepository->find(4);
@@ -313,7 +318,8 @@ class ReservationController extends AbstractController
         'numberNight' => $numberNight,
         'gite' => $gite,
         'priceHt' => $priceHt,
-        'logo' => $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png'),
+        'logo' => $this->imageToBase64($this->getParameter('kernel.project_dir') 
+        . '/public/img/logook2.png'),
     ]);
 
         // Générez le PDF à partir du HTML
@@ -331,7 +337,8 @@ class ReservationController extends AbstractController
             [
                 'reservation' => $reservation,
                 'pdfBase64' => $pdfBase64, 
-                'logo' => $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png'),
+                'logo' => $this->imageToBase64($this->getParameter('kernel.project_dir') 
+                . '/public/img/logook2.png'),
             ],
         );
 

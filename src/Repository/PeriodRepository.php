@@ -22,13 +22,16 @@ class PeriodRepository extends ServiceEntityRepository
     }
 
     // Fonction pour vérifier si les dates chevauchent les périodes existantes en BDD
-    public function findOverlappingPerriods(\DateTimeInterface $startDate, \DateTimeInterface $endDate, int $excludePeriodId = null) 
+    public function findOverlappingPerriods(\DateTimeInterface $startDate, 
+    \DateTimeInterface $endDate) 
     {
         // Initialise un objet QueryBuilder lié à l'entité des périodes
         $qb = $this->createQueryBuilder('p')
-        // Vérifie si la date de début de la période en base est inférieure ou égale à la date de fin spécifiée
+        // Vérifie si la date de début de la période en base 
+        // est inférieure ou égale à la date de fin spécifiée
         ->where('p.startDate <= :endDate')
-        // Vérifie si la date de fin de la période en base est supérieure ou égale à la date de début spécifiée
+        // Vérifie si la date de fin de la période en base 
+        // est supérieure ou égale à la date de début spécifiée
         ->andWhere('p.endDate >= :startDate')
         // Définit les valeurs des paramètres
         ->setParameters([
@@ -36,14 +39,9 @@ class PeriodRepository extends ServiceEntityRepository
             'endDate' => $endDate,
         ]);
 
-        // Si un ID de période est fourni, exclut cette période de la recherche
-        if ($excludePeriodId) {
-            $qb->andWhere('p.id != :excludePeriodId')
-                ->setParameter('excludePeriodId', $excludePeriodId);
-        }
         // Exécute la requête et renvoie les résultats
         return $qb->getQuery()->getResult();
-}
+    }
 
     }
 

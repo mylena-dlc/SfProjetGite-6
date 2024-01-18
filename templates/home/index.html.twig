@@ -46,14 +46,15 @@
 
 
 <div class="averageRating">
-    <div>Avis des voyageurs {{ averageRating | round }}</div>
-    <div id="rating-average"></div>
+    <p>Avis des voyageurs </p>
+        <p class="averageRating-p">{{ averageRating | number_format(2, '.', ',') }}</p>
+    <div id="rating-average" data-rating="5"></div>
 </div>
 
 <script>
     $(document).ready(function () {
         $("#rating-average").rateYo({
-            rating: {{ averageRating | round }},
+            rating: $("#rating-average").data("rating"),
             readOnly: true,
             starWidth: "20px",
             precision: 0,
@@ -246,10 +247,68 @@
 </section>
 
     <section id="alentours">
-        <div class="alentours-containt">
+       
             <div class="title">
                 <h2>Aux alentours</h2>
             </div> 
+
+             <div class="alentours-containt">
+                <div id="map-activity"></div>
+
+                <div id="map-carousel">
+        
+
+                {% for activity in activities %}
+                    <div class="item item-activity">
+
+                        <figure class="activity-picture"><img src="{{ asset(activity.picture) }}" alt="Photo de {{ activity.name }}" class="modal-trigger"/> </figure>
+                        <p>{{ activity.name }}</p>
+                        {# <p>{{ activity.description }}</p> #}
+                        {# <a href="#" class="voir-sur-carte" data-marker-id="{{ loop.index }}">Voir sur la carte</a> #}
+
+        
+                    </div>
+                   {% endfor %}
+
+                </div>
+            </div>
+
+<script>
+        // Créez une icône personnalisée avec une couleur différente
+        var customIcon = L.icon({
+        iconUrl: '../img/icon-localisation.png', 
+        
+        iconSize: [38, 38],  // Taille de l'icône en pixels
+        iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
+        popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
+    });
+
+    // Définir la vue initiale
+    var map = L.map('map-activity').setView([48.116933, 7.140431], 11); 
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Utilisez l'icône personnalisée pour le marqueur
+    var giteMarker = L.marker([48.116933, 7.140431], { icon: customIcon }).addTo(map);
+    giteMarker.bindPopup("Le gîte").openPopup();
+
+
+    // Ajouter des marqueurs pour chaque activité
+    {% for activity in activities %}
+        var activityMarker = L.marker([{{ activity.latitude }}, {{ activity.longitude }}]).addTo(map);
+            activityMarker.bindPopup("<strong>{{ activity.name }}</strong><br><img src='{{ asset(activity.picture) }}' alt='{{ activity.name }}' width='100px'/>").openPopup();
+                
+
+    {% endfor %}
+
+
+</script>
+
+
+
+       
     </section>
 
     <section id="actualites">
@@ -343,6 +402,7 @@
     // Récupération les dates déjà réservées depuis l'attribut "data-reserved-dates" 
     const reservedDatesDataStart = startInput.getAttribute("data-reserved-dates");
     const reservedDatesDataEnd = endInput.getAttribute("data-reserved-dates");
+    
     // Analyse cette chaîne JSON en objet JS
     const reservedDatesStart = JSON.parse(reservedDatesDataStart);
     const reservedDatesEnd = JSON.parse(reservedDatesDataEnd);
@@ -364,10 +424,12 @@
         longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
       },
     }, 
+
     disable: reservedDatesStart.map(date => ({
         from: date.arrivalDate,
          to: date.departureDate
       })),
+      
       plugins: [new rangePlugin({ input: endInput })], 
   });
 

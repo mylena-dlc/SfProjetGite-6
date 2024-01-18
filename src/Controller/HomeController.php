@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Repository\ReviewRepository;
 use App\Repository\PictureRepository;
+use App\Repository\ActivityRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ReservationRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 
 class HomeController extends AbstractController
@@ -36,13 +37,19 @@ class HomeController extends AbstractController
      */
     private $reviewRepository;
 
+    /**
+     * @var ActivityRepository
+     */
+    private $activityRepository;
+
     
-    public function __construct(PictureRepository $pictureRepository, ReservationRepository $reservationRepository, CategoryRepository $categoryRepository, ReviewRepository $reviewRepository)
+    public function __construct(PictureRepository $pictureRepository, ReservationRepository $reservationRepository, CategoryRepository $categoryRepository, ReviewRepository $reviewRepository, ActivityRepository $activityRepository)
     {
         $this->pictureRepository = $pictureRepository;
         $this->reservationRepository = $reservationRepository;
         $this->categoryRepository = $categoryRepository;
         $this->reviewRepository = $reviewRepository;
+        $this->activityRepository = $activityRepository;
     }
 
 
@@ -83,6 +90,9 @@ class HomeController extends AbstractController
          // Affichage de la moyenne des notes
          $averageRating = $this->reviewRepository->averageRating();
 
+         // Affichage des activitées
+         $activities = $this->activityRepository->findAll();
+
          $description = 'Réservez votre location de vacances en Alsace, dans notre gîte de charme à Orbey. Hébergement rénové avec bain nordique pour un séjour inoubliable au cœur de la nature.';
 
         return $this->render('home/index.html.twig', [
@@ -92,6 +102,7 @@ class HomeController extends AbstractController
             'reviews' => $reviews,
             'averageRating' => $averageRating,
             'description' => $description,
+            'activities' => $activities
         ]);
 }
 

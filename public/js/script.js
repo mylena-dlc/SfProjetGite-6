@@ -118,6 +118,14 @@ btn.addEventListener('click', () => {
 
 
 
+
+
+
+
+
+
+
+    
         
 
 
@@ -280,6 +288,21 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 });
 
+
+// Carousel pour les activité
+document.addEventListener('DOMContentLoaded', function () {
+    // Sélectionnez l'élément #carousel
+    const carouselElementActivity = document.querySelector('#map-carousel');
+
+    // Vérifiez si l'élément existe avant de créer le Carousel
+    if (carouselElementActivity !== null) {
+        new Carousel(carouselElementActivity, {
+            slidesVisible: 6,
+            slidesToScroll: 3,
+            loop: false
+        });
+    }
+});
 
 
 /**
