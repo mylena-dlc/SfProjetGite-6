@@ -258,15 +258,13 @@
                 <div id="map-carousel">
         
 
-                {% for activity in activities %}
-                    <div class="item item-activity">
+                {% for key,  activity in activities %}
+                    <div class="item item-activity activityCard" data-lat="{{ activity.latitude }}" data-lng="{{ activity.longitude }}" data-image="{{ asset(activity.picture) }}" data-name="{{ activity.name }}" >
 
                         <figure class="activity-picture"><img src="{{ asset(activity.picture) }}" alt="Photo de {{ activity.name }}" class="modal-trigger"/> </figure>
-                        <p>{{ activity.name }}</p>
-                        {# <p>{{ activity.description }}</p> #}
-                        {# <a href="#" class="voir-sur-carte" data-marker-id="{{ loop.index }}">Voir sur la carte</a> #}
+                        <p class="activity-name">{{ activity.name }}</p>
+                        <p class="activity-description">{{ activity.description }}</p>
 
-        
                     </div>
                    {% endfor %}
 
@@ -278,7 +276,7 @@
         var customIcon = L.icon({
         iconUrl: '../img/icon-localisation.png', 
         
-        iconSize: [38, 38],  // Taille de l'icône en pixels
+        iconSize: [60, 60],  // Taille de l'icône en pixels
         iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
         popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
     });
@@ -292,17 +290,34 @@
 
     // Utilisez l'icône personnalisée pour le marqueur
     var giteMarker = L.marker([48.116933, 7.140431], { icon: customIcon }).addTo(map);
-    giteMarker.bindPopup("Le gîte").openPopup();
+    giteMarker.bindPopup("Le gîte", { className: 'giteModal' }).openPopup();
 
 
-    // Ajouter des marqueurs pour chaque activité
-    {% for activity in activities %}
-        var activityMarker = L.marker([{{ activity.latitude }}, {{ activity.longitude }}]).addTo(map);
-            activityMarker.bindPopup("<strong>{{ activity.name }}</strong><br><img src='{{ asset(activity.picture) }}' alt='{{ activity.name }}' width='100px'/>").openPopup();
-                
+    // Récupération des cards
+    var activityCards = document.querySelectorAll('.activityCard');
 
-    {% endfor %}
+    // Ajout des marqueurs sur la carte et gestion des clics sur les cards
+    activityCards.forEach(function(card) {
+        var lat = parseFloat(card.getAttribute('data-lat'));
+        var lng = parseFloat(card.getAttribute('data-lng'));
+        var imageUrl = card.getAttribute('data-image');
+        var activityName = card.getAttribute('data-name');
 
+        // Création du marqueur
+        var marker = L.marker([lat, lng]).addTo(map);
+        marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + '" /><p>' + activityName + '</p>', { className: 'custom-popup-activity' });
+
+
+        // Gestion du clic sur la card
+        card.addEventListener('click', function() {
+            // Centrer la carte sur le marqueur
+            map.panTo([lat, lng]);
+            // Ouvrir la popup du marqueur
+            marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + '" /><p>' + activityName + '</p>', { className: 'custom-popup-activity' }).openPopup();
+        });
+    });
+
+   
 
 </script>
 

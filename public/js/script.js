@@ -297,8 +297,8 @@ document.addEventListener('DOMContentLoaded', function () {
     // Vérifiez si l'élément existe avant de créer le Carousel
     if (carouselElementActivity !== null) {
         new Carousel(carouselElementActivity, {
-            slidesVisible: 6,
-            slidesToScroll: 3,
+            slidesVisible: 3,
+            slidesToScroll: 1,
             loop: false
         });
     }

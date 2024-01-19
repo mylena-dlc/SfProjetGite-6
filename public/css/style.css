@@ -1021,8 +1021,7 @@ em {
 
 #alentours {
     padding: 100px 50px;
-    background-color: var(--color4);
-    /* height: 80vh; */
+    /* background-color: var(--color4); */
 }
 #alentours h2 {
     margin-bottom: 50px;
@@ -1040,25 +1039,104 @@ em {
 
 #map-carousel {
     width: 60% !important;   
+    margin: 0 20px;
 }
 
 #map-carousel .carousel__container {
-        /* display: grid;
+    /* display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(2, 1fr);
     gap: 20px;
-    width: auto !important; */
-}
-
-/* #map-carousel .carousel__item {
     width: auto !important;
-
+    grid-auto-flow: column;  */
 }
 
-.item-activity {
-    height: 200px !important;
-    width: 200px;
-} */
+#map-carousel .carousel__item {
+    width: auto !important;
+}
+
+.custom-popup-activity img {
+    width: 100%;
+}
+
+.leaflet-popup {
+    width: 150px !important;
+    height: 150px !important;
+}
+
+.giteModal {
+    bottom: -114px !important;
+    left: -61px !important;
+}
+
+.activity-picture {
+    width: 130px;
+    height: 100px;
+
+}
+.activity-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.activityCard {
+    position: relative;  /* Ajoutez cette ligne pour que le positionnement de l'élément ::after soit relatif à .activityCard */
+    height: 250px !important;
+    width: 280px;
+    border-radius: 0px !important;
+    margin: 10px 10px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    transition: 0.3s ease-in-out;  
+
+}
+/* Ajoutez ce style pour la couleur de fond gris clair au survol */
+.activityCard:hover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color1);  /* Couleur de fond gris clair avec transparence */
+    z-index: 0;  
+    transition: background-color 0.5s ease-in-out;  
+    opacity: 0.7;
+}
+
+/* Ajoutez ce style pour afficher la description au survol */
+.activityCard:hover .activity-description {
+    opacity: 1;
+}
+
+
+.activity-description {
+    opacity: 0; 
+    position: absolute;
+    color: white;
+    padding: 15px;
+}
+.activityCard:hover{
+    cursor: pointer;
+}
+.activity-name {
+    color: var(--color1);
+    font-size: 15px;
+    font-family: var(--police2);
+    font-weight: 200;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+
+
+
+
+
 
 /* ********************************************** SECTION ACTUALITÉS ********************************************** */
 
@@ -1169,6 +1247,7 @@ a.ViewProfileButton, a.FollowButton {
 
 .carousel__next--hidden, .carousel__prev--hidden {
     opacity: 0;
+    cursor: none;
 }
 
 
@@ -1823,10 +1902,6 @@ th, td {
 
 }
 
-.activity-picture img {
-    height: auto;
-    width: 150px;
-}
 
 
 /* ********************************************** DASHBOARD AVIS ********************************************** */
