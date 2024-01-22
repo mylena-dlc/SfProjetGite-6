@@ -8,13 +8,6 @@
             <h1>Ajouter une image</h1>
         </div>
         
-{% for type, messages in app.session.flashbag.all() %}
-    {% for message in messages %}
-        <div class="alert alert-{{ type }}">
-            {{ message }}
-        </div>
-    {% endfor %}
-{% endfor %}
    
 <div class="registerForm ">
 

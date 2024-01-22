@@ -93,27 +93,27 @@ btn.addEventListener('click', () => {
 
 /* API Leaflet */ 
 
-    // Créez une icône personnalisée avec une couleur différente
-    var customIcon = L.icon({
-        iconUrl: '../img/icon-localisation.png', 
-        // iconUrl: '{{ asset( img/icon-localisation.png ) }}',
+    // // Créez une icône personnalisée avec une couleur différente
+    // var customIcon = L.icon({
+    //     iconUrl: '../img/icon-localisation.png', 
+    //     // iconUrl: '{{ asset( img/icon-localisation.png ) }}',
         
-        iconSize: [38, 38],  // Taille de l'icône en pixels
-        iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
-        popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
-    });
+    //     iconSize: [38, 38],  // Taille de l'icône en pixels
+    //     iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
+    //     popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
+    // });
 
-    // Initialisez la carte avec l'icône personnalisée
-    var map = L.map('map').setView([48.116933, 7.140431], 13);
+    // // Initialisez la carte avec l'icône personnalisée
+    // var map = L.map('map').setView([48.116933, 7.140431], 13);
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 13,
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(map);
+    // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    //     maxZoom: 13,
+    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    // }).addTo(map);
 
-    // Utilisez l'icône personnalisée pour le marqueur
-    var marker = L.marker([48.116933, 7.140431], { icon: customIcon }).addTo(map);
-    marker.bindPopup("Le gîte du Rain du Pair").openPopup();
+    // // Utilisez l'icône personnalisée pour le marqueur
+    // var marker = L.marker([48.116933, 7.140431], { icon: customIcon }).addTo(map);
+    // marker.bindPopup("Le gîte du Rain du Pair").openPopup();
 
 
 

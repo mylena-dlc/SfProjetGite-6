@@ -9,7 +9,7 @@
         Swal.fire({
             icon: "error",
             title: "Erreur",
-            text: "{{ flash_message }}",
+            text: "{{ flash_message|raw }}",
         });
     </script>
 {% endfor %}
@@ -19,7 +19,7 @@
         Swal.fire({
             icon: "success",
             title: "Succès",
-            text: "{{ flash_message }}",
+            text: "{{ flash_message|raw }}",
         });
     </script>
 {% endfor %}

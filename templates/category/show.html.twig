@@ -8,22 +8,30 @@
 {% block body %}
 
 {% for flash_message in app.flashes('error') %}
-    <script>
-        Swal.fire({
-            icon: "error",
-            title: "Erreur",
-            text: "{{ flash_message }}",
-        });
-    </script>
+    {% if not app.session.get('success_flash_shown') %}
+
+        <script>
+            Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: "{{ flash_message|raw }}",
+            });
+        </script>
+        {% set _ = app.session.set('error_flash_shown', true) %}
+    {% endif %}
 {% endfor %}
+
 {% for flash_message in app.flashes('success') %}
-    <script>
-        Swal.fire({
-            icon: "success",
-            title: "Succès",
-            text: "{{ flash_message }}",
-        });
-    </script>
+    {% if not app.session.get('success_flash_shown') %}
+        <script>
+            Swal.fire({
+                icon: "success",
+                title: "Succès",
+                text: "{{ flash_message|raw }}",
+            });
+        </script>
+        {% set _ = app.session.set('error_flash_shown', true) %}
+    {% endif %}
 {% endfor %}
 
     <div class="title gite-title center">
@@ -43,18 +51,17 @@
             <div class="gallery-item"> 
                 <img src="{{ asset(picture.url) }}" alt="{{ picture.description }}" class="modal-trigger" onclick="openModal('{{ asset(picture.url) }}')">
             </div>
+
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <button class="btn delete cardBtn"><a href="{{ path('delete_picture', {'id': category.id, 'id_picture': picture.id }) }}" class="cardLink"><i class="fa-solid fa-trash-can"></i></a></button>
+        {% endif %}
         {% endfor %}
     </div>
 </div>
 
 
 </div>
-    {% if is_granted('ROLE_ADMIN') %}
-        <div class="btnRight">
-            <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}" class="btn add">Ajouter une image</a></button>
-        </div>
 
-        
-    {% endif %}
 
 {% endblock %}

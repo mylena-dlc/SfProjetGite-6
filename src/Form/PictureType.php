@@ -24,7 +24,7 @@ class PictureType extends AbstractType
             ->add('picture', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,
-                'required' => false,
+                'required' => true,
                 'attr' => [
                     'class' => 'inputRegister pictureInput'
                 ],
@@ -43,6 +43,7 @@ class PictureType extends AbstractType
             ])
             ->add('description', TextType::class, [
                 'label' => 'Description',
+                'required' => true,
                 'attr' => [
                     'class' => 'inputRegister'
                 ]

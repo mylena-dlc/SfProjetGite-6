@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        {# <meta name="viewport" content="width=device-width, initial-scale=1.0"> #}
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title> {% block title %}{% endblock %} </title>
         <meta name="description" content="{% block meta_description %}{% endblock %}">
@@ -112,8 +112,6 @@
                 <video class="videoHome" src="{{ asset('img/video-header.mp4') }}" type="video/mp4" autoplay muted loop></video>
             </div>
             <nav class="navbar">
-
-
                 {# boutton menu burger #}
                 {# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                                     <span class="navbar-toggler-icon"></span>
@@ -129,7 +127,7 @@
 
                     <li class="nav-item">
                         <a href="/#gite">
-                            Accueil HOME
+                            Accueil
                         </a>
                     </li>
                     <li class="nav-item">
@@ -147,17 +145,17 @@
                             avis
                         </a>
                     </li>
+      
+                    <li class="nav-item">
+                        <a href="{{ path('app_home') }}">
+                            réservation
+                        </a>
+                    </li>
                     <li class="nav-item">
                         <a href="{{ path('app_contact') }}">
                             contact
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="/#search">
-                            réservation
-                        </a>
-                    </li>
-
                     {% if is_granted('ROLE_ADMIN') %}
                         {# Si je suis admin #}
                         <li class="nav-item">
@@ -207,61 +205,68 @@
         <main class="container pageaccueil">
             {% block body %}{% endblock %}
         </main>
+        
+<footer>
+    <div class="footerContent">
+        <div class="footer-background"></div>
 
-               <footer>
-
-
-
-            <div class="footerContaint">
-                <div class="footer-background"></div>
-                <div class="footerTop">
-                    <figure>
-                        <img src="{{ asset( 'img/logo-blanc.png' ) }}" alt="logo" class="footerLogo"/>
-                    </figure>
-                    <div class="address">            
-                        {# Carte Leaflet #}
-                        <div id="map"></div>
-                    </div>
-                    <div class="contact">
-                        <p class="footerP">
-                            <a href="https://www.instagram.com/giteraindupair/" class="footerLink" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-                            <a href="https://www.facebook.com/profile.php?id=61555292307736" class="footerLink" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-                        </p>
-                        <p class="footerP">
-                            <a href="mailto:contact@giteraindupair.fr" target="_blank">contact@giteraindupair.fr</a>
-                        </p>
-                        <p class="footerP">
-                            <i class="fa-solid fa-phone"></i>
-                            06 36 29 62 22
-                        </p>
-                    </div>
-                </div>
-                <div class="footer-line"></div>
-                <div class="footerBottom">
-                    <div class="footer-link">
-                        <div class="link-right">
-                            <p class="footerLink">
-                            <a href="{{ path('app_condition_generales_vente') }}">Conditions générales de vente</a>
-                            </p>
-                            <p class="footerLink">
-                                <a href="{{ path('app_politique-confidentialite') }}">Politique de confidentialités</a>
-                            </p>
-                            <p class="footerLink">
-                                <a href="{{ path('app_mentions_legales') }}">Mentions légales</a>
-                            </p>
-                            <p class="footerLink">
-                                Plan du site
-                            </p>
-                        </div>
-                        <div class="link-left">
-                            <p class="footerLink">
-                                &copy; 2024 Gîte du Rain du Pair - Tous droits réservés.
-                            </p>
-                        </div>
-                    </div>
-                </div>
+        <div class="footerTop">
+            <div class="address">            
+                <p class="footerTitle">Nous trouver</p>
+                <p class="footerP">224, Rain du Pair</p>
+                <p class="footerP">68370 Orbey</p>
+                <p class="footerP">Alsace, France</p>
             </div>
-        </footer>
+            {# Carte Leaflet #}
+            <div id="map"></div>
+
+            <figure>
+                <img src="{{ asset( 'img/logo-blanc.png' ) }}" alt="logo" class="footerLogo"/>
+            </figure>
+
+            <div class="contact">
+                <p class="footerTitle">Nous contacter</p> 
+                <p class="footerP">
+                    <a href="mailto:contact@giteraindupair.fr" class="hoverLink" target="_blank"><i class="fa-solid fa-envelope"></i> contact@giteraindupair.fr</a>
+                </p>
+                <p class="footerP">
+                    <i class="fa-solid fa-phone"></i>
+                    06 36 29 62 22
+                </p>
+                <p class="footerP">
+                    <a href="https://www.instagram.com/giteraindupair/" class="footerLink" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61555292307736" class="footerLink" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                </p>
+            </div>
+        </div>
+
+        <div class="footer-line"></div>
+
+        <div class="footerBottom">
+    
+            <div class="link-right">
+                <p class="footerLink hoverLink">
+                    <a href="{{ path('app_condition_generales_vente') }}">Conditions générales de vente</a>
+                </p>
+                <p class="footerLink hoverLink">
+                    <a href="{{ path('app_politique-confidentialite') }}">Politique de confidentialités</a>
+                </p>
+                <p class="footerLink hoverLink">
+                    <a href="{{ path('app_mentions_legales') }}">Mentions légales</a>
+                </p>
+                <p class="footerLink hoverLink">
+                    Plan du site
+                </p>
+            </div>
+
+            <div class="link-left">
+                <p class="footerLink">
+                    &copy; 2024 Gîte du Rain du Pair - Tous droits réservés.
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
 
         {% block javascripts_footer %}
         

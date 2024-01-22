@@ -123,8 +123,11 @@ class SecurityController extends AbstractController
                 // On génère un lien de réinitialisation du mot de passe
                 $url = $this->generateUrl('reset_pass', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL);
 
+                // Encodage du logo
+                $logo = $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png');
+
                 // Création des données du mail
-                $context = compact('url', 'user');
+                $context = compact('url', 'user', 'logo');
 
                 // Envoi du mail
                 $mail->send(
@@ -301,5 +304,15 @@ class SecurityController extends AbstractController
 
         // Rediriger l'utilisateur vers la page d'accueil
          return $this->redirectToRoute('app_home');
+    }
+
+    // Fonction pour encoder le logo
+
+    private function imageToBase64($path) {
+        $path = $path;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
     }
 }

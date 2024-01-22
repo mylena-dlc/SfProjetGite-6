@@ -73,7 +73,7 @@ class PictureController extends AbstractController
         
         return $this->render('category/index.html.twig', [
             'categories' => $categories,
-            'desciption' => $description
+            'description' => $description
         ]);
     }
 
@@ -139,7 +139,7 @@ class PictureController extends AbstractController
     #[Route('home/category/{id}', name: 'show_category')]
     public function show(Category $category, $id): Response {
 
-        $pictures = $this->pictureRepository ->findBy(['category' => $id]);
+        $pictures = $this->pictureRepository->findBy(['category' => $id]);
         
         $description = 'Explorez notre gîte de charme à Orbey à travers notre galerie photos. Découvrez chaque catégorie et préparez-vous à vivre une expérience exceptionnelle en Alsace.';
 
@@ -208,7 +208,7 @@ class PictureController extends AbstractController
 
             // Ajoutez un message flash de succès
             if ($picture->getId()) {
-                $this->addFlash('success', 'L\'image a été ajoutée.');
+                $this->addFlash("success", "L\'image a été ajoutée.");
             } else {
                 $this->addFlash('success', 'Echec lors de l\'ajout de l\'image.');
             }
@@ -294,4 +294,32 @@ class PictureController extends AbstractController
             'pictureId' => $picture->getId() // transmet aussi l'ID de la photo mais sous un autre nom
         ]);
     }   
+
+    /**
+    * Fonction pour supprimer une photos
+    */
+   
+    #[Route('admin/category/{id}/{id_picture}/delete', name: 'delete_picture')]
+    public function deletePicture(int $id, int $id_picture) {
+
+
+        // $picture = $this->pictureRepository->findBy(['id' => $id_picture]);
+        $picture = $this->pictureRepository->find($id_picture);
+
+
+        if (!$picture) {
+            $this->addFlash('error', 'L\'image n\'existe pas.');
+            return $this->redirectToRoute('show_category', ['id' => $id]);
+        }
+
+        $this->em->remove($picture);
+        $this->em->flush();
+
+        // $successMessage = 'L\'image a été supprimée.';
+        // $this->addFlash('success', htmlspecialchars_decode($successMessage));
+        $this->addFlash("success', 'L\'image a été supprimée.");
+    
+        return $this->redirectToRoute('show_category' , ['id' => $id]); 
+    }
+
 }

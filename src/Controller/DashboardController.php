@@ -12,6 +12,7 @@ use App\Entity\Activity;
 use App\Form\PeriodType;
 use App\Form\ReviewType;
 use App\Form\ActivityType;
+use App\Service\SendMailService;
 use App\Form\ReservationViewType;
 use App\Repository\GiteRepository;
 use App\Repository\UserRepository;
@@ -249,7 +250,7 @@ class DashboardController extends AbstractController
     */
 
     #[Route('security/{id}/writeReview{reservation_id}', name: 'app_write_review')]
-    public function writeReview(User $user, Request $request, int $id, $reservation_id): Response
+    public function writeReview(User $user, Request $request, int $id, $reservation_id, SendMailService $mail): Response
     {
         $userSession = $this->getUser();
         $user = $this->userRepository->findOneBy(['id' => $id]);
@@ -275,6 +276,19 @@ class DashboardController extends AbstractController
                 $this->em->flush();
                 $this->addFlash('success', "Avis ajouté avec succès. Merci d\'avoir partagé votre expérience avec nous.", false);
 
+                // Envoyer la notification à l'administrateur
+                $mail->sendAdminNotification(
+                    'contact@giteraindupair.fr',
+                    'admin@giteraindupair.com',
+                    'Nouvel avis',
+                    'admin-notification-review',
+                    [
+                        'review' => $review,
+                    ]
+                );
+
+
+
                 $userId = $user->getId();
                 return $this->redirectToRoute('app_profil', ['id' => $userId]); 
             }
@@ -290,7 +304,6 @@ class DashboardController extends AbstractController
         }
         
         return $this->redirectToRoute('app_login');
-
     }
 
 

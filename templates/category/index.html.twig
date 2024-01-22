@@ -7,17 +7,28 @@
 
 {% block body %}
 
+{% for flash_message in app.flashes("error") %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message|raw }}",
+        });
+    </script>
+{% endfor %}
+{% for flash_message in app.flashes("success") %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "{{ flash_message|raw }}",
+        });
+    </script>
+{% endfor %}
+
 <div class="title gite-title center">
         <h1>Catégorie d'image</h1>
 </div>
-
-{% for type, messages in app.session.flashbag.all() %}
-{% for message in messages %}
-    <div class="alert alert-{{ type }}">
-        {{ message }}
-    </div>
-{% endfor %}
-{% endfor %}
 
 
 <div class="cards">
@@ -37,8 +48,8 @@
 {% endfor %}
 </div>
 <div class="btnRight">
-    <button class="btn add categoryBtnAdd"><a href="{{ path ('new_category') }}" class="btn add">Ajouter une catégorie</a></button>
-    <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}" class="btn add">Ajouter une image</a></button>
+    <button class="btn add categoryBtnAdd"><a href="{{ path ('new_category') }}">Ajouter une catégorie</a></button>
+    <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}">Ajouter une image</a></button>
 
 </div>
 

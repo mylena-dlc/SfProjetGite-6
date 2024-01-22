@@ -11,7 +11,7 @@
         Swal.fire({
             icon: "error",
             title: "Erreur",
-            text: "{{ flash_message }}",
+            text: "{{ flash_message|raw }}",
             customClass: {
                 confirmButton: 'btn-ok',
             }
@@ -23,7 +23,7 @@
         Swal.fire({
             icon: "success",
             title: "Succès",
-            text: "{{ flash_message }}",
+            text: "{{ flash_message|raw }}",
         });
     </script>
 {% endfor %}
@@ -62,8 +62,6 @@
     });
 </script>
 
-
-{# <h2 class="title-search">Réserver</h2> #}
 
     <form id="reservationForm" action="{{ path('app_reservation') }}" method="post" onsubmit="return validateForm()">
         <div class="start-containt">
@@ -109,23 +107,30 @@
 
 
     <section id="gite">
-            <div class="gite-contain">
+                   <div class="title gite-title">
+            {# <h2>le <strong>gîte</strong></h2> #}
+           <h2>Entre nature et tranquillité</h2>
+        </div>
+
+            <div class="gite-content">
 
     <div class="background-image"></div>
 
 
-               
 
         <div class="description-and-picture">
-        <div class="title gite-title">
-            <h2>le <strong>gîte</strong></h2>
-        </div>
-            <p class="gite-description">Bienvenue au <strong>Gîte</strong> du Rain du Pair, 
-            un havre de paix situé dans un ancien corps de ferme récemment rénové, perché sur les hauteurs d'Orbey, en Alsace.
 
-            Notre <strong>gîte de charme</strong> offre une expérience exceptionnelle tout au long de l'année, que ce soit pour 
-            les plaisirs de l'hiver à proximité de la station de ski du Lac Blanc, les aventures estivales le long de la Route des Crêtes
-             et des vignobles alsaciens, ou simplement pour une retraite paisible au cœur de la nature.</p>
+  
+            
+
+            <p class="gite-description">Bienvenue au <strong class="color">Gîte du Rain du Pair</strong>, 
+        un havre de paix situé dans un ancien corps de ferme récemment rénové, perché sur les hauteurs d'Orbey, <strong class="color">en Alsace.</strong><br><br>
+        
+        Proche de la station de ski du Lac Blanc, notre <strong>hébergement</strong> avec <strong class="color">bain nordique</strong> vous offre une expérience unique pour des <strong>vacances en Alsace</strong>.<br><br>
+        
+        Découvrez le confort et l'authenticité de notre <strong class="color">gîte</strong> qui promet un <strong class="color">séjour nature</strong> inoubliable, au cœur de cette région riche en charme et en traditions.</p>
+    </p>
+
 
             <figure class="giteFigure">
                 <img class="picture01" src="img/gite-alsace-01.jpg" alt="Photos du séjour du gîte"/>
@@ -134,9 +139,11 @@
             
         </div>
 
-
             </div>
 
+        <figure class="giteFigure">
+        <img class="feuille01" src="img/feuille.png" alt="Photos du séjour du gîte"/>
+    </figure>
         <div class="banner">
             <div class="icons">
                 <div class="icon">
@@ -160,17 +167,20 @@
 
 
 
-        <div class="caracteristique-title">
-            <h2>Entre <br>nature et <br>tranquillité</h2>
+        <div class="title caracteristique-title">
+            {# <h2>Entre <br>nature et <br>tranquillité</h2> #}
+            <h2>le <strong>gîte</strong></h2>
+
         </div>
 
         <div class="caracteristique">
             <div class="caracteristique-left">
-                <p class="caracteristique-p">Réparti sur deux étages, le <em>logement</em> offre un espace confortable pouvant accueillir jusqu'à 6 personnes. 
+    <p class="caracteristique-p">Réparti sur deux étages, notre <em>hébergement de vacances</em> offre un <span class="color">espace confortable</span> pouvant accueillir jusqu'à 6 personnes.<br><br> 
                     Au rez-de-chaussée, vous profiterez d’une cuisine entièrement équipée ouverte sur le séjour, ainsi qu’un wc séparé. 
                     À l’étage, vous trouverez deux chambres élégamment aménagées, 
-                    chacune avec sa propre salle d'eau attenante pour plus d'intimité et un wc séparé.
-                    L'intérieur est chaleureux, accueillant et décoré avec soin pour vous offrir un <em>séjour nature en Alsace</em></p>
+                    chacune avec sa propre salle d'eau attenante pour plus d'intimité et un wc séparé.<br><br>
+                    L'intérieur est chaleureux, accueillant et décoré avec soin dans ce superbe <strong class="color">logement de charme</strong>.<br><br>
+                Détendez-vous dans notre <strong class="color">bain nordique</strong> extérieur chauffé au feu de bois, une expérience relaxante dans un petit coin de paradis en plein air.</p>
 
                     <div id="myModal" class="modal">
                         <span class="close">&times;</span>
@@ -194,10 +204,7 @@
                     </figure>
                 </div>
                
-               
-                <p class="caracteristique-p">La terrasse privative offre une vue imprenable sur les montagnes environnantes et le village en contre bas. 
-            Vous pourrez vous détendre dans notre <strong>bain nordique</strong> extérieur chauffé au feu de bois, 
-            une expérience relaxante dans un petit coin de paradis en plein air.</p>
+            
             </div>
             <div class="caracteristique-right">                
                
@@ -205,6 +212,10 @@
                     <img src="img/gite-alsace-06.jpg" alt="Photo d'une chambre du gîte" class="picture02"/>
                 </figure>
 
+                <figure class="giteFigure">
+                <img class="feuille02" src="img/feuille02.png" alt="Photos du séjour du gîte"/>
+            </figure>
+                
             </div>
 
         </div>
@@ -222,7 +233,7 @@
     <section id="galerie">
         <div class="galerie-contain">
             <div class="title"> 
-                <h2>Galerie</h2>
+                <h2>En image</h2>
             </div>
 
             <div class="categories"> 
@@ -236,7 +247,7 @@
                                 <img class="categoryImg" src="{{ firstPicture.getUrl() }}" alt="">
                                 <p class="voirPlus"><i class="fa-solid fa-magnifying-glass-plus"></i> Voir plus</p> 
                             </figure>
-                            <figcaption class="titleGalerie">{{ categoryName }}</figcaption>
+                            <p class="titleGalerie">{{ categoryName }}</p>
                         </a>
                     </div>
             {% endfor %} 
@@ -246,9 +257,37 @@
 
 </section>
 
+<section id="actualites">
+<div class="actualites-content">
+
+  <div class="section-btn-actu">
+        <div class="title">
+            <h2>Actualités</h2>
+        </div>
+        <h3>Suivez-nous !</h3>
+            <div>
+        <a href="https://www.instagram.com/giteraindupair/" class="footerLink" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.facebook.com/profile.php?id=61555292307736" class="footerLink" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+    </div>
+</div>
+
+    {# <div class="posts"> #}
+        <div class="instagram_post" postID="C1-Bg99MpvF" width="width" height="500px" scrolling="no" style="overflow: hidden"></div>
+
+        <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px" ></div>
+
+        <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px"></div>
+
+    {# </div> #}
+
+  
+
+</div>
+</section>
+
     <section id="alentours">
        
-            <div class="title">
+            <div class="title alentours-title">
                 <h2>Aux alentours</h2>
             </div> 
 
@@ -262,8 +301,13 @@
                     <div class="item item-activity activityCard" data-lat="{{ activity.latitude }}" data-lng="{{ activity.longitude }}" data-image="{{ asset(activity.picture) }}" data-name="{{ activity.name }}" >
 
                         <figure class="activity-picture"><img src="{{ asset(activity.picture) }}" alt="Photo de {{ activity.name }}" class="modal-trigger"/> </figure>
-                        <p class="activity-name">{{ activity.name }}</p>
-                        <p class="activity-description">{{ activity.description }}</p>
+                        
+                        <div class="activity-content">
+                            <p class="activity-name">{{ activity.name }}</p>
+                           
+                                <p class="activity-description">{{ activity.description }}</p>
+                          
+                        </div>
 
                     </div>
                    {% endfor %}
@@ -272,10 +316,10 @@
             </div>
 
 <script>
-        // Créez une icône personnalisée avec une couleur différente
+
+        // Créez une icône personnalisée pour le marker du gîte
         var customIcon = L.icon({
         iconUrl: '../img/icon-localisation.png', 
-        
         iconSize: [60, 60],  // Taille de l'icône en pixels
         iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
         popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
@@ -292,6 +336,14 @@
     var giteMarker = L.marker([48.116933, 7.140431], { icon: customIcon }).addTo(map);
     giteMarker.bindPopup("Le gîte", { className: 'giteModal' }).openPopup();
 
+    // Création du markeur des activités
+    var customIconActivity = L.icon({
+        iconUrl: '../img/marker.png', 
+        iconSize: [45, 60], 
+        iconAnchor: [16, 32], 
+        popupAnchor: [0, -32],
+    });
+
 
     // Récupération des cards
     var activityCards = document.querySelectorAll('.activityCard');
@@ -304,7 +356,7 @@
         var activityName = card.getAttribute('data-name');
 
         // Création du marqueur
-        var marker = L.marker([lat, lng]).addTo(map);
+        var marker = L.marker([lat, lng], { icon: customIconActivity }).addTo(map);
         marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + '" /><p>' + activityName + '</p>', { className: 'custom-popup-activity' });
 
 
@@ -322,35 +374,16 @@
 </script>
 
 
-
        
     </section>
 
-    <section id="actualites">
-        <div class="actualites-containt">
-            <div class="title">
-                <h2>Actualités</h2>
-            </div> 
-
-            <div class="posts">
-                <div class="instagram_post" postID="C1-Bg99MpvF" width="width" height="500px" scrolling="no" style="overflow: hidden"></div>
-
-                <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px" ></div>
-
-                <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px"></div>
-    
-            </div>
-
-        </div>
-    </section>
+ 
+       <hr class="hr-alentours">
 
 
     <section id="review">
-        <div class="title">
-            <h2>Avis</h2>
-        </div>
 
-    {# <div class="container"> #}
+    <div class="review-content">
         <div id="carousel">
 
             {% for review in reviews %}
@@ -378,10 +411,10 @@
             </div>     
             {% endfor %}
         </div> 
-
         <div class="sectionCenter">
             <button class="btn btnReviews"><a href="{{ path('app_all_reviews') }}">Voir tous les avis</a></button>
         </div>
+    </div>
     </section>
 
 

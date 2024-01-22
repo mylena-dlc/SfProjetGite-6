@@ -76,13 +76,16 @@ class RegistrationController extends AbstractController
             // Générer le token
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
+            // Encodage du logo
+            $logo = $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png');
+
             // Envoi du mail de vérification de compte
             $mail->send(
                 'no-reply@giteraindupair.fr',
                 $user->getEmail(),
                 'Activation de votre compte sur le site du Gîte du Rain du Pair',
                 'register',
-                compact('user', 'token')
+                compact('user', 'token', 'logo')
             );
 
             $this->addFlash('success', 'Votre compte a été créé avec succès. Veuillez prendre un moment pour valider votre compte en cliquant sur le lien envoyé à votre adresse e-mail.');
@@ -158,16 +161,31 @@ class RegistrationController extends AbstractController
             // Générer le token
             $token = $jwt->generate($header, $payload, $this->getParameter('app.jwtsecret'));
 
+            // Encodage du logo
+            $logo = $this->imageToBase64($this->getParameter('kernel.project_dir') . '/public/img/logook2.png');
+
             // Envoi du mail de vérification de compte
             $mail->send(
                 'ne-pas-repondre@giteraindupair.fr',
                 $user->getEmail(),
                 'Activation de votre compte sur le site du Gîte du Rain du Pair',
                 'register',
-                compact('user', 'token')
+                compact('user', 'token', 'logo')
             );
 
             $this->addFlash('success', 'Lien de vérification envoyé sur votre boîte mail ! Vous avez 3 heures pour le valider.');
             return $this->redirectToRoute('app_profil', ['id' => $user->getId()]);
     }
+
+
+    // Fonction pour encoder le logo
+
+    private function imageToBase64($path) {
+        $path = $path;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        return $base64;
+    }
+
 }
