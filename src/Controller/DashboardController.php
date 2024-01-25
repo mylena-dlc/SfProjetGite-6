@@ -95,29 +95,18 @@ class DashboardController extends AbstractController
         ]);
     }
 
-    /**
-    * Fonction pour afficher les infos du gîte
-    */
-
-    #[Route('admin/gite', name: 'app_gite')]
-    public function showGite(): Response
-    {
-        $gites = $this->giteRepository->findAll();
-        return $this->render('gite/index.html.twig', [
-            'gites' => $gites,
-        ]);
-    }
-
 
     /**
     * Fonction pour ajouter ou éditer un gîte
     */
 
-    #[Route('admin/gite/new', name: 'new_gite')]
+    #[Route('admin/gite/', name: 'app_gite')]
     #[Route('admin/gite/{id}/edit', name: 'edit_gite')]
 
     public function newEditGite(Gite $gite = null, Request $request): Response {
-    
+
+        $gites = $this->giteRepository->findAll();
+
         if(!$gite) {
             $gite = new Gite();
         }
@@ -133,13 +122,15 @@ class DashboardController extends AbstractController
             $this->em->persist($gite);
             // execute PDO
             $this->em->flush();
-
+            
+            $this->addFlash('success', 'Le gîte a été ajouté avec succès.');
             return $this->redirectToRoute('app_gite');
         }
 
-        return $this->render('gite/new.html.twig', [
+        return $this->render('gite/index.html.twig', [
             'form' => $form,
             'edit' => $gite->getId(),
+            'gites' => $gites,
         ]);
     }  
 
@@ -164,8 +155,9 @@ class DashboardController extends AbstractController
 
 
     // /**
-    // * Fonction pour afficher, ajouter ou éditer une période
+    // * Fonction pour afficher ou ajouter une période
     // */
+
 
     #[Route('admin/period', name: 'app_period')]
 

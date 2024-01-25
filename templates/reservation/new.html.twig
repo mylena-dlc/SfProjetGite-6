@@ -10,15 +10,20 @@
          <h1>Confirmer votre réservation</h1>
     </div>
 
-    {# Affichage du compte à rebours #}
-    <div id="countdown"></div> 
+    <div class="head-resa">
+        <div class="breadcrumb">
+            <a href="{{ path('app_reservation') }}"><button class="btn">Retour</button></a>
+        </div>
+        {# Affichage du compte à rebours #}
+        <div id="countdown"></div>
+    </div>
 
-   <div class="sectionLogin">
+        {# Si l'utilisateur est connecté et que son compte à été validé #}
+        {% if app.user and app.user.isVerified == true  %}
+           <div class="sectionLogin">
        <div class="title gite-title titlecenter">
             <h2>Connection</h2>
         </div>
-
-        {% if app.user %} {# Si je suis connecté: #}
             <p>Vous êtes connecter avec ce compte : </p>
             <p>{{ app.user.email }}</p>
             <p>Connectez-vous avec un autre compte <a aria-current="page" href="{{ path('app_login') }}"><i class="fa-solid fa-circle-arrow-right"></i></a></p>
@@ -87,12 +92,22 @@
     </div>
 {{ form_end(form) }}
 
+{% endif %}
 
-{% else %}
-    <p class="pBold">Veuillez vous connecter pour confirmer votre réservation <a aria-current="page" href="{{ path('app_login') }}"><i class="fa-solid fa-circle-arrow-right"></i></a></p>
 
-    <p class="pBold">Ou créer un compte <a aria-current="page" href="{{ path('app_register') }}"><i class="fa-solid fa-circle-arrow-right"></i></a></p>       
-
+{% if not app.user  %}
+    <p class="pBold">Veuillez vous connecter pour confirmer votre réservation 
+        <a aria-current="page" href="{{ path('app_login') }}"> ici <i class="fa-solid fa-circle-arrow-right"></i></a>
+    Ou créer un compte <a aria-current="page" href="{{ path('app_register') }}"> par ici<i class="fa-solid fa-circle-arrow-right"></i></a></p>      
 {% endif %}  
+
+    {# Si le compte n'a pas été validé #}
+    {% if app.user and app.user.isVerified == false  %}
+
+    <div class="section-profil">
+        <p class="profilResa"><i class="fa-solid fa-triangle-exclamation"></i> Votre compte n'est pas activé,<br>Veuilliez consultez vos mail et cliquer sur le lien d'activation.
+        <br><br> renvoyer le lien d'activation sur votre boîte mail <a href="{{ path('resend_verif') }}">ici </a></p>
+    </div>
+    {% endif %} 
 
 {% endblock %}

@@ -12,6 +12,10 @@
          <h1>Avis des voyageurs</h1>
     </div> 
 
+    <div class="breadcrumb">
+        <a href="{{ path('app_home') ~ '#review' }}"><button class="btn">Retour</button></a>
+    </div>
+
     <div class="allReviews">
     {% for review in reviews %}
     <div class="item itemAllReviews">

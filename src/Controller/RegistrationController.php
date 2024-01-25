@@ -88,7 +88,7 @@ class RegistrationController extends AbstractController
                 compact('user', 'token', 'logo')
             );
 
-            $this->addFlash('success', 'Votre compte a été créé avec succès. Veuillez prendre un moment pour valider votre compte en cliquant sur le lien envoyé à votre adresse e-mail.');
+            $this->addFlash('success', 'Votre compte a été créé avec succès. Veuillez valider votre compte en cliquant sur le lien envoyé à votre adresse e-mail afin de pouvoir réserver votre séjour.');
             return $this->redirectToRoute('app_login');
         }
     }

@@ -36,6 +36,7 @@ class PictureType extends AbstractType
                             'image/jpeg',
                             'image/jpg',
                             'image/png',
+                            'image/webp',
                         ],
                         'mimeTypesMessage' => 'Veuillez télécharger une image valide.',
                     ])
@@ -59,8 +60,6 @@ class PictureType extends AbstractType
                 ],             
                 'required' => false, // Rend le champ non obligatoire
                 'placeholder' => 'Sans catégorie', // Définit la valeur du placeholder
-
-
             ])
       
             ->add('url', HiddenType::class, [ // Champ "url" de type HiddenType

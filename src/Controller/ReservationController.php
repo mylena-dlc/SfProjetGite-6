@@ -71,6 +71,36 @@ class ReservationController extends AbstractController
     #[Route('/reservation', name: 'app_reservation')]
     public function index(Request $request): Response
     {
+
+        // Initialisation des variables avec des valeurs par défaut
+        $startDate = null;
+        $endDate = null;
+        $dateRange = null;
+        $numberAdult = null;
+        $numberKid = null; 
+        $numberNight = null;
+        $nightPrice = null;
+        $cleaningCharge = null;
+        $supplement = null;
+        $totalPrice = null;
+
+        // Récupération des données de session si elles existent
+        $session = $request->getSession();
+        $reservationDetails = $session->get('reservation_details');
+
+        // Si les données de session existent, on initialise les variables
+        if ($reservationDetails !== null) {
+            $startDate = $reservationDetails['startDate'];
+            $endDate = $reservationDetails['endDate'];
+            $numberAdult = $reservationDetails['numberAdult'];
+            $numberKid = $reservationDetails['numberKid'];
+            $numberNight = $reservationDetails['numberNight'];
+            $nightPrice = $reservationDetails['nightPrice'];
+            $cleaningCharge = $reservationDetails['cleaningCharge'];
+            $supplement = $reservationDetails['supplement'];
+            $totalPrice = $reservationDetails['totalPrice'];
+        }
+
         if ($request->isMethod('POST')) {
 
             // Récupérez les données du formulaire
@@ -79,6 +109,11 @@ class ReservationController extends AbstractController
             $dateRange = $request->get('start');
             $numberAdult = $request->get('numberAdult');
             $numberKid = $request->get('numberKid'); 
+            $numberNight = $request->get('numberNight'); 
+            $nightPrice = $request->get('nightPrice'); 
+            $cleaningCharge = $request->get('cleaningCharge'); 
+            $supplement = $request->get('supplement'); 
+            $totalPrice = $request->get('totalPrice'); 
 
 
             // Si les dates ne sont pas sélectionnées, redirection et message d'erreur
@@ -176,8 +211,9 @@ class ReservationController extends AbstractController
 
     // Vérifiez si l'utilisateur est connecté
     if (!$security->isGranted('IS_AUTHENTICATED_FULLY')) {
-        // Redirigez l'utilisateur vers la page de connexion
-        return $this->redirectToRoute('app_login');
+        // Redirigez l'utilisateur vers la page d'inscription
+        $this->addFlash('error', 'Vous devez créer un compte pour finaliser votre réservation.');
+        return $this->redirectToRoute('app_register');
     }
 
     // Récupérez les données stockées en session

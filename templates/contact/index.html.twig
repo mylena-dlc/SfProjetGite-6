@@ -11,7 +11,9 @@
         <h1>Contactez-nous</h1>
 </div>
    
-
+<div class="breadcrumb">
+    <a href="{{ path('app_home') }}"><button class="btn">Retour</button></a>
+</div>
 
 <section class="section-contact">
     <div class="icon">
@@ -39,10 +41,10 @@
 
    <div class="registerForm">
 
-    
+<h2 class="title-contact">Un renseignement?<br> Une demande particulière?<br> N'hésitez pas, envoyez-nous un message !</h2>    
     <form id="reservationForm" class="contactForm" action="{{ path('app_contact_email') }}" method="post">
 
-        
+
         <label for="email">Votre adresse mail</label>
         <input type="email" id="contact-email" name="email" required placeholder="Sélectionnez votre adresse mail">
 

@@ -7,6 +7,26 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
+    {% for flash_message in app.flashes('error') %}
+    <script>
+        Swal.fire({
+            icon: "error",
+            title: "Erreur",
+            text: "{{ flash_message|raw }}",
+        });
+    </script>
+{% endfor %}
+
+{% for flash_message in app.flashes('success') %}
+    <script>
+        Swal.fire({
+            icon: "success",
+            title: "Succès",
+            text: "{{ flash_message|raw }}",
+        });
+    </script>
+{% endfor %}
+
 <section class="login-page">
     <div class="title gite-title center">
         <h1>Inscription</h1>

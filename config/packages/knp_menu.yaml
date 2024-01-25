@@ -1,0 +1,6 @@
+# knp_menu:
+#      builders:
+#         main_menu:
+#             class: App\Menu\Builder
+      
+#             alias: main_menu

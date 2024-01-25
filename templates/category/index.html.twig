@@ -2,9 +2,6 @@
 
 {% block title %}Galerie images{% endblock %}
 
-{% block meta_description %} {{ description }} {% endblock %}
-
-
 {% block body %}
 
 {% for flash_message in app.flashes("error") %}
@@ -26,31 +23,59 @@
     </script>
 {% endfor %}
 
-<div class="title gite-title center">
-        <h1>Catégorie d'image</h1>
+<div class="containerDashboard">
+    <div class="slidebar">
+        <ul>
+            <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
+            <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
+        </ul>
+    </div>
+
+<div class="content">
+
+    <div class="title gite-title center">
+            <h1>Catégorie d'image</h1>
+    </div>
+
+
+    <div class="cards">
+    {% for category in categories %}
+
+        <div class="card">
+                <a class="cardLink" href="{{ path('show_category', {'id': category.id}) }}">
+                {{ category }}
+                </a>
+            <div class="cardBtns">
+                <button class="btn delete cardBtn"><a href="{{ path ('delete_category', {'id': category.id}) }}" class="cardLink"><i class="fa-solid fa-trash-can"></i></a></button>
+            </div>
+        </div>    
+    {% endfor %}
+    </div>
+
+    <div class="btnRight">
+        <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}">Ajouter une image</a></button>
+    </div>
+
+
+    <div class="addPeriodSection">
+
+        <div class="title gite-title center">
+                <h2>Ajouter une catégorie d'image</h2>
+        </div>
+
+        <div class="addPeriodForm">
+        {{ form(formAddCategory) }}  
+        </div>
+    </div>
+</div>
 </div>
 
-
-<div class="cards">
-{% for category in categories %}
-
-<div class="card">
-    <a class="cardLink" href="{{ path('show_category', {'id': category.id}) }}">
-    {{ category }}
-    </a>
-<div class="cardBtns">
-    <button class="btn edit cardBtn"><a href="{{ path ('edit_category', {'id': category.id}) }}" class="cardLink"><i class="fa-solid fa-pen-to-square"></i></a></button>
-    <button class="btn delete cardBtn"><a href="{{ path ('delete_category', {'id': category.id}) }}" class="cardLink"><i class="fa-solid fa-trash-can"></i></a></button>
-
-</div>
-    </div>    
-
-{% endfor %}
-</div>
-<div class="btnRight">
-    <button class="btn add categoryBtnAdd"><a href="{{ path ('new_category') }}">Ajouter une catégorie</a></button>
-    <button class="btn add categoryBtnAdd"><a href="{{ path ('new_picture') }}">Ajouter une image</a></button>
-
-</div>
 
 {% endblock %}

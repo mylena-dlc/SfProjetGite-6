@@ -17,7 +17,7 @@
             
             <script>
                 tarteaucitron.init({
-                    "privacyUrl": "", /* Privacy policy url */
+                    "privacyUrl": "{{ path('app_mentions_legales') }}", /* Privacy policy url */
                     "bodyPosition": "bottom", /* or top to bring it as fFirst element for accessibility */
 
                     "hashtag": "#tarteaucitron", /* Open the panel with this hashtag */
@@ -255,7 +255,7 @@
                     <a href="{{ path('app_mentions_legales') }}">Mentions légales</a>
                 </p>
                 <p class="footerLink hoverLink">
-                    Plan du site
+                    <a href="{{ path('app_sitemap') }}">Plan du site</a>
                 </p>
             </div>
 

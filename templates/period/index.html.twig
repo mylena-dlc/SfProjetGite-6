@@ -25,20 +25,19 @@
 
 
 <div class="containerDashboard">
-    <div class="slidebar">
-        <ul>
-            <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="titleSlidebar"><i class="fa-solid fa-angles-right"></i> Accueil tableau de board</a></li>
-            <li class="titleSlidebar">gestion des réservations</li>
-            <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations à venir</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les réservations passées</a></li>
-            <li class="titleSlidebar">gestion du calendrier</li>
-            <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les périodes</a></li>
-            <li class="titleSlidebar">gestion du gîte</li>
-            <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Le gîte</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les photos</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-angles-right"></i> Les avis</a></li>
-        </ul>
-    </div>
+<div class="slidebar">
+    <ul>
+        <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
+        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
+        <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
+    </ul>
+</div>
 
 <div class="content">
 
@@ -72,7 +71,6 @@
     </table>        
 
 
-    {# <div class="addPeriodSection" style="display: none;" data-prototype="{{ form_widget(form.periods.vars.prototype)|e('html_attr') }}"> #}
     <div class="addPeriodSection">
 
         <div class="title gite-title center">
