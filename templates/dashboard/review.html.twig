@@ -25,80 +25,68 @@
 
 
 <div class="containerDashboard">
-<div class="slidebar">
-    <ul>
-        <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
-        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
-    </ul>
-</div>
+    <div class="slidebar">
+        <ul>
+            <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
+            <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
+        </ul>
+    </div>
 
-<div class="content">
+    <div class="content">
 
-    <div class="title gite-title center">
-         <h1>Avis des voyageurs</h1>
-    </div> 
+        <div class="title gite-title center">
+            <h1>Avis non validé(s)</h1>
+        </div> 
 
-    <section class="unverifiedReview">
-        <h2 class="center">Avis non validé(s)</h2>
+        <section class="unverifiedReview">
 
-        {% if unverifiedReviews is empty %}
-            <p class="center">Il n'y a aucun avis à valider.</p>
-        {% else %}
+            {% if unverifiedReviews is empty %}
+                <p class="center">Il n'y a aucun avis à valider.</p>
+            {% else %}
 
-        {% for unverifiedReview in unverifiedReviews %}
-        <div class="cardReviews">
-            <p class="reviewName">{{ unverifiedReview.reservation.lastName }} {{ unverifiedReview.reservation.firstName }}</p>
-            <p class="reviewComment">{{ unverifiedReview.creationDate|date('d-m-Y') }}</p>
-            {# <p class="reviewRating">Note : {{ unverifiedReview.rating }}</p> #}
+            {% for unverifiedReview in unverifiedReviews %}
+            <div class="cardReviews">
+                <p class="reviewName">{{ unverifiedReview.reservation.lastName }} {{ unverifiedReview.reservation.firstName }}</p>
+                <p class="reviewComment">{{ unverifiedReview.creationDate|date('d-m-Y') }}</p>
 
-            {# Utilisation de RateYo pour afficher les étoiles #}
-            <div id="rating-{{ unverifiedReview.id }}"></div>
-            <script>
-                $(document).ready(function () {
-                    $("#rating-{{ unverifiedReview.id }}").rateYo({
-                        rating: {{ unverifiedReview.rating }},
-                        readOnly: true, // Pour rendre les étoiles en lecture seule
-                        starWidth: "20px",
-                        precision: 0,
+                {# Utilisation de RateYo pour afficher les étoiles #}
+                <div id="rating-{{ unverifiedReview.id }}"></div>
+                <script>
+                    $(document).ready(function () {
+                        $("#rating-{{ unverifiedReview.id }}").rateYo({
+                            rating: {{ unverifiedReview.rating }},
+                            readOnly: true, 
+                            starWidth: "20px",
+                            precision: 0,
+                        });
                     });
-                });
-            </script>
-            
-            <p class="reviewComment">{{ unverifiedReview.comment }}</p>
-            
-            {# Formulaire pour valider l'avis et ajouter une réponse #}
-            <form method="post" action="{{ path('app_verify_review', {'id': unverifiedReview.id}) }}" id="reviewForm">
-            
-                <label for="response">Réponse du propriétaire:</label><br>
-                <textarea id="response" name="response"></textarea><br>
+                </script>
+                
+                <p class="reviewComment">{{ unverifiedReview.comment }}</p>
+                
+                {# Formulaire pour valider l'avis et ajouter une réponse #}
+                <form method="post" action="{{ path('app_verify_review', {'id': unverifiedReview.id}) }}" id="reviewForm">
+                
+                    <label for="response">Réponse du propriétaire:</label><br>
+                    <textarea id="response" name="response"></textarea><br>
 
-                <button type="submit" class="btn btn-primary">Valider l'avis</button>
+                    <button type="submit" class="btn btn-primary">Valider l'avis</button>
 
-            </form>
+                </form>
 
-        </div>
+                <button class="btn delete"><a href="{{ path('delete_review', {'id': unverifiedReview.id }) }}"><i class="fa-solid fa-pen-to-square"></i> Supprimer l'avis</a></button>
 
-        {% endfor %}
-    {% endif %}
-
-</section>
-
-<section class="verifiedReview">
-    <h2 class="center">Tous les avis</h2>
-
-        <div class="sectionCenter">
-            <button class="btn btnReviews"><a href="{{ path('app_all_reviews') }}">Voir tous les avis</a></button>
-        </div>
-
-</section>
-
-</div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        </section>
+    </div>
 </div>
 {% endblock %}

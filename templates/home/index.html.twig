@@ -389,7 +389,7 @@
             {% for review in reviews %}
             <div class="item">
 
-                <p class="reviewName">{{ review.reservation.lastName }} {{ review.reservation.firstName }}</p>
+                <p class="reviewName">{{ review.reservation.firstName }}</p>
                 <p class="reviewDate">posté le {{ review.creationDate|date('d-m-Y') }}</p> 
                 
                 {# Utilisation de RateYo pour afficher les étoiles #}

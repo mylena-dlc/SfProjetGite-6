@@ -209,6 +209,7 @@ class DashboardController extends AbstractController
     * Fonction pour afficher les réservations passées
     */
 
+
     #[Route('admin/dashboard/previous-reservations', name: 'app_previous_reservations')]
     public function previousReservations(): Response
     {
@@ -232,6 +233,23 @@ class DashboardController extends AbstractController
     
         return $this->render('dashboard/upcoming-reservations.html.twig', [
             'upcomingReservations' => $upcomingReservations,
+        ]);
+    }
+
+
+    /**
+    * Fonction pour afficher les détails d'une réservation
+    */
+
+    #[Route('admin/reservation/{id}', name: 'show_reservation_admin')]
+    public function showReservation(int $id): Response
+    {
+        // Récupérez la réservation depuis la base de données
+        $reservation = $this->reservationRepository->find($id);
+
+        // Passez les données de la réservation à la vue
+        return $this->render('dashboard/show-reservation.html.twig', [
+            'reservation' => $reservation
         ]);
     }
 
@@ -279,8 +297,6 @@ class DashboardController extends AbstractController
                     ]
                 );
 
-
-
                 $userId = $user->getId();
                 return $this->redirectToRoute('app_profil', ['id' => $userId]); 
             }
@@ -300,7 +316,7 @@ class DashboardController extends AbstractController
 
 
     /**
-    * Fonction pour afficher les avis
+    * Fonction pour afficher les avis non validés
     */
 
     #[Route('admin/dashboard/review', name: 'app_review')]
@@ -317,7 +333,23 @@ class DashboardController extends AbstractController
   
 
     /**
-    * Fonction pour valider un avis par l'administrateur
+    * Fonction pour supprimer un avis
+    */
+
+    #[Route('admin/dashboard/review/{id}/delete', name: 'delete_review')]
+    public function deleteReview(Review $review): Response
+    {
+          $this->em->remove($review);
+          $this->em->flush();
+  
+          $this->addFlash('success', "Avis supprimé avec succès !");
+  
+          return $this->redirectToRoute('app_review');
+    }
+
+
+    /**
+    * Fonction pour valider un avis par l'administrateur et lui répondre
     */
 
     #[Route('admin/dashboard/review/verify/{id}', name: 'app_verify_review')]
@@ -328,7 +360,7 @@ class DashboardController extends AbstractController
         // Mettre à jour le champ is_verified à 1
         $review->setIsVerified(1);
 
-        // Récupération de la réponse de l'admin depuis el formulaire
+        // Récupération de la réponse de l'admin depuis le formulaire
         $response = $request->request->get('response');
         $review->setResponse($response);
     

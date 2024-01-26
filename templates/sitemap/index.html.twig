@@ -14,7 +14,7 @@
             <priority>0.8</priority>
 
                 {# Si il y a une image #}
-                {% if url['pictures'] is defined and url['pictures'] is not empty %}
+                {# {% if url['pictures'] is defined and url['pictures'] is not empty %}
                 {% for picture in url['pictures'] %}
                     <image:image>
                         <image:loc>
@@ -23,7 +23,7 @@
                         <image:title>{{ picture['alt'] }}</image:title>
                     </image:image>
                 {% endfor %}
-            {% endif %}
+            {% endif %} #}
         </url>
     {% endfor %}
 </urlset>

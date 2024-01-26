@@ -1861,11 +1861,11 @@ th, td {
 
 .titleAdmin {
     text-transform: uppercase;
-    font-size: 18px;
+    font-size: 22px;
     text-align: center;
-    padding-bottom: 15px;
-
+    padding-bottom: 30px;
 }
+
 .content {
     padding: 20px;
     width: calc(100% - 350px);
@@ -2055,11 +2055,18 @@ th, td {
 .textarea {
     height: 300px;
     width: 500px;
-
 }
 
+.table-activity-img img {
+    height: 200px;
+    width: 300px;
+    object-fit: cover;
+}
 
+.btn-detail .fa-solid {
+    color: white;
 
+}
 /* ********************************************** DASHBOARD AVIS ********************************************** */
 
 .reviewTitle {
@@ -2117,6 +2124,11 @@ th, td {
     border-radius: 20px;
     padding: 30px;
     margin: 50px 0;
+}
+
+.cardReviews .delete {
+    line-height: 5px;
+    margin: 10px;
 }
 
 .cardReviews p {

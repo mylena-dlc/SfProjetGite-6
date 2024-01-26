@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Repository\ReviewRepository;
 use App\Repository\PictureRepository;
 use App\Repository\ActivityRepository;
@@ -138,6 +139,27 @@ class HomeController extends AbstractController
     {
         return $this->render('home/cgv.html.twig');
     }
+
+
+    
+    /**
+    * Fonction pour voir les photos d'une catégorie
+    */
+
+    #[Route('home/category/{id}', name: 'show_category')]
+    public function show(Category $category, $id): Response {
+
+        $pictures = $this->pictureRepository->findBy(['category' => $id]);
+        
+        $description = 'Explorez notre gîte de charme à Orbey à travers notre galerie photos. Découvrez chaque catégorie et préparez-vous à vivre une expérience exceptionnelle en Alsace.';
+
+        return $this->render('home/picture.html.twig', [
+            'category' => $category,
+            'pictures' => $pictures,
+            'description' => $description
+        ]);
+    }
+
 
 
     /**

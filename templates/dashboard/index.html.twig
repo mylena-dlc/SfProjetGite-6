@@ -6,25 +6,25 @@
 
 
 <div class="containerDashboard">
-<div class="slidebar">
-    <ul>
-        <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
-        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
-    </ul>
-</div>
+    <div class="slidebar">
+        <ul>
+            <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
+            <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
+        </ul>
+    </div>
 
-<div class="content">
+    <div class="content">
 
-<div class="circleResa">
-    <p>Dernières réservations éffectuées</p>
-</div> 
+    <div class="circleResa">
+        <p>Dernières réservations éffectuées</p>
+    </div> 
 
     <div class="title gite-title center">
          <h1>Tableau de bord Administrateur</h1>
@@ -41,7 +41,7 @@
             <th>Date d'arrivée</th>
             <th>Date de départ</th>
             <th>Prix total</th>
-            <th>Détails</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -54,11 +54,7 @@
             <td>{{ reservation.arrivalDate|date('d-m-Y') }}</td>
             <td>{{ reservation.departureDate|date('d-m-Y') }}</td>
             <td>{{ reservation.totalPrice }} €</td> 
-            <td>
-                <a href="{{ path('show_reservation', {'id': reservation.id}) }}">
-                    <i class="fa-solid fa-circle-info"></i>
-                </a>
-            </td>
+            <td class="btn-detail"><a href="{{ path('show_reservation_admin', {'id': reservation.id}) }}"><button class="btn"><i class="fa-solid fa-circle-info"></i> Voir les détails</button></a></td>
         </tr>   
             {% endfor %}
     </tbody>

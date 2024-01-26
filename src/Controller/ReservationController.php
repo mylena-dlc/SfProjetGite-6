@@ -426,17 +426,17 @@ class ReservationController extends AbstractController
     #[Route('/reservation/{id}', name: 'show_reservation')]
     public function show(int $id): Response
     {
-    // Récupérez la réservation depuis la base de données
-    $reservation = $this->reservationRepository->find($id);
+        // Récupérez la réservation depuis la base de données
+        $reservation = $this->reservationRepository->find($id);
 
-    $description = 'Détails de votre séjour passé dans notre gîte à Orbey. Retrouvez les dates, tarifs, et toutes les informations liées à votre réservation. Revivez vos moments de vacances en Alsace.';
+        $description = 'Détails de votre séjour passé dans notre gîte à Orbey. Retrouvez les dates, tarifs, et toutes les informations liées à votre réservation. Revivez vos moments de vacances en Alsace.';
 
-    // Passez les données de la réservation à la vue
-    return $this->render('reservation/show.html.twig', [
-        'reservation' => $reservation,
-        'description' => $description
-    ]);
-}
+        // Passez les données de la réservation à la vue
+        return $this->render('reservation/show.html.twig', [
+            'reservation' => $reservation,
+            'description' => $description
+        ]);
+    }
 
 
     /**

@@ -44,24 +44,24 @@ class SitemapController extends AbstractController
         $categories = $this->categoryRepository->findAll();
 
 
-        foreach ($categories as $category) {
-            $categoryUrl[] = ['loc' => $this->generateUrl('app_category', [
-                'name' => $category->getName()
-                ]
-            )];
+        // foreach ($categories as $category) {
+        //     $categoryUrl[] = ['loc' => $this->generateUrl('app_category', [
+        //         'name' => $category->getName()
+        //         ]
+        //     )];
 
-            $urls[] = [
-                'loc' => $categoryUrl,
-                'pictures' => $category->getPictures()
-            ];
+        //     $urls[] = [
+        //         'loc' => $categoryUrl,
+        //         'pictures' => $category->getPictures()
+        //     ];
 
-            foreach ($category->getPictures() as $picture) {
-                $urls[] = [
-                    'loc' => $this->generateUrl('show_category', ['id' => $picture->getId()]),
-                    'picture' => $picture
-                ];
-            }
-        }
+        //     foreach ($category->getPictures() as $picture) {
+        //         $urls[] = [
+        //             'loc' => $this->generateUrl('show_category', ['id' => $picture->getId()]),
+        //             'picture' => $picture
+        //         ];
+        //     }
+        // }
 
         // Fabrication de la réponse
         $response = new Response(

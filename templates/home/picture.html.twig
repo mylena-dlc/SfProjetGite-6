@@ -4,7 +4,6 @@
 
 {% block meta_description %} {{ description }} {% endblock %}
 
-
 {% block body %}
 
 {% for flash_message in app.flashes('error') %}
@@ -16,7 +15,6 @@
             });
         </script>
 {% endfor %}
-
 {% for flash_message in app.flashes('success') %}
   
         <script>
@@ -27,13 +25,6 @@
             });
         </script>
 {% endfor %}
-
-{# {{ knp_menu_render(menu, { 'template': 'menu/index.html.twig' }) }} #}
-{# {{ knp_menu_render(menu, 'KnpMenuBundle:menu.html.twig') }} #}
-{# {{ knp_menu_render(menu, {'template': 'KnpMenuBundle:menu.html.twig'}) }} #}
-
-{# 
-{{ knp_menu_render('App:Builder:menu') }} #}
 
 
     <div class="title gite-title center">
@@ -58,12 +49,11 @@
                 <img src="{{ asset(picture.url) }}" alt="{{ picture.description }}" class="modal-trigger" onclick="openModal('{{ asset(picture.url) }}')">
             </div>
 
-
-        {% if is_granted('ROLE_ADMIN') %}
-            <button class="btn delete cardBtn"><a href="{{ path('delete_picture', {'id': category.id, 'id_picture': picture.id }) }}" class="cardLink"><i class="fa-solid fa-trash-can"></i></a></button>
-            <button class="btn delete cardBtn"><a href="{{ path('edit_picture', {'category_id': category.id, 'id': picture.id }) }}" class="cardLink"><i class="fa-solid fa-pen-to-square"></i></a></button>
-        {% endif %}
-        
+            {% if is_granted('ROLE_ADMIN') %}
+                <button class="btn delete cardBtn"><a href="{{ path('delete_picture', {'id': category.id, 'id_picture': picture.id }) }}" class="cardLink"><i class="fa-solid fa-trash-can"></i></a></button>
+                <button class="btn delete cardBtn"><a href="{{ path('edit_picture', {'category_id': category.id, 'id': picture.id }) }}" class="cardLink"><i class="fa-solid fa-pen-to-square"></i></a></button>
+            {% endif %}
+            
         {% endfor %}
     </div>
 </div>

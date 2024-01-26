@@ -66,7 +66,6 @@ class PictureController extends AbstractController
     * Fonction pour afficher, ajouter ou éditer une catégorie
     */
 
-
     #[Route('admin/category', name: 'app_category')]
 
     public function newCategory(Category $category = null, Request $request): Response {
@@ -88,7 +87,8 @@ class PictureController extends AbstractController
             $this->addFlash("success", "La catégorie a été ajoutée.");
             return $this->redirectToRoute('app_category');
         } 
-        return $this->render('category/index.html.twig', [
+
+        return $this->render('dashboard/category.html.twig', [
             'formAddCategory' => $form,
             'categories' => $categories,
         ]);
@@ -118,17 +118,14 @@ class PictureController extends AbstractController
     * Fonction pour voir les photos d'une catégorie
     */
 
-    #[Route('home/category/{id}', name: 'show_category')]
-    public function show(Category $category, $id): Response {
+    #[Route('admin/dashboard/picture/{id}', name: 'show_category')]
+    public function showPicture(Category $category, $id): Response {
 
         $pictures = $this->pictureRepository->findBy(['category' => $id]);
         
-        $description = 'Explorez notre gîte de charme à Orbey à travers notre galerie photos. Découvrez chaque catégorie et préparez-vous à vivre une expérience exceptionnelle en Alsace.';
-
-        return $this->render('/category/show.html.twig', [
+        return $this->render('/dashboard/picture.html.twig', [
             'category' => $category,
-            'pictures' => $pictures,
-            'description' => $description
+            'pictures' => $pictures
         ]);
     }
 

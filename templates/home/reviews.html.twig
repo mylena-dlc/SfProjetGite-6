@@ -6,7 +6,6 @@
 
 {% block body %}
 
-<div class="content">
 
     <div class="title gite-title center">
          <h1>Avis des voyageurs</h1>
@@ -20,7 +19,7 @@
     {% for review in reviews %}
     <div class="item itemAllReviews">
 
-        <p class="reviewName">{{ review.reservation.lastName }} {{ review.reservation.firstName }}</p>
+        <p class="reviewName">{{ review.reservation.firstName }}</p>
         <p class="reviewDate">posté le {{ review.creationDate|date('d-m-Y') }}</p> 
         
         {# Utilisation de RateYo pour afficher les étoiles #}
@@ -62,7 +61,6 @@
 
 
 
-</div>
 
 
 {% endblock %}
