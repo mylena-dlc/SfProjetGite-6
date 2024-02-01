@@ -6,6 +6,8 @@
 parameters:
     pictures_directory: '%kernel.project_dir%/public/uploads'
     app.jwtsecret: '%env(JWT_SECRET)%'
+    router.request_context.scheme: 'https'
+    asset.request_context.secure: true
 
 
 services:

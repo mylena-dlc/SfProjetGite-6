@@ -4,67 +4,61 @@
 
 {% block body %}
 
+    <section class="containerDashboard">
+        <nav class="slidebar">
+            <ul>
+                <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
+                <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
+            </ul>
+        </nav>
 
-<div class="containerDashboard">
-<div class="slidebar">
-    <ul>
-        <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
-        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
-    </ul>
-</div>
+        <div class="content">
+            <div class="title gite-title center">
+                <h1>Réservations passées</h1>
+            </div> 
 
-<div class="content">
+        {% if previousReservations is not empty %}
+            <table class="tableGite tableReservation">
+                    <thead>
+                        <tr>
+                            <th>Référence</th> 
+                            <th>Date de réservation</th>                
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Date d'arrivée</th>
+                            <th>Date de départ</th>
+                            <th>Prix total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for previousReservation in previousReservations %}
+                            <tr>
+                                <td>{{ previousReservation.reference }}</td>
+                                <td>{{ previousReservation.reservationDate|date('d-m-Y') }}</td>
+                                <td>{{ previousReservation.firstName }}</td>
+                                <td>{{ previousReservation.LastName }}</td>
+                                <td>{{ previousReservation.arrivalDate|date('d-m-Y') }}</td>
+                                <td>{{ previousReservation.departureDate|date('d-m-Y') }}</td>
+                                <td>{{ previousReservation.totalPrice }} €</td>
+                                <td class="btn-detail"><a href="{{ path('show_reservation_admin', {'id': previousReservation.id}) }}"><button class="btn"><i class="fa-solid fa-circle-info"></i> Voir les détails</button></a></td>
+                            </tr>   
+                        {% endfor %}
+                    </tbody>
+                </table>    
+            
+        {% else %}
+            <p>Aucune réservation passée.</p>
+        {% endif %}   
 
-
-    <div class="title gite-title center">
-         <h1>Réservations passées</h1>
-    </div> 
-
-
-{% if previousReservations is not empty %}
-
-<table class="tableGite tableReservation">
-        <thead>
-            <tr>
-                <th>Référence</th> 
-                <th>Date de réservation</th>                
-                <th>Nom</th>
-                <th>Prénom</th>
-                <th>Date d'arrivée</th>
-                <th>Date de départ</th>
-                <th>Prix total</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-             {% for previousReservation in previousReservations %}
-            <tr>
-                <td>{{ previousReservation.reference }}</td>
-                <td>{{ previousReservation.reservationDate|date('d-m-Y') }}</td>
-                <td>{{ previousReservation.firstName }}</td>
-                <td>{{ previousReservation.LastName }}</td>
-                <td>{{ previousReservation.arrivalDate|date('d-m-Y') }}</td>
-                <td>{{ previousReservation.departureDate|date('d-m-Y') }}</td>
-                <td>{{ previousReservation.totalPrice }} €</td>
-                <td class="btn-detail"><a href="{{ path('show_reservation_admin', {'id': previousReservation.id}) }}"><button class="btn"><i class="fa-solid fa-circle-info"></i> Voir les détails</button></a></td>
-            </tr>   
-
-               {% endfor %}
-        </tbody>
-    </table>    
-     
-    {% else %}
-        <p>Aucune réservation passée.</p>
-    {% endif %}   
-
-</div>
-</div>
+        </div>
+    </section>
 
 {% endblock %}

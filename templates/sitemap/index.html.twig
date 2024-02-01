@@ -4,26 +4,9 @@
     {% for url in urls %}
         <url>
             <loc>
-                {# On vérifie si le nom d'hôte (hostname) est présent dans l'URL, sinon on l'ajoute #}
-                {# {{ hostname }}{{ url['loc'] | replace({ hostname: '' }) }} #}
                 {{ hostname ~ url['loc'] | replace({ hostname: '' }) | default('') }}
-
             </loc>
             <lastmod>{{ 'now'|date('Y-m-d') }}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>0.8</priority>
-
-                {# Si il y a une image #}
-                {# {% if url['pictures'] is defined and url['pictures'] is not empty %}
-                {% for picture in url['pictures'] %}
-                    <image:image>
-                        <image:loc>
-                            {{ hostname }}{{ picture['loc'] | replace({ hostname: '' }) }}
-                        </image:loc>
-                        <image:title>{{ picture['alt'] }}</image:title>
-                    </image:image>
-                {% endfor %}
-            {% endif %} #}
         </url>
     {% endfor %}
 </urlset>

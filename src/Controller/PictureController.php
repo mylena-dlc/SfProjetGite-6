@@ -275,7 +275,7 @@ class PictureController extends AbstractController
     }   
 
     /**
-    * Fonction pour supprimer une photos
+    * Fonction pour supprimer une photo
     */
    
     #[Route('admin/category/{id}/{id_picture}/delete', name: 'delete_picture')]

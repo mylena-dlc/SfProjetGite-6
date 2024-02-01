@@ -102,7 +102,8 @@ class SecurityController extends AbstractController
     */
 
     #[Route(path: '/reset-password', name: 'app_reset_password')]
-    public function resetPassword(Request $request, UserRepository $userRepository, TokenGeneratorInterface $tokenGeneratorInterface, SendMailService $mail): Response
+    public function resetPassword(Request $request, UserRepository $userRepository, 
+    TokenGeneratorInterface $tokenGeneratorInterface, SendMailService $mail): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
 
@@ -198,7 +199,6 @@ class SecurityController extends AbstractController
     */
     
     #[Route(path: '/profil/{id}', name: 'app_profil')]
-
     public function profil(User $user): Response
     {
         $userSession = $this->getUser();
@@ -290,11 +290,6 @@ class SecurityController extends AbstractController
             // Mettre à jour l'entité dans la base de données
             $this->em->persist($user);
             $this->em->flush();
-            
-            // On récupère la session en cours afin de la supprimer
-            // $session = $request->getSession();
-
-            // unset($session);
             
             $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
 

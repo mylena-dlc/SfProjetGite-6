@@ -13,7 +13,6 @@
         });
     </script>
 {% endfor %}
-
 {% for flash_message in app.flashes('success') %}
     <script>
         Swal.fire({
@@ -24,96 +23,78 @@
     </script>
 {% endfor %}
 
-
     <div class="title gite-title center">
          <h1>Mon compte</h1>
     </div>
 
- <div class="containt">
-
+ <section class="containt">
     {% if app.user and app.user.isVerified == true  %}
-
         <div class="profilContaint">
             <p class="profilEmail">Email</p> <p class="profilEmailAddress">{{ user.email }}</p> 
-        
             <button class="btn deleteAccount" onclick="confirmDeleteAccount()"><i class="fa-solid fa-trash-can"></i> Supprimer mon compte</button>
-        
         </div>
-
-
 
         <div class="title gite-title center">
             <h2>Mes réservations</h2>
         </div>
-
-        <div class="resaContaint">
-                  
-               
-                    
-    {% if upcomingReservations is not empty %}
-    <table class="tableGite">
-            <thead>
-                <tr>
-                    <th>Référence de la réservation</th>  
-                    <th>Date de réservation</th> 
-                    <th>Date d'arrivée</th>
-                    <th>Date de départ</th>
-                    <th>Nombre d'adulte(s)</th>
-                    <th>Nombre d'enfant(s)</th>
-                    <th>Prix total</th>
-                    <th>Détails</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for upcomingReservation in upcomingReservations %}
-                <tr>
-                    <td>{{ upcomingReservation.reference }}</td>
-                    <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
-                    <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>
-                    <td>{{ upcomingReservation.departureDate|date('d-m-Y') }}</td>
-                    <td>{{ upcomingReservation.numberAdult }}</td>
-                    <td>{{ upcomingReservation.numberKid }}</td>
-                    <td>{{ upcomingReservation.totalPrice }} €</td>
-                    <td><a href="{{ path('show_reservation', {'id': upcomingReservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
-                </tr>   
-                {% endfor %}
-            </tbody>
-        </table>        
-
-        <div class="center">      
-            <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id': user.id}) }}">Mes anciens séjours</a></button>
+        <div class="resaContaint">     
+            {% if upcomingReservations is not empty %}
+                <table class="tableGite">
+                    <thead>
+                        <tr>
+                            <th>Référence de la réservation</th>  
+                            <th>Date de réservation</th> 
+                            <th>Date d'arrivée</th>
+                            <th>Date de départ</th>
+                            <th>Nombre d'adulte(s)</th>
+                            <th>Nombre d'enfant(s)</th>
+                            <th>Prix total</th>
+                            <th>Détails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for upcomingReservation in upcomingReservations %}
+                            <tr>
+                                <td>{{ upcomingReservation.reference }}</td>
+                                <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
+                                <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>
+                                <td>{{ upcomingReservation.departureDate|date('d-m-Y') }}</td>
+                                <td>{{ upcomingReservation.numberAdult }}</td>
+                                <td>{{ upcomingReservation.numberKid }}</td>
+                                <td>{{ upcomingReservation.totalPrice }} €</td>
+                                <td><a href="{{ path('show_reservation', {'id': upcomingReservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
+                            </tr>   
+                        {% endfor %}
+                    </tbody>
+                </table>        
+                <div class="center">      
+                    <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id': user.id}) }}">Mes anciens séjours</a></button>
+                </div>
+            {% else %}
+                <p class="profilResa">Vous n'avez aucune réservation.</p>
+            {% endif %}
+    {% else %}
+        <div class="section-profil">
+            <p class="profilResa"><i class="fa-solid fa-triangle-exclamation"></i> Votre compte n'est pas activé,<br> renvoyer le lien d'activation sur votre boîte mail <a href="{{ path('resend_verif') }}">ici </a></p>
         </div>
-                {% else %}
-                    <p class="profilResa">Vous n'avez aucune réservation.</p>
-                {% endif %}
-            </div>
-        </div>
-
-
-{% else %}
-<div class="section-profil">
-    <p class="profilResa"><i class="fa-solid fa-triangle-exclamation"></i> Votre compte n'est pas activé,<br> renvoyer le lien d'activation sur votre boîte mail <a href="{{ path('resend_verif') }}">ici </a></p>
-</div>
-{% endif %}
-
-    </div>
-
+    {% endif %}
+</section>
 
         <script>
-        function confirmDeleteAccount() {
-            Swal.fire({
-                title: 'Voulez-vous supprimer votre compte?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Oui',
-                cancelButtonText: 'Non',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Si l'utilisateur clique sur "Oui", redirigez vers la suppression du compte
-                    window.location.href = "{{ path('app_delete_account') }}";
-                }
-            });
-        }
-    </script>
+            function confirmDeleteAccount() {
+                Swal.fire({
+                    title: 'Voulez-vous supprimer votre compte?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Oui',
+                    cancelButtonText: 'Non',
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Si l'utilisateur clique sur "Oui", redirigez vers la suppression du compte
+                        window.location.href = "{{ path('app_delete_account') }}";
+                    }
+                });
+            }
+        </script>
 
 {% endblock %}

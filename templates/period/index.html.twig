@@ -23,72 +23,60 @@
     </script>
 {% endfor %}
 
+<section class="containerDashboard">
+    <nav class="slidebar">
+        <ul>
+            <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
+            <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
+            <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
+        </ul>
+    </nav>
 
-<div class="containerDashboard">
-<div class="slidebar">
-    <ul>
-        <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
-        <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
-        <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
-    </ul>
-</div>
-
-<div class="content">
-
-    <div class="title gite-title center">
-        <h1>Listes des périodes avec supplément</h1>
-    </div>
-        
-
-    <table class="tableGite">
-        <thead>
-            <tr>
-                <th>Date de début</th>
-                <th>Date de fin</th>
-                <th>Supplément (par nuit)</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for period in periods %}
-            <tr>
-                <td>{{ period.startDate|date('d-m-Y') }}</td>
-                <td>{{ period.endDate|date('d-m-Y') }}</td>
-                <td>{{ period.supplement }} € </td>
-                <td>      
-                    {# <a href="{{ path ('edit_gite', {'id': gite.id}) }}" class="btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a href="{{ path ('delete_gite', {'id': gite.id}) }}" class="btn delete"><i class="fa-solid fa-trash-can"></i></a> #}
-                </td>
-            </tr>   
-
-               {% endfor %}
-        </tbody>
-    </table>        
-
-
-    <div class="addPeriodSection">
-
+    <div class="content">
         <div class="title gite-title center">
-                <h2>Ajouter une période</h2>
+            <h1>Listes des périodes avec supplément</h1>
         </div>
+        <table class="tableGite">
+            <thead>
+                <tr>
+                    <th>Date de début</th>
+                    <th>Date de fin</th>
+                    <th>Supplément (par nuit)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for period in periods %}
+                <tr>
+                    <td>{{ period.startDate|date('d-m-Y') }}</td>
+                    <td>{{ period.endDate|date('d-m-Y') }}</td>
+                    <td>{{ period.supplement }} € </td>
+                </tr>   
+                {% endfor %}
+            </tbody>
+        </table>        
 
-        <div class="addPeriodForm">
-            {{ form_start(form) }} 
-                {{ form_row(form.startDate) }} 
-                {{ form_row(form.endDate) }} 
-                {{ form_row(form.supplement) }} 
-                {{ form_row(form.ajouter) }} 
-            {{ form_end(form) }}
-    </div>
-    </div>
 
-</div>
-</div>
-    {% endblock %}    
+        <div class="addPeriodSection">
+            <div class="title gite-title center">
+                    <h2>Ajouter une période</h2>
+            </div>
+            <div class="addPeriodForm">
+                {{ form_start(form) }} 
+                    {{ form_row(form.startDate) }} 
+                    {{ form_row(form.endDate) }} 
+                    {{ form_row(form.supplement) }} 
+                    {{ form_row(form.ajouter) }} 
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}    
     
     

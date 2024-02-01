@@ -2,148 +2,134 @@
 
 {% block title %}Location de Gîte à Orbey, Alsace | Gîte du Rain du Pair{% endblock %}
 
-{% block meta_description %} {{ description }} {% endblock %}
+{% block meta_description %}{{ description }}{% endblock %}
 
 {% block body %}
 
-{% for flash_message in app.flashes('error') %}
-    <script>
-        Swal.fire({
-            icon: "error",
-            title: "Erreur",
-            text: "{{ flash_message|raw }}",
-            customClass: {
-                confirmButton: 'btn-ok',
-            }
-        });
-    </script>
-{% endfor %}
-{% for flash_message in app.flashes('success') %}
-    <script>
-        Swal.fire({
-            icon: "success",
-            title: "Succès",
-            text: "{{ flash_message|raw }}",
-        });
-    </script>
-{% endfor %}
+	{% for flash_message in app.flashes('error') %}
+		<script>
+			Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: "{{ flash_message|raw }}",
+                customClass: {
+                    confirmButton: 'btn-ok'
+                }
+            });
+		</script>
+	{% endfor %}
+	{% for flash_message in app.flashes('success') %}
+		<script>
+			Swal.fire({
+                icon: "success", 
+                title: "Succès", 
+                text: "{{ flash_message|raw }}"});
+		</script>
+	{% endfor %}
 
-        <section id="first-section">
+	<section id="first-section">
+		<h1><strong>Logement de charme</strong></h1>
+		<h2>au coeur des Vosges Alsacienne</h2>
+		<p>
+			<span class="first-section-person">
+				Jusqu'à 6 personnes</span>
+		</p>
+	</section>
 
-            <h1><strong>Logement de charme</strong></h1>
-            <h2>au coeur des Vosges Alsacienne </h2>
+	<section id="search">
+		<div class="averageRating">
+			<p>Avis des voyageurs
+			</p>
+			<p class="averageRating-p">{{ averageRating | number_format(2, '.', ',') }}</p>
+			<div id="rating-average" data-rating="5"></div>
+		</div>
 
-            <p><span class="first-section-person"> Jusqu'à 6 personnes </span><p>
+		<script>
+			$(document).ready(function () {
+                $("#rating-average").rateYo({
+                    rating: $("#rating-average").data("rating"), 
+                    readOnly: true, 
+                    starWidth: "20px", 
+                    precision: 0});
+            });
+		</script>
 
+		<form id="reservationForm" action="{{ path('app_reservation') }}" method="post" onsubmit="return validateForm()">
+			<div class="start-containt">
+				<label for="start" class="start">Date d'arrivée</label>
+				<input type="text" id="start" class="start-input" name="start" required placeholder="Sélectionnez votre date d'arrivée" data-reserved-dates="{{ reservedDates }}">
+			</div>
 
+			<div class="end-containt">
+				<label for="end" class="end">Date de départ</label>
+				<input type="text" id="end" class="end-input" name="end" required placeholder="Sélectionnez votre date de départ" data-reserved-dates="{{ reservedDates }}">
+			</div>
 
-        </section>
+			<div class="person-containt">
+				<div class="adult">
+					<label for="numberAdult" class="numberAdult">Adulte</label>
+					<div class="action">
+						<p class="decrement">
+							<i class="fa-solid fa-circle-minus"></i>
+						</p>
+						<input type="number" id="numberAdult" class="inputPerson" name="numberAdult" value="1" min="1" max="6" readonly>
+						<p class="increment">
+							<i class="fa-solid fa-circle-plus"></i>
+						</p>
+					</div>
+				</div>
+				<div class="kid">
+					<label for="numberKid" class="numberKid">Enfant</label>
+					<div class="action">
+						<p class="decrement">
+							<i class="fa-solid fa-circle-minus"></i>
+						</p>
+						<input type="number" id="numberKid" class="inputPerson" name="numberKid" value="0" min="0" max="5" readonly>
+						<p class="increment">
+							<i class="fa-solid fa-circle-plus"></i>
+						</p>
+					</div>
+				</div>
+				<div class="person">
+					<label for="totalPerson" class="labelPerson">Voyageurs</label>
+					<div class="action">
+						<input type="number" id="totalPerson" class="inputPerson" value="1" min="1" max="6" readonly>
+					</div>
+				</div>
+			</div>
+			<div class="submit-containt">
+				<input type="submit" class="btn search" value="Réserver" id="timerbtn" onclick="startNewSearch()">
+			</div>
+		</form>
+	</section>
 
+	<section id="gite">
+		<div class="title gite-title">
+			<h2>Entre nature et tranquilité</h2>
+		</div>
 
-
-<section id="search">     
-
-
-
-<div class="averageRating">
-    <p>Avis des voyageurs </p>
-        <p class="averageRating-p">{{ averageRating | number_format(2, '.', ',') }}</p>
-    <div id="rating-average" data-rating="5"></div>
-</div>
-
-<script>
-    $(document).ready(function () {
-        $("#rating-average").rateYo({
-            rating: $("#rating-average").data("rating"),
-            readOnly: true,
-            starWidth: "20px",
-            precision: 0,
-        });
-    });
-</script>
-
-
-    <form id="reservationForm" action="{{ path('app_reservation') }}" method="post" onsubmit="return validateForm()">
-        <div class="start-containt">
-          <label for="start" class="start">Date d'arrivée</label>
-          <input type="text" id="start" class="start-input" name="start" required placeholder="Sélectionnez votre date d'arrivée" data-reserved-dates="{{ reservedDates }}">
-        </div>
-
-        <div class="end-containt">
-          <label for="end" class="end">Date de départ</label>
-          <input type="text" id="end" class="end-input" name="end" required placeholder="Sélectionnez votre date de départ" data-reserved-dates="{{ reservedDates }}">
-        </div>
-
-        <div class="person-containt">
-            <div class="adult">
-                <label for="numberAdult" class="numberAdult">Adulte</label>
-                <div class="action">
-                    <p class="decrement"><i class="fa-solid fa-circle-minus"></i></p>
-                    <input type="number" id="numberAdult" class="inputPerson" name="numberAdult" value="1" min="1" max="6" readonly>
-                    <p class="increment"><i class="fa-solid fa-circle-plus"></i></p>
-                </div>
-            </div>
-            <div class="kid">
-                <label for="numberKid" class="numberKid">Enfant</label>
-                <div class="action">
-                    <p class="decrement"><i class="fa-solid fa-circle-minus"></i></p>
-                    <input type="number" id="numberKid" class="inputPerson" name="numberKid" value="0" min="0" max="5" readonly>
-                    <p class="increment"><i class="fa-solid fa-circle-plus"></i></p>
-                </div>
-            </div>    
-            <div class="person">
-                <label for="totalPerson" class="labelPerson">Voyageurs</label>
-                <div class="action">
-                    <input type="number" id="totalPerson" class="inputPerson" value="1" min="1" max="6" readonly>
-                </div> 
-            </div> 
-        </div>
-
-        <div class="submit-containt">
-            <input type="submit" class="btn search" value="Réserver" id="timerbtn" onclick="startNewSearch()">
-        </div>
-    </form>
-</section>
-
-
-    <section id="gite">
-                   <div class="title gite-title">
-            {# <h2>le <strong>gîte</strong></h2> #}
-           <h2>Entre nature et tranquillité</h2>
-        </div>
-
-            <div class="gite-content">
-
-    <div class="background-image"></div>
-
-
-
-        <div class="description-and-picture">
-
-  
-            
-
-            <p class="gite-description">Bienvenue au <strong class="color">Gîte du Rain du Pair</strong>, 
-        un havre de paix situé dans un ancien corps de ferme récemment rénové, perché sur les hauteurs d'Orbey, <strong class="color">en Alsace.</strong><br><br>
-        
-        Proche de la station de ski du Lac Blanc, notre <strong>hébergement</strong> avec <strong class="color">bain nordique</strong> vous offre une expérience unique pour des <strong>vacances en Alsace</strong>.<br><br>
-        
-        Découvrez le confort et l'authenticité de notre <strong class="color">gîte</strong> qui promet un <strong class="color">séjour nature</strong> inoubliable, au cœur de cette région riche en charme et en traditions.</p>
-    </p>
-
-
-            <figure class="giteFigure">
-                <img class="picture01" src="img/gite-alsace-01.jpg" alt="Photos du séjour du gîte"/>
-            </figure>
-
-            
-        </div>
-
-            </div>
+		<div class="gite-content">
+			<div class="background-image"></div>
+			<div class="description-and-picture">
+				<p class="gite-description">Bienvenue au
+					<strong class="color">Gîte du Rain du Pair</strong>, 
+					un havre de paix situé dans un ancien corps de ferme récemment rénové, perché sur les hauteurs d'Orbey,
+					<strong class="color">en Alsace.</strong><br><br>
+					Proche de la station de ski du Lac Blanc, notre <strong>hébergement</strong> avec <strong class="color">bain nordique</strong>
+					vous offre une expérience unique pour des<strong>vacances en Alsace</strong>.<br><br>
+					Découvrez le confort et l'authenticité de notre <strong class="color">gîte</strong> qui promet un <strong class="color">séjour nature</strong>
+					inoubliable, au cœur de cette région riche en charme et en traditions.</p>
+			    </p>
+			<figure class="giteFigure">
+				<img class="picture01" src="img/gite-orbey-alsace-hebergement-location-01.webp" alt="Photos du séjour du gîte"/>
+			</figure>
+		    </div>
+	    </div>
 
         <figure class="giteFigure">
-        <img class="feuille01" src="img/feuille.png" alt="Photos du séjour du gîte"/>
-    </figure>
+            <img class="feuille01" src="img/feuille.png" alt="Photos du séjour du gîte"/>
+        </figure>
+
         <div class="banner">
             <div class="icons">
                 <div class="icon">
@@ -154,427 +140,347 @@
                     <p class="banner-icon"><i class="fa-solid fa-bed"></i></p>
                     <p class="banner-p">Linge de maison</p>
                 </div>
-            <div class="icon">
-                <p class="banner-icon"><i class="fa-solid fa-wifi"></i></p>
-                <p class="banner-p">Wifi gratuit</p>
-            </div>
-            <div class="icon">
-                <p class="banner-icon"><i class="fa-solid fa-square-parking"></i></p>
-                <p class="banner-p">Parking privé</p>
-            </div>
+                <div class="icon">
+                    <p class="banner-icon"><i class="fa-solid fa-wifi"></i></p>
+                    <p class="banner-p">Wifi gratuit</p>
+                </div>
+                <div class="icon">
+                    <p class="banner-icon"><i class="fa-solid fa-square-parking"></i></p>
+                    <p class="banner-p">Parking privé</p>
+                </div>
             </div>
         </div>
 
-
-
         <div class="title caracteristique-title">
-            {# <h2>Entre <br>nature et <br>tranquillité</h2> #}
             <h2>le <strong>gîte</strong></h2>
-
         </div>
 
         <div class="caracteristique">
             <div class="caracteristique-left">
-    <p class="caracteristique-p">Réparti sur deux étages, notre <em>hébergement de vacances</em> offre un <span class="color">espace confortable</span> pouvant accueillir jusqu'à 6 personnes.<br><br> 
+                <p class="caracteristique-p">Réparti sur deux étages, notre <em>hébergement de vacances</em> offre un <span class="color">espace confortable</span>
+                    pouvant accueillir jusqu'à 6 personnes.<br><br>
                     Au rez-de-chaussée, vous profiterez d’une cuisine entièrement équipée ouverte sur le séjour, ainsi qu’un wc séparé. 
                     À l’étage, vous trouverez deux chambres élégamment aménagées, 
                     chacune avec sa propre salle d'eau attenante pour plus d'intimité et un wc séparé.<br><br>
-                    L'intérieur est chaleureux, accueillant et décoré avec soin dans ce superbe <strong class="color">logement de charme</strong>.<br><br>
-                Détendez-vous dans notre <strong class="color">bain nordique</strong> extérieur chauffé au feu de bois, une expérience relaxante dans un petit coin de paradis en plein air.</p>
+                    L'intérieur est chaleureux, accueillant et décoré avec soin dans ce superbe
+                    <strong class="color">logement de charme</strong>.<br><br>
+                    Détendez-vous dans notre
+                    <strong class="color">bain nordique</strong>
+                    extérieur chauffé au feu de bois, une expérience relaxante dans un petit coin de paradis en plein air.</p>
 
-                    <div id="myModal" class="modal">
-                        <span class="close">&times;</span>
-                        <img class="modal-content" id="modalImg">
-                    </div>
+                <div id="myModal" class="modal">
+                    <span class="close">&times;</span>
+                    <img class="modal-content" id="modalImg">
+                </div>
 
-                <div class="caracteristique-galery">                    
-                
-                    <figure class="figure-picture03 picture" onclick="openModal('img/gite-alsace-03.jpg')">
-
-                        <img src="img/gite-alsace-03.jpg" alt="Photo d'une chambre du gîte" class="picture03"/>
+                <div class="caracteristique-galery">
+                    <figure class="figure-picture03 picture" onclick="openModal('img/gite-alsace-03.webp')">
+                        <img src="img/gite-alsace-03.webp" alt="Gîte à Orbey, charmant hébergement en Alsace" class="picture03"/>
                     </figure>
-       
-                    <figure class="figure-picture05 picture" onclick="openModal('img/gite-alsace-05.jpg')">
-                        <img src="img/gite-alsace-05.jpg" alt="Photo du nom du gîte sur un tableau" class="picture05"/>
+                    <figure class="figure-picture05 picture" onclick="openModal('img/gite-orbey-alsace-hebergement-location-05.webp')">
+                        <img src="img/gite-orbey-alsace-hebergement-location-05.webp" alt="Décoration intérieure soignée de notre gîte en Alsace, séjour mémorable à Orbey" class="picture05"/>
                     </figure>
-
-         
-                    <figure class="figure-picture03 picture" onclick="openModal('img/gite-alsace-04.jpg')">
-                        <img src="img/gite-alsace-04.jpg" alt="Photo de l'entrée du gîte" class="picture04"/>
+                    <figure class="figure-picture03 picture" onclick="openModal('img/gite-orbey-alsace-hebergement-location-04.webp')">
+                        <img src="img/gite-orbey-alsace-hebergement-location-04.webp" alt="Salon chaleureux de notre gîte à Orbey en Alsace" class="picture04"/>
                     </figure>
                 </div>
-               
-            
-            </div>
-            <div class="caracteristique-right">                
-               
-                <figure class="figure-picture02 picture-02" onclick="openModal('img/gite-alsace-06.jpg')">
-                    <img src="img/gite-alsace-06.jpg" alt="Photo d'une chambre du gîte" class="picture02"/>
+		    </div>
+
+            <div class="caracteristique-right">
+                <figure class="figure-picture02 picture-02" onclick="openModal('img/gite-orbey-alsace-hebergement-location-06.webp')">
+                    <img src="img/gite-orbey-alsace-hebergement-location-06.webp" alt="Intérieur du gîte de charme à Orbey, idéal pour un séjour nature en Alsace" class="picture02"/>
                 </figure>
-
                 <figure class="giteFigure">
-                <img class="feuille02" src="img/feuille02.png" alt="Photos du séjour du gîte"/>
-            </figure>
-                
+                    <img class="feuille02" src="img/feuille02.png" alt="Photos du séjour du gîte"/>
+                </figure>
             </div>
+	    </div>
+    </section>
 
-        </div>
- </section>
 
+    <section class="banner2">
+        <p class="banner2-p">Découvrez l'Alsace avec notre<strong>location de vacances</strong>.<br>
+            Réservez votre<strong>hébergement à Orbey</strong>dès aujourd'hui<br>
+            et profitez d'un séjour inoubliable<br>
+            dans notre<strong>gîte de charme</strong>.
+        </p>
+    </section>
 
-        <div class="banner2">
-            <p class="banner2-p"> Découvrez l'Alsace avec notre <strong>location de vacances</strong>. <br>
-                                Réservez votre <strong>hébergement à Orbey</strong> dès aujourd'hui <br>
-                                et profitez d'un séjour inoubliable<br> dans notre <strong>gîte de charme</strong>. </p>
-        </div>
-            
-   
 
     <section id="galerie">
         <div class="galerie-contain">
-            <div class="title"> 
+            <div class="title">
                 <h2>En image</h2>
             </div>
 
-            <div class="categories"> 
-
-            {% for categoryName, firstPicture in categoryFirstPictures %}
-                {# Générez une classe unique en ajoutant le compteur à la classe 'category' #}
-                {% set categoryClass = 'category-' ~ loop.index %}
+            <div class="categories">
+                {% for categoryName, firstPicture in categoryFirstPictures %}
+                    {# Générez une classe unique en ajoutant le compteur à la classe 'category' #}
+                    {% set categoryClass = 'category-' ~ loop.index %}
                     <div class="{{ categoryClass }}">
-                        <a class="hover-link" href="{{ path('show_category', {'id': firstPicture.getCategory().getId()}) }}">
+                        <a class="hover-link" href="{{ path('show_galery', {'id': firstPicture.getCategory().getId()}) }}">
                             <figure class="categoryFigure">
-                                <img class="categoryImg" src="{{ firstPicture.getUrl() }}" alt="">
-                                <p class="voirPlus"><i class="fa-solid fa-magnifying-glass-plus"></i> Voir plus</p> 
+                                <img class="categoryImg" src="{{ firstPicture.getUrl() }}" alt="Gîte de charme à Orbey pour un séjour nature en Alsace"/>
+                                <p class="voirPlus">
+                                    <i class="fa-solid fa-magnifying-glass-plus"></i>Voir plus
+                                </p>
                             </figure>
                             <p class="titleGalerie">{{ categoryName }}</p>
                         </a>
                     </div>
-            {% endfor %} 
+                {% endfor %}
             </div>
-
         </div>
+    </section>
 
-</section>
-
-<section id="actualites">
-<div class="actualites-content">
-
-  <div class="section-btn-actu">
-        <div class="title">
-            <h2>Actualités</h2>
-        </div>
-        <h3>Suivez-nous !</h3>
-            <div>
-        <a href="https://www.instagram.com/giteraindupair/" class="footerLink" target="_blank"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://www.facebook.com/profile.php?id=61555292307736" class="footerLink" target="_blank"><i class="fa-brands fa-facebook"></i></a>
-    </div>
-</div>
-
-
-        <div class="instagram_post" postID="C1-Bg99MpvF" width="width" height="500px" scrolling="no" style="overflow: hidden"></div>
-
-        <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px" ></div>
-
-        <div class="instagram_post" postID="C1nBOjStKDe" width="width" height="500px"></div>
-
-
-
-  
-
-</div>
-</section>
-
-    <section id="alentours">
-       
-            <div class="title alentours-title">
-                <h2>Aux alentours</h2>
-            </div> 
-
-             <div class="alentours-containt">
-                <div id="map-activity"></div>
-
-                <div id="map-carousel">
-        
-
-                {% for key,  activity in activities %}
-                    <div class="item item-activity activityCard" data-lat="{{ activity.latitude }}" data-lng="{{ activity.longitude }}" data-image="{{ asset(activity.picture) }}" data-name="{{ activity.name }}" >
-
-                        <figure class="activity-picture"><img src="{{ asset(activity.picture) }}" alt="Photo de {{ activity.name }}" class="modal-trigger"/> </figure>
-                        
-                        <div class="activity-content">
-                            <p class="activity-name">{{ activity.name }}</p>
-                           
-                                <p class="activity-description">{{ activity.description }}</p>
-                          
-                        </div>
-
-                    </div>
-                   {% endfor %}
-
+    <section id="actualites">
+        <div class="actualites-content">
+            <div class="section-btn-actu">
+                <div class="title">
+                    <h2>Actualités</h2>
+                </div>
+                <h3>Suivez-nous !</h3>
+                <div>
+                    <a href="https://www.instagram.com/giteraindupair/" class="footerLink" target="_blank">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61555292307736" class="footerLink" target="_blank">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
                 </div>
             </div>
 
-<script>
+            <div class="instagram_post" postid="C1-Bg99MpvF" width="width" height="500px" scrolling="no" style="overflow: hidden"></div>
 
-        // Créez une icône personnalisée pour le marker du gîte
-        var customIcon = L.icon({
-        iconUrl: '../img/icon-localisation.png', 
-        iconSize: [60, 60],  // Taille de l'icône en pixels
-        iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
-        popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
-    });
+            <div class="instagram_post" postid="C1nBOjStKDe" width="width" height="500px"></div>
 
-    // Définir la vue initiale
-    var map = L.map('map-activity').setView([48.116933, 7.140431], 11); 
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Utilisez l'icône personnalisée pour le marqueur
-    var giteMarker = L.marker([48.116933, 7.140431], { icon: customIcon }).addTo(map);
-    giteMarker.bindPopup("Le gîte", { className: 'giteModal' }).openPopup();
-
-    // Création du markeur des activités
-    var customIconActivity = L.icon({
-        iconUrl: '../img/marker.png', 
-        iconSize: [45, 60], 
-        iconAnchor: [16, 32], 
-        popupAnchor: [0, -32],
-    });
-
-
-    // Récupération des cards
-    var activityCards = document.querySelectorAll('.activityCard');
-
-    // Ajout des marqueurs sur la carte et gestion des clics sur les cards
-    activityCards.forEach(function(card) {
-        var lat = parseFloat(card.getAttribute('data-lat'));
-        var lng = parseFloat(card.getAttribute('data-lng'));
-        var imageUrl = card.getAttribute('data-image');
-        var activityName = card.getAttribute('data-name');
-
-        // Création du marqueur
-        var marker = L.marker([lat, lng], { icon: customIconActivity }).addTo(map);
-        marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + '" /><p>' + activityName + '</p>', { className: 'custom-popup-activity' });
-
-
-        // Gestion du clic sur la card
-        card.addEventListener('click', function() {
-            // Centrer la carte sur le marqueur
-            map.panTo([lat, lng]);
-            // Ouvrir la popup du marqueur
-            marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + '" /><p>' + activityName + '</p>', { className: 'custom-popup-activity' }).openPopup();
-        });
-    });
-
-   
-
-</script>
-
-
-       
+            <div class="instagram_post" postid="C1nBOjStKDe" width="width" height="500px"></div>
+            
+        </div>
     </section>
 
- 
-       <hr class="hr-alentours">
+    <section id="alentours">
+        <div class="title alentours-title">
+            <h2>Aux alentours</h2>
+        </div>
+        <div class="alentours-containt">
+            <div id="map-activity"></div>
+            <div id="map-carousel">
+                {% for key,  activity in activities %}
+                    <div class="item item-activity activityCard" data-lat="{{ activity.latitude }}" data-lng="{{ activity.longitude }}" data-image="{{ asset(activity.picture) }}" data-name="{{ activity.name }}">
+                        <figure class="activity-picture">  
+                            <img src="{{ asset(activity.picture) }}" alt="Photo de {{ activity.name }}" class="modal-trigger"/>
+                        </figure>
 
+                        <div class="activity-content">
+                            <p class="activity-name">{{ activity.name }}</p>
+                            <p class="activity-description">{{ activity.description }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        <script>
+
+            // Créez une icône personnalisée pour le marker du gîte
+            var customIcon = L.icon({
+                iconUrl: '../img/icon-localisation.png',
+                iconAnchor: [16, 32], // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
+                popupAnchor: [0, -32], // Point d'ancrage du popup par rapport à son coin supérieur gauche
+            });
+
+            // Définir la vue initiale
+            var map = L.map('map-activity').setView([48.116933, 7.140431], 11);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {attribution: '© OpenStreetMap contributors'}).addTo(map);
+
+            // Utilisez l'icône personnalisée pour le marqueur
+            var giteMarker = L.marker([48.116933, 7.140431], {icon: customIcon}).addTo(map);
+            giteMarker.bindPopup("Le gîte", {className: 'giteModal'}).openPopup();
+
+            // Création du markeur des activités
+            var customIconActivity = L.icon({
+                iconUrl: '../img/marker.png',
+                iconSize: [35, 48],
+                iconAnchor: [16, 32],
+                popupAnchor: [0, -32]
+            });
+
+            // Récupération des cards
+            var activityCards = document.querySelectorAll('.activityCard');
+
+            // Ajout des marqueurs sur la carte et gestion des clics sur les cards
+            activityCards.forEach(function (card) {
+                var lat = parseFloat(card.getAttribute('data-lat'));
+                var lng = parseFloat(card.getAttribute('data-lng'));
+                var imageUrl = card.getAttribute('data-image');
+                var activityName = card.getAttribute('data-name');
+
+                // Création du marqueur
+                var marker = L.marker([lat, lng], {icon: customIconActivity}).addTo(map);
+                marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + '" /><p>' + activityName + '</p>', {className: 'custom-popup-activity'});
+
+                // Gestion du clic sur la card
+                card.addEventListener('click', function () { 
+                    map.panTo([lat, lng]); // Centrer la carte sur le marqueur
+                    // Ouvrir la popup du marqueur
+                    marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + '" /><p>' + activityName + '</p>', {className: 'custom-popup-activity'}).openPopup();
+                });
+            });
+        </script>
+    </section>
+
+    <hr class="hr-alentours">
 
     <section id="review">
-
-    <div class="review-content">
-        <div id="carousel">
-
-            {% for review in reviews %}
-            <div class="item">
-
-                <p class="reviewName">{{ review.reservation.firstName }}</p>
-                <p class="reviewDate">posté le {{ review.creationDate|date('d-m-Y') }}</p> 
-                
-                {# Utilisation de RateYo pour afficher les étoiles #}
-                    <div id="rating-{{ review.id }}"></div>
-                <script>
-                    $(document).ready(function () {
-                        $("#rating-{{ review.id }}").rateYo({
-                            rating: {{ review.rating }},
-                            readOnly: true, // Pour rendre les étoiles en lecture seule #}
-                            starWidth: "20px",
-                            precision: 0,
-                        });
-                    });
-                </script>
-
-                <p class="reviewComment">{{ review.comment }}</p>
-                <p class="reviewDate"> Réponse du propriétaire : </p>
-                <p class="reviewCommentAdmin">{{ review.response }}</p>
-            </div>     
-            {% endfor %}
-        </div> 
-        <div class="sectionCenter">
-            <button class="btn btnReviews"><a href="{{ path('app_all_reviews') }}">Voir tous les avis</a></button>
+        <div class="review-content">
+            <div id="carousel">
+                {% for review in reviews %}
+                    <div class="item">
+                        <p class="reviewName">{{ review.reservation.firstName }}</p>
+                        <p class="reviewDate">posté le {{ review.creationDate|date('d-m-Y') }}</p>
+                        {# Utilisation de RateYo pour afficher les étoiles #}
+                        <div id="rating-{{ review.id }}"></div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#rating- {{ review.id }}").rateYo({
+                                rating: {{ review.rating }}, readOnly: true, // Pour rendre les étoiles en lecture seule #}
+                                starWidth: "20px",
+                                precision: 0
+                                });
+                            });
+                        </script>
+                        <p class="reviewComment">{{ review.comment }}</p>
+                        <p class="reviewDate">Réponse du propriétaire :</p>
+                        <p class="reviewCommentAdmin">{{ review.response }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="sectionCenter">
+                <button class="btn btnReviews">
+                    <a href="{{ path('app_all_reviews') }}">Voir tous les avis</a>
+                </button>
+            </div>
         </div>
-    </div>
     </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 {% block javascript %}
 
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/fr.js"></script>
 
-
-<script>
-
-// AFFICHAGE DU CALENDRIER DANS LA BARRE DE RECHERCHE
+	<script>
+	// AFFICHAGE DU CALENDRIER DANS LA BARRE DE RECHERCHE
 
     // Recherche des éléments HTML
     const startInput = document.getElementById("start");
     const endInput = document.getElementById("end");
-  
-    // Récupération les dates déjà réservées depuis l'attribut "data-reserved-dates" 
+
+    // Récupération les dates déjà réservées depuis l'attribut "data-reserved-dates"
     const reservedDatesDataStart = startInput.getAttribute("data-reserved-dates");
     const reservedDatesDataEnd = endInput.getAttribute("data-reserved-dates");
-    
+
     // Analyse cette chaîne JSON en objet JS
     const reservedDatesStart = JSON.parse(reservedDatesDataStart);
     const reservedDatesEnd = JSON.parse(reservedDatesDataEnd);
 
     // Configuration du calendrier pour le champs date d'arrivée
     const startPicker = flatpickr(startInput, {
-    altInput: true,
-    altFormat: "j F Y",
-    dateFormat: "Y-m-d",
-    minDate: "today",
-    locale: {
-      firstDayOfWeek: 1,
-      weekdays: {
-        shorthand: ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-        longhand: ["Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"]
-      },
-      months: {
-        shorthand: ["Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"],
-        longhand: ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
-      },
-    }, 
+        altInput: true,
+        altFormat: "j F Y",
+        dateFormat: "Y-m-d",
+        minDate: "today",
+        locale: {
+            firstDayOfWeek: 1,
+            weekdays: {
+                shorthand: [
+                    "Dim","Lun","Mar","Mer","Jeu","Ven","Sam"
+                ],
+                longhand: [
+                    "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"
+                ]
+            },
+            months: {
+                shorthand: [
+                    "Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"
+                ],
+                longhand: [ 
+                    "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+                ]
+            }
+        },
 
-    disable: reservedDatesStart.map(date => ({
-        from: date.arrivalDate,
-         to: date.departureDate
-      })),
-      
-      plugins: [new rangePlugin({ input: endInput })], 
-  });
+        disable: reservedDatesStart.map(date => ({from: date.arrivalDate, to: date.departureDate})),
+
+        plugins: [new rangePlugin(
+            {input: endInput}
+        )]
+        
+    });
 
     // Configuration du calendrier pour le champs date de départ
     const endPicker = flatpickr(endInput, {
-    altInput: true,
-    altFormat: "j F Y",
-    dateFormat: "Y-m-d",
-    minDate: startInput.value,   
-     locale: {
-      firstDayOfWeek: 1,
-      weekdays: {
-        shorthand: [
-            "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"
-        ],
-        longhand: [
-            "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", 
-            "Vendredi", "Samedi"
-        ]
-      },
-      months: {
-        shorthand: [
-            "Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", 
-            "Août", "Sept", "Oct", "Nov", "Déc"
-        ],
-        longhand: [
-            "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", 
-            "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
-        ]
-      }
-    },
-    
-   disable: [
-        {
-            from: startInput.value,
-            to: startInput.value
-        },
-        {
-          ...reservedDatesEnd.map(date => ({
-          from: date.arrivalDate,
-          to: date.departureDate
-          })),
+        altInput: true,
+        altFormat: "j F Y",
+        dateFormat: "Y-m-d",
+        minDate: startInput.value,
+        locale: {
+        firstDayOfWeek: 1,
+        weekdays: {
+            shorthand: [
+                "Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"
+            ],
+            longhand: [
+                "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi"
+                ]
+            },
+        months: {
+            shorthand: [
+                "Jan", "Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Août", "Sept", "Oct", "Nov", "Déc"
+            ],
+            longhand: [
+                "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+            ]
         }
-   ],
-       plugins: [new rangePlugin({ input: startInput })],
+    },
 
-  });
+        disable: reservedDatesStart.map(date => ({from: date.arrivalDate, to: date.departureDate})),
+
+        plugins: [new rangePlugin(
+            {input: startInput}
+        )]
+    });
 
 
-  // Gestionnaire d'événements pour le champ de date d'arrivée
-    startInput.addEventListener("change", function() {
-    const arrivalDate = new Date(startInput.value);
-    const departureDate = new Date(endInput.value);
+    // Gestionnaire d'événements pour le champ de date d'arrivée
+    startInput.addEventListener("change", function () {
+        const arrivalDate = new Date(startInput.value);
+        const departureDate = new Date(endInput.value);
 
-    // Si la date d'arrivée est postérieure à la date de départ
-    if (arrivalDate > departureDate) {
-        // Message d'erreur 
-        Swal.fire({
-        icon: "error",
-        title: "Erreur",
-        text: "La date d'arrivée ne peut pas être postérieure à la date de départ.",
-        });
+        // Si la date d'arrivée est postérieure à la date de départ
+        if (arrivalDate > departureDate) { // Message d'erreur
+            Swal.fire({icon: "error", title: "Erreur", text: "La date d'arrivée ne peut pas être postérieure à la date de départ."});
 
-        // Réinitialisation des dates
-        endInput.value = "";
-        startInput.value = "";
-    }
+            // Réinitialisation des dates
+            endInput.value = "";
+            startInput.value = "";
+        }
     });
 
     // Gestionnaire d'événements pour le champ de date de départ
-    endInput.addEventListener("change", function() {
-    const arrivalDate = new Date(startInput.value);
-    const departureDate = new Date(endInput.value);
+    endInput.addEventListener("change", function () {
+        const arrivalDate = new Date(startInput.value);
+        const departureDate = new Date(endInput.value);
 
-    // Si la date de départ est antérieure à la date d'arrivée
-    if (departureDate < arrivalDate) {
-        // Message d'erreur
-        Swal.fire({
-        icon: "error",
-        title: "Erreur",
-        text: "La date de départ ne peut pas être antérieure à la date d'arrivée.",
-        });
-        // Réinitialisation des dates
-        startInput.value = "";
-        endInput.value = "";
-    }
+        // Si la date de départ est antérieure à la date d'arrivée
+        if (departureDate < arrivalDate) { // Message d'erreur
+            Swal.fire({icon: "error", title: "Erreur", text: "La date de départ ne peut pas être antérieure à la date d'arrivée."});
+            // Réinitialisation des dates
+            startInput.value = "";
+            endInput.value = "";
+        }
     });
-
-</script>
-
-
+	</script>
 
 
 {% endblock %}
-
-
 {% endblock %}
-
-
-

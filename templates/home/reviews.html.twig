@@ -6,7 +6,6 @@
 
 {% block body %}
 
-
     <div class="title gite-title center">
          <h1>Avis des voyageurs</h1>
     </div> 
@@ -15,52 +14,46 @@
         <a href="{{ path('app_home') ~ '#review' }}"><button class="btn">Retour</button></a>
     </div>
 
-    <div class="allReviews">
-    {% for review in reviews %}
-    <div class="item itemAllReviews">
+    <section class="allReviews">
+        {% for review in reviews %}
+            <div class="item itemAllReviews">
 
-        <p class="reviewName">{{ review.reservation.firstName }}</p>
-        <p class="reviewDate">posté le {{ review.creationDate|date('d-m-Y') }}</p> 
-        
-        {# Utilisation de RateYo pour afficher les étoiles #}
-            <div id="rating-{{ review.id }}"></div>
-        <script>
-            $(document).ready(function () {
-                $("#rating-{{ review.id }}").rateYo({
-                    rating: {{ review.rating }},
-                    readOnly: true, // Pour rendre les étoiles en lecture seule #}
-                        starWidth: "20px",
-                    precision: 0,
-                });
-            });
-        </script>
-        <p class="commentAllReviews">{{ review.comment }}</p>
-        <p class="reviewDate"> Réponse du propriétaire : </p>
-        <p class="commentAllReviews">{{ review.response }}</p>
-    </div>
-            
-    {% endfor %}
+                <p class="reviewName">{{ review.reservation.firstName }}</p>
+                <p class="reviewDate">posté le {{ review.creationDate|date('d-m-Y') }}</p> 
+                
+                {# Utilisation de RateYo pour afficher les étoiles #}
+                <div id="rating-{{ review.id }}"></div>
+                <script>
+                    $(document).ready(function () {
+                        $("#rating-{{ review.id }}").rateYo({
+                            rating: {{ review.rating }},
+                            readOnly: true, // Pour rendre les étoiles en lecture seule #}
+                                starWidth: "20px",
+                            precision: 0,
+                        });
+                    });
+                </script>
 
-</div>
+                <p class="commentAllReviews">{{ review.comment }}</p>
+                <p class="reviewDate"> Réponse du propriétaire : </p>
+                <p class="commentAllReviews">{{ review.response }}</p>
+            </div>    
+        {% endfor %}
+    </section>
 
-{# Affichez la pagination #}
-<div class="pagination">
-    {% if pagination.page > 1 %}
-        <a href="{{ path(pagination.route, { 'page': pagination.page - 1 }) }}" class="previous"><i class="fa-solid fa-chevron-left"></i></a>
-    {% endif %}
+    {# Affichez la pagination #}
+    <section class="pagination">
+        {% if pagination.page > 1 %}
+            <a href="{{ path(pagination.route, { 'page': pagination.page - 1 }) }}" class="previous"><i class="fa-solid fa-chevron-left"></i></a>
+        {% endif %}
 
-    {# // Ajoute la class active au numéro de page actuel #}
-    {% for page in 1..pagination.pages %} 
-        <a href="{{ path(pagination.route, { 'page': page }) }}" {% if page == pagination.page %}class="active"{% endif %}>{{ page }}</a>
-    {% endfor %}
+        {# // Ajoute la class active au numéro de page actuel #}
+        {% for page in 1..pagination.pages %} 
+            <a href="{{ path(pagination.route, { 'page': page }) }}" {% if page == pagination.page %}class="active"{% endif %}>{{ page }}</a>
+        {% endfor %}
 
-    {% if pagination.page < pagination.pages %}
-        <a href="{{ path(pagination.route, { 'page': pagination.page + 1 }) }}" class="next"><i class="fa-solid fa-chevron-right"></i></a>
-    {% endif %}
-</div>
-
-
-
-
-
+        {% if pagination.page < pagination.pages %}
+            <a href="{{ path(pagination.route, { 'page': pagination.page + 1 }) }}" class="next"><i class="fa-solid fa-chevron-right"></i></a>
+        {% endif %}
+    </section>
 {% endblock %}

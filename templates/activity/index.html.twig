@@ -23,72 +23,68 @@
     </script>
 {% endfor %}
 
+    <section class="containerDashboard">
+        <nav class="slidebar">
+            <ul>
+                <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
+                <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
+                <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
+            </ul>
+        </nav>
 
-<div class="containerDashboard">
-    <div class="slidebar">
-        <ul>
-            <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
-            <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_upcoming_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations à venir</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_previous_reservations') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les réservations passées</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_period') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les périodes</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_gite') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Le gîte</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_category') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les photos</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
-            <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
-        </ul>
-    </div>
-
-    <div class="content">
-
-        <div class="title gite-title center">
-            <h1>Toutes les activités</h1>
-        </div>
-        
-
-        <table class="tableGite">
-            <thead>
-                <tr>
-                    <th>Image</th>
-                    <th>Nom de l'activité</th>
-                    <th>Description</th>
-                    <th>Code postal</th>
-                    <th>Longitude</th>
-                    <th>Latitude</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for activity in activities %}
-                <tr>
-                    <td class="table-activity-img"><img src="{{ asset(activity.picture) }}" alt="Photo de {{ activity.name }}" class="modal-trigger"/> </td>
-                    <td>{{ activity.name }}</td>
-                    <td>{{ activity.description }}</td>
-                    <td>{{ activity.cp }} </td>
-                    <td>{{ activity.longitude }}</td>
-                    <td>{{ activity.latitude }} </td>
-                </tr>   
-                {% endfor %}
-            </tbody>
-        </table>        
-
-        <div class="addPeriodSection">
+        <div class="content">
             <div class="title gite-title center">
-                    <h2>Ajouter une activité</h2>
+                <h1>Toutes les activités</h1>
             </div>
+            <table class="tableGite">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Nom de l'activité</th>
+                        <th>Description</th>
+                        <th>Code postal</th>
+                        <th>Longitude</th>
+                        <th>Latitude</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for activity in activities %}
+                        <tr>
+                            <td class="table-activity-img"><img src="{{ asset(activity.picture) }}" alt="Photo de {{ activity.name }}" class="modal-trigger"/> </td>
+                            <td>{{ activity.name }}</td>
+                            <td>{{ activity.description }}</td>
+                            <td>{{ activity.cp }} </td>
+                            <td>{{ activity.longitude }}</td>
+                            <td>{{ activity.latitude }} </td>
+                        </tr>   
+                    {% endfor %}
+                </tbody>
+            </table>        
 
-            <div class="addPeriodForm">
-                {{ form_start(form) }} 
-                    {{ form_row(form.name) }} 
-                    {{ form_row(form.description) }} 
-                    {{ form_row(form.picture) }}
-                    {{ form_row(form.cp) }} 
-                    {{ form_row(form.longitude) }} 
-                    {{ form_row(form.latitude) }} 
-                {{ form_end(form) }}
+            <div class="addPeriodSection">
+                <div class="title gite-title center">
+                        <h2>Ajouter une activité</h2>
+                </div>
+                <div class="addPeriodForm">
+                    {{ form_start(form) }} 
+                        {{ form_row(form.name) }} 
+                        {{ form_row(form.description) }} 
+                        {{ form_row(form.picture) }}
+                        {{ form_row(form.cp) }} 
+                        {{ form_row(form.longitude) }} 
+                        {{ form_row(form.latitude) }} 
+                    {{ form_end(form) }}
+                </div>
             </div>
         </div>
-    </div>
-</div>
+    </section>
+
 {% endblock %}    
     
     

@@ -33,7 +33,7 @@ class ReservationType extends AbstractType
                 'label' => 'Adresse',
                 "required" => true
             ])
-            ->add('cp', IntegerType::class, [
+            ->add('cp', TextType::class, [
                 'label' => 'Code Postal',
                 "required" => true
             ])

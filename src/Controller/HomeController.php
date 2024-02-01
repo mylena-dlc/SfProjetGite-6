@@ -146,7 +146,7 @@ class HomeController extends AbstractController
     * Fonction pour voir les photos d'une catégorie
     */
 
-    #[Route('home/category/{id}', name: 'show_category')]
+    #[Route('home/category/{id}', name: 'show_galery')]
     public function show(Category $category, $id): Response {
 
         $pictures = $this->pictureRepository->findBy(['category' => $id]);

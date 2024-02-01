@@ -24,8 +24,8 @@
     </script>
 {% endfor %}
 
-<div class="containerDashboard">
-    <div class="slidebar">
+<section class="containerDashboard">
+    <nav class="slidebar">
         <ul>
             <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
             <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
@@ -37,72 +37,62 @@
             <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
             <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
         </ul>
-    </div>
+    </nav>
 
-<div class="content">
-    <div class="title gite-title center">
-        <h1>Listes des gîtes</h1>
-    </div>
-
-    <table class="tableGite">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Adresse</th>
-                <th>Code postal</th>
-                <th>Ville</th>
-                <th>Capacité</th>
-                <th>Description</th>
-                <th>Prix de la nuitée</th>
-                <th>Forfait ménage</th>
-                <th>Modifier / Supprimer</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for gite in gites %}
-            <tr>
-                <td>{{ gite.name }}</td>
-                <td>{{ gite.address }}</td>
-                <td>{{ gite.cp}}</td>
-                <td>{{ gite.city}}</td>
-                <td>{{ gite.capacity }} personnes</td>
-                <td class="tdDescription">{{ gite.description }}</td>
-                <td>{{ gite.price }} €</td>
-                <td>{{ gite.cleaningCharge }} €</td>
-                <td>      
-                    <a href="{{ path ('edit_gite', {'id': gite.id}) }}" class="btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
-                    <a href="{{ path ('delete_gite', {'id': gite.id}) }}" class="btn delete"><i class="fa-solid fa-trash-can"></i></a>
-                </td>
-            </tr>   
-            {% endfor %}
-        </tbody>
-    </table>        
-
-
-
+    <div class="content">
+        <div class="title gite-title center">
+            <h1>Listes des gîtes</h1>
+        </div>
+        <table class="tableGite">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Adresse</th>
+                    <th>Code postal</th>
+                    <th>Ville</th>
+                    <th>Capacité</th>
+                    <th>Description</th>
+                    <th>Prix de la nuitée</th>
+                    <th>Forfait ménage</th>
+                    <th>Modifier / Supprimer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gite in gites %}
+                <tr>
+                    <td>{{ gite.name }}</td>
+                    <td>{{ gite.address }}</td>
+                    <td>{{ gite.cp}}</td>
+                    <td>{{ gite.city}}</td>
+                    <td>{{ gite.capacity }} personnes</td>
+                    <td class="tdDescription">{{ gite.description }}</td>
+                    <td>{{ gite.price }} €</td>
+                    <td>{{ gite.cleaningCharge }} €</td>
+                    <td>      
+                        <a href="{{ path ('edit_gite', {'id': gite.id}) }}" class="btn edit"><i class="fa-solid fa-pen-to-square"></i></a>
+                        <a href="{{ path ('delete_gite', {'id': gite.id}) }}" class="btn delete"><i class="fa-solid fa-trash-can"></i></a>
+                    </td>
+                </tr>   
+                {% endfor %}
+            </tbody>
+        </table>        
 
     <div class="addPeriodSection">
+        <div class="title gite-title center">
+                <h2>Ajouter un gîte</h2>
+        </div>
 
-    <div class="title gite-title center">
-            <h2>Ajouter un gîte</h2>
+        <div class="addPeriodForm">
+            {{ form_start(form) }} 
+                {{ form_row(form.name) }} 
+                {{ form_row(form.address) }} 
+                {{ form_row(form.cp) }} 
+                {{ form_row(form.city) }} 
+                {{ form_row(form.capacity) }} 
+                {{ form_row(form.price) }} 
+                {{ form_row(form.cleaningCharge) }} 
+            {{ form_end(form) }}
+        </div>
     </div>
-
-    <div class="addPeriodForm">
-        {{ form_start(form) }} 
-            {{ form_row(form.name) }} 
-            {{ form_row(form.address) }} 
-            {{ form_row(form.cp) }} 
-            {{ form_row(form.city) }} 
-            {{ form_row(form.capacity) }} 
-            {{ form_row(form.price) }} 
-            {{ form_row(form.cleaningCharge) }} 
-        {{ form_end(form) }}
-</div>
-
-
-
-
-
-</div>
-
+</section>
 {% endblock %}

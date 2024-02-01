@@ -1,4 +1,19 @@
 
+function toggleMenu() {
+    const navbar = document.querySelector(".navbar")
+    const burger = document.querySelector(".burger")
+    burger.addEventListener('click', () => {
+        navbar.classList.toggle('show-nav')
+        behavior: "smooth"
+    })
+}
+toggleMenu();
+
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
 // Récupérez les éléments HTML
@@ -91,62 +106,22 @@ btn.addEventListener('click', () => {
 })
 
 
-/* API Leaflet */ 
-
-    // // Créez une icône personnalisée avec une couleur différente
-    // var customIcon = L.icon({
-    //     iconUrl: '../img/icon-localisation.png', 
-    //     // iconUrl: '{{ asset( img/icon-localisation.png ) }}',
-        
-    //     iconSize: [38, 38],  // Taille de l'icône en pixels
-    //     iconAnchor: [16, 32],  // Point d'ancrage de l'icône par rapport à son coin inférieur gauche
-    //     popupAnchor: [0, -32],  // Point d'ancrage du popup par rapport à son coin supérieur gauche
-    // });
-
-    // // Initialisez la carte avec l'icône personnalisée
-    // var map = L.map('map').setView([48.116933, 7.140431], 13);
-
-    // L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    //     maxZoom: 13,
-    //     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    // }).addTo(map);
-
-    // // Utilisez l'icône personnalisée pour le marqueur
-    // var marker = L.marker([48.116933, 7.140431], { icon: customIcon }).addTo(map);
-    // marker.bindPopup("Le gîte du Rain du Pair").openPopup();
-
-
-
-
-
-
-
-
-
-
-
-    
-        
-
 
 // Plugin Rate Yo pour l'affichage des étoiles de la notation des avis
 
-$(document).ready(function () {
-    $("#rating").rateYo({
-        rating: 0, // la valeur initiale
-        starWidth: "20px",
-        precision: 0, // Désactive les demi-étoiles
+    $(document).ready(function () {
+        $("#rating").rateYo({
+            rating: 0, // la valeur initiale
+            starWidth: "20px",
+            precision: 0, // Désactive les demi-étoiles
 
-        onChange: function (rating, rateYoInstance) {
-            // Mettre à jour la valeur du champ caché avec la note sélectionnée
-            $("input[name='review[rating]']").val(rating);
-        }
+            onChange: function (rating, rateYoInstance) {
+                // Mettre à jour la valeur du champ caché avec la note sélectionnée
+                $("input[name='review[rating]']").val(rating);
+            }
+        });
     });
-});
   
-
-
-
 
 class Carousel {
 
@@ -156,7 +131,6 @@ class Carousel {
      * @callback moveCallback
      * @param {number} index
      */
-
 
     /**
      * @param {HTMLElement} getElement
@@ -175,6 +149,7 @@ class Carousel {
         }, options)
 
         let children = [].slice.call(element.children)
+        this.isMobile = false
         this.currentItem = 0
         this.root = this.createDivWithClass('carousel')
         this.container = this.createDivWithClass('carousel__container')
@@ -190,6 +165,8 @@ class Carousel {
         this.setStyle()
         this.createNavigation()
         this.moveCallbacks.forEach(cb => cb(0))
+        this.onWindowResize()
+        window.addEventListener('resize', this.onWindowResize.bind(this))
     }
 
 /*
@@ -197,9 +174,9 @@ Applique les bonnes dimensions aux éléments du carousel
 */
 
 setStyle () {
-    let ratio = this.items.length / this.options.slidesVisible
+    let ratio = this.items.length / this.slidesVisible
     this.container.style.width = (ratio * 100) + "%"
-    this.items.forEach(item => item.style.width = ((100 / this.options.slidesVisible) / ratio) + "%")
+    this.items.forEach(item => item.style.width = ((100 / this.slidesVisible) / ratio) + "%")
 }
 
 createNavigation () {
@@ -219,7 +196,7 @@ createNavigation () {
             prevButton.classList.remove('carousel__prev--hidden');
         }
         
-        if (index >= this.items.length - this.options.slidesVisible) {
+        if (index >= this.items.length - this.slidesVisible) {
             nextButton.classList.add('carousel__next--hidden');
         } else {
             nextButton.classList.remove('carousel__next--hidden');
@@ -228,12 +205,12 @@ createNavigation () {
 }
 
 next () {
-    this.gotoItem(this.currentItem + this.options.slidesToScroll)
+    this.gotoItem(this.currentItem + this.slidesToScroll)
 
 }
 
 prev () {
-    this.gotoItem(this.currentItem - this.options.slidesToScroll)
+    this.gotoItem(this.currentItem - this.slidesToScroll)
 }
 
 
@@ -261,6 +238,15 @@ onMove(cb) {
     this.moveCallbacks.push(cb)
 }
 
+onWindowResize () {
+    let mobile = window.innerWidth < 1024
+    if (mobile !== this.isMobile) {
+        this.isMobile = mobile;
+        this.setStyle(); 
+        this.moveCallbacks.forEach(cb => cb(this.currentItem));
+    }
+}
+
     /**
      * 
      * @param {string} className
@@ -270,6 +256,13 @@ onMove(cb) {
         let div = document.createElement('div')
         div.setAttribute('class', className)
         return div
+    }
+
+    get slidesToScroll () {
+        return this.isMobile ? 1 : this.options.slidesToScroll
+    }
+    get slidesVisible () {
+        return this.isMobile ? 1 : this.options.slidesVisibles
     }
 }
 
@@ -361,10 +354,6 @@ function closeModal() {
     var modal = document.getElementById('myModal');
     modal.style.display = 'none';
 }
-
-
-
-
 
 
 // TIMER LORS D'UNE RÉSERVATION

@@ -24,11 +24,12 @@ class RegistrationFormType extends AbstractType
             ->add('email', EmailType::class, [
                 'attr' => [
                     'class' => 'inputRegister'
-                ]
+                ],
+                'required' => true,
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false, // le champs ne sera pas stocké en BDD
-                'label' => "Cochez cette case pour accepter les conditions d'utilisations",
+                // 'label' => "Cochez cette case pour accepter <a href='{{ path('app_mentions_legales') }}'>les conditions d'utilisations</a>",
                 'attr' => [
                     'class' => 'inputRegisterTerms'
                 ],

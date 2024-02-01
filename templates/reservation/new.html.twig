@@ -10,104 +10,95 @@
          <h1>Confirmer votre réservation</h1>
     </div>
 
-    <div class="head-resa">
+    <section class="head-resa">
         <div class="breadcrumb">
             <a href="{{ path('app_reservation') }}"><button class="btn">Retour</button></a>
         </div>
         {# Affichage du compte à rebours #}
         <div id="countdown"></div>
-    </div>
+    </section>
 
         {# Si l'utilisateur est connecté et que son compte à été validé #}
         {% if app.user and app.user.isVerified == true  %}
-           <div class="sectionLogin">
-       <div class="title gite-title titlecenter">
-            <h2>Connection</h2>
-        </div>
-            <p>Vous êtes connecter avec ce compte : </p>
-            <p>{{ app.user.email }}</p>
-            <p>Connectez-vous avec un autre compte <a aria-current="page" href="{{ path('app_login') }}"><i class="fa-solid fa-circle-arrow-right"></i></a></p>
-    </div>
+           <section class="sectionLogin">
+                <div class="title gite-title titlecenter">
+                        <h2>Connection</h2>
+                    </div>
+                <p>Vous êtes connecter avec ce compte : </p>
+                <p>{{ app.user.email }}</p>
+                <p>Connectez-vous avec un autre compte <a aria-current="page" href="{{ path('app_login') }}"><i class="fa-solid fa-circle-arrow-right"></i></a></p>
+            </section>
 
+            <section class="recap">
+                <div class="recapTop">
+                    <div class="recapRight">
+                        <h3 class="recapTitle">Vos dates</h3>
+                        <p> du {{ arrivalDate }} au {{ departureDate }} </p>
+                    </div>
+                    <div class="recapLeft">
+                        <h3 class="recapTitle">Détails du prix</h3>
+                        <p>{{ nightPrice }}€ x {{ numberNight }} nuit(s) <strong>{{ totalPrice }} €</strong></p>
+                        <p>Frais de ménage </p>
+                    </div>
+                </div>
 
-<div class="recap">
-    <div class="recapTop">
-        <div class="recapRight">
-            <h3 class="recapTitle">Vos dates</h3>
+                <div class="line"></div>
 
-            <p> du {{ arrivalDate }} au {{ departureDate }} </p>
-        </div>
+                <div class="recapBottom">
+                    <div class="recapRight">
+                        <h3 class="recapTitle">Nombre de personne(s)</h3>
+                        <p>{{ numberAdult}} adulte(s)</p>
+                        <p>{{ numberKid }} enfant(s)</p>
+                    </div>
+                    <div class="recapLeft">
+                        <h3 class="recapTitle rigtht">Total</h3>
+                        <h3 class="recapTitle left"> {{ totalPrice }} €</h3>
+                    </div>
+                </div>
+            </section>
 
-        <div class="recapLeft">
-            <h3 class="recapTitle">Détails du prix</h3>
-            <p>{{ nightPrice }}€ x {{ numberNight }} nuit(s) <strong>{{ totalPrice }} €</strong></p>
-            <p>Frais de ménage </p>
-        </div>
-    </div>
+            <div class="title gite-title center">
+                <h2>Vos coordonnées</h2>
+            </div>
 
-<div class="line"></div>
+           
+            <section class="resaForm">
+                <div class="row"> 
+                    {{ form_start(form) }}
+                    {{ form_row(form.lastName) }}
+                    {{ form_row(form.firstName) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.address) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.cp) }}
+                    {{ form_row(form.city) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.country) }}
+                    {{ form_row(form.phone) }}
+                </div>
+                <div class="row">
+                    {{ form_row(form.isMajor) }}
+                </div>
+                {{ form_row(form.payer) }}
+                {{ form_end(form) }}
+            </section>
+        {% endif %}
 
-<div class="recapBottom">
-    <div class="recapRight">
-        <h3 class="recapTitle">Nombre de personne(s)</h3>
-        <p>{{ numberAdult}} adulte(s)</p>
-        <p>{{ numberKid }} enfant(s)</p>
-    </div>
-    <div class="recapLeft">
-        <h3 class="recapTitle rigtht">Total</h3>
-        <h3 class="recapTitle left"> {{ totalPrice }} €</h3>
-    </div>
-</div>
-</div>
+        {# Si l'utilisateur n'est pas connecté #}
+        {% if not app.user  %}
+            <p class="pBold">Veuillez vous connecter pour confirmer votre réservation 
+                <a aria-current="page" href="{{ path('app_login') }}"> ici <i class="fa-solid fa-circle-arrow-right"></i></a>
+            Ou créer un compte <a aria-current="page" href="{{ path('app_register') }}"> par ici<i class="fa-solid fa-circle-arrow-right"></i></a></p>      
+        {% endif %}  
 
-
-    <div class="title gite-title center">
-        <h2>Vos coordonnées</h2>
-    </div>
-
-
-    {{ form_start(form) }}
-
-    <div class="resaForm">
-        <div class="row">
-            {{ form_row(form.lastName) }}
-            {{ form_row(form.firstName) }}
-        </div>
-        <div class="row">
-            {{ form_row(form.address) }}
-        </div>
-        <div class="row">
-            {{ form_row(form.cp) }}
-            {{ form_row(form.city) }}
-        </div>
-        <div class="row">
-            {{ form_row(form.country) }}
-            {{ form_row(form.phone) }}
-        </div>
-        <div class="row">
-        {{ form_row(form.isMajor) }}
-        </div>
-
-        {{ form_row(form.payer) }}
-    </div>
-{{ form_end(form) }}
-
-{% endif %}
-
-
-{% if not app.user  %}
-    <p class="pBold">Veuillez vous connecter pour confirmer votre réservation 
-        <a aria-current="page" href="{{ path('app_login') }}"> ici <i class="fa-solid fa-circle-arrow-right"></i></a>
-    Ou créer un compte <a aria-current="page" href="{{ path('app_register') }}"> par ici<i class="fa-solid fa-circle-arrow-right"></i></a></p>      
-{% endif %}  
-
-    {# Si le compte n'a pas été validé #}
-    {% if app.user and app.user.isVerified == false  %}
-
-    <div class="section-profil">
-        <p class="profilResa"><i class="fa-solid fa-triangle-exclamation"></i> Votre compte n'est pas activé,<br>Veuilliez consultez vos mail et cliquer sur le lien d'activation.
-        <br><br> renvoyer le lien d'activation sur votre boîte mail <a href="{{ path('resend_verif') }}">ici </a></p>
-    </div>
-    {% endif %} 
-
+        {# Si le compte n'a pas été validé #}
+        {% if app.user and app.user.isVerified == false  %}
+            <section class="section-profil">
+                <p class="profilResa"><i class="fa-solid fa-triangle-exclamation"></i> Votre compte n'est pas activé,<br>Veuilliez consultez vos mail et cliquer sur le lien d'activation.
+                <br><br> renvoyer le lien d'activation sur votre boîte mail <a href="{{ path('resend_verif') }}">ici </a></p>
+            </section>
+        {% endif %} 
 {% endblock %}

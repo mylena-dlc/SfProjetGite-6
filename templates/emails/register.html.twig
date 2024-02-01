@@ -53,35 +53,25 @@
 <body>
 
     <div class="header">
-
-    <h1>Activez votre compte</h1>
-
+        <h1>Activez votre compte</h1>
+        <p>Bonjour,</p><br>
+        <p>Merci pour votre inscription sur le site du Gîte du Rain du Pair !</p>
+        <p>Votre inscription est à valider en cliquant sur le lien ci-dessous :</p>  
+        <br>
+        <button class="btn-invoice"> 
+            <p><a href="{{ absolute_url(path('verify_user', {'token': token})) }}">Par ici</a></p>
+        </button>
+        <br>
+        <p>Ce lien expirera dans 3 heures.</p>
+        <p>Nous espérons avoir le plaisir de vous accueillir bientôt !</p>
+        <div class="signature">
+            <figure>
+                <img src="{{ logo }}" alt="logo" class="invoiceLogo"> 
+            </figure>
+            <p class="signature-p">Cordialement,<br>
+            L'équipe du Gîte Rain du pair</p>
+        </div>
+    </div>
     
-    <p>Bonjour,</p><br>
-
-    <p>Merci pour votre inscription sur le site du Gîte du Rain du Pair !</p>
-    <p>Votre inscription est à valider en cliquant sur le lien ci-dessous :</p>  
-
-    <br>
-
-    <button class="btn-invoice"> 
-        <p><a href="{{ absolute_url(path('verify_user', {'token': token})) }}">Par ici</a></p>
-    </button>
-    <br>
-
-    <p>Ce lien expirera dans 3 heures.</p>
-
-    <p>Nous espérons avoir le plaisir de vous accueillir bientôt !</p>
-
-
-    <div class="signature">
-        <figure>
-            <img src="{{ logo }}" alt="logo" class="invoiceLogo"> 
-        </figure>
-        <p class="signature-p">Cordialement,<br>
-        L'équipe du Gîte Rain du pair</p>
-    </div>
-        
-    </div>
 </body>
 </html>

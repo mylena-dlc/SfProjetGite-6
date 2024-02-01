@@ -33,35 +33,17 @@ class SitemapController extends AbstractController
 
         // On ajoute les URLs "statiques"
         $urls[] = ['loc' => $this->generateUrl('app_home')];
+        $urls[] = ['loc' => $this->generateUrl('app_reservation')];
+        $urls[] = ['loc' => $this->generateUrl('new_reservation')];
         $urls[] = ['loc' => $this->generateUrl('app_login')];
         $urls[] = ['loc' => $this->generateUrl('app_register')];
         $urls[] = ['loc' => $this->generateUrl('app_all_reviews')];
         $urls[] = ['loc' => $this->generateUrl('app_contact')];
+        $urls[] = ['loc' => $this->generateUrl('app_mentions_legales')];
+        $urls[] = ['loc' => $this->generateUrl('app_politique-confidentialite')];
+        $urls[] = ['loc' => $this->generateUrl('app_condition_generales_vente')];
+        $urls[] = ['loc' => $this->generateUrl('app_sitemap')];
 
-        // dump($urls); die;
-        // On ajoute les URLs "dynamiques"
-        // $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
-        $categories = $this->categoryRepository->findAll();
-
-
-        // foreach ($categories as $category) {
-        //     $categoryUrl[] = ['loc' => $this->generateUrl('app_category', [
-        //         'name' => $category->getName()
-        //         ]
-        //     )];
-
-        //     $urls[] = [
-        //         'loc' => $categoryUrl,
-        //         'pictures' => $category->getPictures()
-        //     ];
-
-        //     foreach ($category->getPictures() as $picture) {
-        //         $urls[] = [
-        //             'loc' => $this->generateUrl('show_category', ['id' => $picture->getId()]),
-        //             'picture' => $picture
-        //         ];
-        //     }
-        // }
 
         // Fabrication de la réponse
         $response = new Response(

@@ -53,15 +53,10 @@
 <body>
 
     <div class="header">
-
         <h1>Confirmation de réservation</h1>
-
         <p>Bonjour {{ reservation.firstName }} {{ reservation.lastName }},</p>
-
         <p>Nous sommes ravis de vous confirmer votre réservation dans notre gîte de charme à Orbey en Alsace.</p>
-
         <p>Voici un récapitulatif de votre réservation :</p>
-
         <ul>
             <li>Date d'arrivée : {{ reservation.arrivalDate|date('d-m-Y') }} (arrivée à partir de 17H00)</li>
             <li>Date de départ : {{ reservation.departureDate|date('d-m-Y') }} (départ à 11H00 maximun)</li>
@@ -69,9 +64,7 @@
             <li>Nombre d'enfants : {{ reservation.numberKid }}</li>
             <li>Montant total : {{ reservation.totalPrice }} €</li>
         </ul>
-
         <p>Merci de votre confiance. Nous sommes impatients de vous accueillir!</p>
-
         <div class="signature">
             <figure>
                 <img src="{{ logo }}" alt="logo" class="invoiceLogo"> 
@@ -79,13 +72,11 @@
             <p class="signature-p">Cordialement,<br>
             L'équipe du Gîte Rain du pair</p>
         </div>
-
-           
         <br>
         <button class="btn-invoice"> 
             <a href="data:application/pdf;base64,{{ pdfBase64 }}" download="facture.pdf">Télécharger votre facture</a>
         </button>
-
     </div>
+    
 </body>
 </html>

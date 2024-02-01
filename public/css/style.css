@@ -2,12 +2,8 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
-    /* font-family: 'Catamaran', 'Ruthie', 'Corinthia', 'Rochester'; */
-    /* font-family: system-ui, sans-serif; */
     font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
-    /* font-family: 'Corinthia'; */
     font-weight: normal;
-
 }
 
 /* Déclaration des variables */
@@ -52,6 +48,10 @@
 
 
 /* ********************************************** GÉNÉRAL ********************************************** */
+
+.burger {
+    display: none;
+}
 
 .pageaccueil {
     margin-top: 0 !important;
@@ -126,13 +126,16 @@ p {
 .btn {
     height: 50px;
     width: 150px;
-    /* border-radius: var(--borderRadius1); */
+
     background:linear-gradient(to bottom, var(--color6), var(--color3));
+    font-weight: var(--medium); 
+     color: var(--color4);
+     
     border: none;
-    color: var(--color4);
+   
     font-size: 1rem;
     text-transform: uppercase;
-    font-weight: var(--medium); 
+    
     letter-spacing: 1px;
     box-shadow: var(--boxShadow2);
     transition-duration: 0.3s;
@@ -249,7 +252,7 @@ header {
     position: absolute;
     top: -380px;
     right: 50%;
-    z-index: 10;
+    /* z-index: 10; */
     text-transform: lowercase;
     transform: translate(50%, 0%); 
     z-index: 100;
@@ -292,7 +295,7 @@ h1 strong {
 
 .navbar {
     position: fixed;
-    z-index: 200;
+    z-index: 1000;
     padding: 0 100px;
     width: 100%;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.5)), url("../img/fond-banner.webp");
@@ -387,7 +390,7 @@ h1 strong {
     font-size: 22px;
     color: var(--color1);
     font-weight: 500;
-    margin: 60px;
+    margin: 30px;
     z-index: 1000;
     position: relative;
 }
@@ -408,13 +411,13 @@ h1 strong {
     justify-content: center;
     border-radius: var(--borderRadius1);
     background: linear-gradient(to bottom, var(--color6), var(--color3));
-
 }
+
 .averageRating p {
     color: white;
-    font-size: 15px;
     text-align: center;
 }
+
 #rating-average .jq-ry-group svg {
     fill: white;
 }
@@ -422,10 +425,9 @@ h1 strong {
 .averageRating-p {
     font-size: 20px !important;
 }
+
 #search {
-    /* From https://css.glass */
     background: rgba(255, 255, 255, 0.33);
-    /* border-radius: 30px; */
     border-radius: 50% 50% 0px 0px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5.2px);
@@ -610,6 +612,7 @@ h1 strong {
 .login-page .registerForm {
     margin-top: 130px;
 }
+
 .registerForm {
     background-color: var(--color4);
     width: 50%;
@@ -647,6 +650,10 @@ h1 strong {
 }
 
 .p-link > a {
+    color: var(--color3);
+}
+
+.registerForm a {
     color: var(--color3);
 }
 
@@ -699,8 +706,6 @@ em {
 
 .gite-description {
     width: 33%;
-    text-align: center; 
-    text-align: left;
     margin: 10px 0;
     font-size: 20px;
     text-align: justify;
@@ -735,7 +740,7 @@ em {
     height: 400px;
     width: 100%;
     display: flex;
-    align-items: center;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -746,11 +751,11 @@ em {
 
 .icons {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
 }
 
 .icon {
-    margin: 130px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -837,7 +842,7 @@ em {
 }
 
 .caracteristique-left > p {
-    text-align: left; 
+    /* text-align: left;  */
     margin: 30px 0;
     font-size: 20px;
     text-align: justify;
@@ -1126,14 +1131,14 @@ em {
     z-index: 5;
 }
 
-#map-carousel {
+ #map-carousel {
     width: 60% !important;   
     margin: 0 30px;
-}
+} 
 
-#map-carousel .carousel__item {
+ #map-carousel .carousel__item {
     width: auto !important;
-}
+} 
 
 .custom-popup-activity img {
     width: 100%;
@@ -1255,6 +1260,7 @@ em {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .section-btn-actu {
@@ -1262,6 +1268,7 @@ em {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 300px;
 }
 
 .section-btn-actu h3 {
@@ -1284,7 +1291,7 @@ em {
 
 .instagram_post {
     margin: 10px;
-    overflow: hidden;
+    /* overflow: hidden; */
     box-shadow: var(--boxShadow1);
 }
 
@@ -2160,6 +2167,7 @@ th, td {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .section-contact .icon {
@@ -2319,6 +2327,7 @@ footer a {
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-wrap: wrap;
     padding: 30px;
 }
 
@@ -2424,8 +2433,6 @@ footer a {
 
 
 
-
-
 /*
 *
 * RESPONSIVE DESIGN
@@ -2437,11 +2444,297 @@ footer a {
 @media only screen and (max-width: 1024px) {
     /* Styles pour les écrans de tailles inférieure à 768px */
 
+     .burger {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        padding: 0;
+        width: 45px;
+        height: 45px;
+        border: none;
+        background-color: white;
+        cursor: pointer;
+        z-index: 2500;
+    }
+    .bar {
+        display: block;
+        width: 45px;
+        height: 4px;
+        background: var(--color1);
+        border-radius: 3px;
+        transition: all .3s ease-in-out;
+    }
+    .show-nav .bar {
+        width: 0;
+        background: transparent;
+    }
+    .bar::before,
+    .bar::after {
+        content: "";
+        width: 45px;
+        height: 4px;
+        position: absolute;
+        left: 0;
+        background: var(--color1);
+        border-radius: 3px;
+        transition: all .5s ease-in-out;
+    }
+    .bar::before {
+        transform: translateY(-12px);
+    }
+    .bar::after {
+        transform: translateY(12px);
+    }
+    .show-nav .bar::before {
+        transform: rotate(45deg);
+    }
+    .show-nav .bar::after {
+        transform: rotate(-45deg);
+    }
+    .nav-items {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 0;
+        min-height: 95vh;
+        position: absolute;
+        right: 0;
+        background:linear-gradient(to bottom, var(--color4), var(--color2));
+        transition: all .5s ease-in-out;
+        z-index: 2000;
+        text-align: center;
+        overflow: hidden;
+    }
+    .show-nav .nav-items {
+        width: 100%;
+    }       
+    .nav-item {
+        transform: translateX(101%);
+    }
+    .show-nav .nav-item {
+        transform: translateX(0);
+    }
+    .nav-item>a {
+        display: block;
+        padding: 1rem;
+        font-size: 2.2rem;
+        transition: all .4s ease-in-out;
+    }
+    .nav-item>a:hover {
+        padding-left: 2rem;
+        letter-spacing: 5px;
+    }
+    .navLogo {
+        height: 150px;
+    }
+    header {
+        min-height: 100vh;
+    }
+    h1 strong {
+        font-size: 80px !important;
+    }
+    .first-section-person {
+        font-size: 30px;
+    }
+    #first-section {
+        top: -530px;
+    }
+    #reservationForm {
+        flex-wrap: wrap;
+    }
+    #search {
+        width: 100%;
+        padding: 300px 0px 0px 0px;
+        height: 500px;
+        top: -845px;
+    }
+    #first-section h2 {
+        font-size: 30px;
+    }
+    .gite-content {
+        padding: 20px;
+    }
+    .pageaccueil .gite-title {
+        left: 20px;
+        top: 150px;
+    }
+    .picture01 {
+        width: 360px;
+        margin-left: 70px
+    }
+    .gite-description {
+        margin: 200px 0;
+        width: 100%;
+    }
+    .feuille01 {
+        top: 600px;
+    }
+    .banner-p {
+        white-space: wrap;
+        text-align: center;
+    }
+    #galerie {
+        padding: 10px;
+    }
+    .caracteristique {
+        margin: 30px;
+    }
+    .caracteristique-title {
+        margin: 50px 0px 50px 30px;
+    }
+    .caracteristique-galery {
+        width: 200%;
+        margin-top: 50px;
+    }
+    .feuille02 {
+        transform: rotate(45deg) translateY(60px);
+        right: 15px;
+    }
+    .banner2-p {
+        font-size: 20px;
+    }
+    .categories{
+        flex-wrap: wrap;
+        margin: 50px;
+    }
+    .galerie-contain .title {
+        margin: 30px;
+    }
+    #actualites {
+        padding: 100px;
+    }
+ 
+    .alentours-containt {
+        flex-wrap: wrap;
+    }
+    #map-activity {
+        width: 100%;
+    }
+     #map-carousel {
+        width: 100% !important;
+    } 
+    #review {
+        padding: 50px 20px;
+    }
+    .footerBottom {
+        flex-wrap: wrap;
+    }
+
+    /* Page contact */
+    .section-contact{
+        margin: 0;
+        width: 100%;
+        justify-content: center;
+    }
+    .registerForm{
+        width: 100%;
+        
+    }
+
+
+
+    
+
 }
 
 /* ********************************************** MOBILE ************************************************ */
 
 @media only screen and (max-width: 768px) {
     /* Styles pour les écrans de tailles inférieure à 768px */
+    #first-section {
+        left: 0;
+    }
+    .banner2-p {
+        white-space: normal;
+    }
+    h1 strong {
+        font-size: 50px !important;
+    }
+    #first-section {
+        left: 20px;
+        top: -490px;
+        width: 100%;
+        transform: none;
+        text-align: left;
+    }
+    .averageRating {
+        left: 20px;
+        top: -280px;
+    }
+    #search {
+        border-radius:  20% 20% 0px 0px;
+        padding: 220px 0px 0px 0px;
+        top: -780px;
+    }
+    .background-image {
+        display: none;
+    }
+    .description-and-picture {
+        width: 100%;
+    }
+    .pageaccueil .gite-title {
+        top: 40px;
+    }
+    .giteFigure {
+        width: 100%;
+        
+    }
+    .description-and-picture {
+        flex-wrap: wrap;
+    }
+    .feuille01, .feuille02 {
+        display: none;
+    }
+    .gite-description {
+        margin: 120px 0px 50px 0px;
+    }
+    .picture01 {
+        width: 250px;
+        border-radius: 50%;
+        margin-bottom: 50px;
+    }
+    .icon {
+        margin: 10px;
+        width: 130px;
+    }
+    .caracteristique-left{
+        width: 100%;
+    }
+    .caracteristique {
+        padding: 20px;
+        margin: 0;
+    }
+    .caracteristique-galery {
+        width: 100%;
+    }
+    .banner2 {
+        height: 600px;
+    }
+    #actualites {
+        padding: 20px;
+    }
+    .actualites-content{
+        justify-content: center;
+    }
+    #alentours{
+        padding: 20px;
+    }
+    .link-right{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .picture03, .picture05, .picture04{
+        width: 100px;
+    }
+    #contact-message {
+        width: 100%;
+    }
+    .base {
+        height: 200px;
+    }
+
 
 }

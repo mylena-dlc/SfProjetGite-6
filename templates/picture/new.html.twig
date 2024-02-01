@@ -4,8 +4,8 @@
 
 {% block body %}
 
-<div class="containerDashboard">
-    <div class="slidebar">
+<section class="containerDashboard">
+    <nav class="slidebar">
         <ul>
             <li class="titleSlidebar titleAdmin">Tableau de bord<br>Administrateur</li>
             <li class="titleSlidebar"><a href="{{ path('app_dashboard') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Accueil</a></li>
@@ -17,25 +17,23 @@
             <li class="linkSlidebar"><a href="{{ path('app_review') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les avis</a></li>
             <li class="linkSlidebar"><a href="{{ path('app_activity') }}" class="linkAdmin"><i class="fa-solid fa-caret-right"></i> Les activités</a></li>
         </ul>
-    </div>
+    </nav>
 
     <div class="content">
-
         <div class="title gite-title center">
-                <h1>Ajouter une image</h1>
-            </div>
-            
+            <h1>Ajouter une image</h1>
+        </div>
         <div class="registerForm ">
             {{ form_start(form) }}
             {{ form_row(form.picture) }}
             {{ form_row(form.description) }}
             <div class="formPictureCategory">
-            {% for child in form.category %}
-            <div style="display: block; margin-bottom: 5px;">
-                {{ form_widget(child) }}
-                {{ form_label(child) }}
-            </div>
-        {% endfor %}
+                {% for child in form.category %}
+                    <div style="display: block; margin-bottom: 5px;">
+                        {{ form_widget(child) }}
+                        {{ form_label(child) }}
+                    </div>
+                {% endfor %}
             </div>
             <div class="pictureFormSubmit">
                 {{ form_row(form.valider) }}
@@ -43,6 +41,5 @@
             {{ form_end(form) }}
         </div>
     </div>
-</div>
-
+</section>
 {% endblock %}

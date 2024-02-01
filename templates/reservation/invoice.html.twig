@@ -66,59 +66,56 @@
 </head>
 <body>
 
-<div class="header">
-    <figure>
-        <img src="{{ logo }}" alt="logo" class="invoiceLogo"> 
-    </figure>
-
-    <div class="giteInfo">
-        <p>{{ gite.name }}</p>
-        <p>{{ gite.address }}</p>
-        <p>{{ gite.cp }} {{ gite.city }}</p>
-        <p>contact@leraindupair.fr</p>
+    <div class="header">
+        <figure>
+            <img src="{{ logo }}" alt="logo" class="invoiceLogo"> 
+        </figure>
+        <div class="giteInfo">
+            <p>{{ gite.name }}</p>
+            <p>{{ gite.address }}</p>
+            <p>{{ gite.cp }} {{ gite.city }}</p>
+            <p>contact@leraindupair.fr</p>
+        </div>
+        <div class="customerInfo">
+            <p> {{ reservation.lastName }} {{ reservation.firstName }}</p>
+            <p>Adresse: {{ reservation.address }} {{ reservation.cp }} {{ reservation.country }}</p>
+            <p>Téléphone: {{ reservation.phone }}</p>
+            <p>Email: {{ reservation.user.email }}</p>
+        </div>
     </div>
-    <div class="customerInfo">
-        <p> {{ reservation.lastName }} {{ reservation.firstName }}</p>
-        <p>Adresse: {{ reservation.address }} {{ reservation.cp }} {{ reservation.country }}</p>
-        <p>Téléphone: {{ reservation.phone }}</p>
-        <p>Email: {{ reservation.user.email }}</p>
-        
+
+    <div class="title">
+        <h1>FACTURE</h1>
+        <p>{{ reservation.reference }}</p>
+        <p>Réservation effectuée le {{ reservation.reservationDate|date('d-m-Y')  }} </p>
     </div>
-</div>
 
-<div class="title">
-    <h1>FACTURE</h1>
-    <p>{{ reservation.reference }}</p>
-    <p>Réservation effectuée le {{ reservation.reservationDate|date('d-m-Y')  }} </p>
-</div>
-
-<table class="reservation-details">
-    <thead>
-        <tr>
-            <th>Description</th>
-            <th>Montant HT</th>
-            <th>Montant TTC</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td colspan="2">Séjour de {{ numberNight }} nuit(s) pour {{ reservation.numberAdult }} adulte(s) et {{ reservation.numberKid }} enfant(s)<br>
-                Du {{ reservation.arrivalDate|date('d-m-Y') }} au {{ reservation.departureDate|date('d-m-Y') }} </td>
-            <td> {{ priceHt }} €</td>
-        </tr>
-        <tr>
-            <td colspan="2">Frais de ménage</td>
-            <td>{{ gite.cleaningCharge }} €</td>
-        </tr>
-    </tbody>
-    <tfoot>
-        <tr class="total">
-            <td colspan="2">Montant total</td>
-            <td>{{ reservation.totalPrice }} €</td>
-        </tr>
-    </tfoot>
-</table>
-
+    <table class="reservation-details">
+        <thead>
+            <tr>
+                <th>Description</th>
+                <th>Montant HT</th>
+                <th>Montant TTC</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="2">Séjour de {{ numberNight }} nuit(s) pour {{ reservation.numberAdult }} adulte(s) et {{ reservation.numberKid }} enfant(s)<br>
+                    Du {{ reservation.arrivalDate|date('d-m-Y') }} au {{ reservation.departureDate|date('d-m-Y') }} </td>
+                <td> {{ priceHt }} €</td>
+            </tr>
+            <tr>
+                <td colspan="2">Frais de ménage</td>
+                <td>{{ gite.cleaningCharge }} €</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr class="total">
+                <td colspan="2">Montant total</td>
+                <td>{{ reservation.totalPrice }} €</td>
+            </tr>
+        </tfoot>
+    </table>
     <p class="textEnd">Nous vous remercions de votre confiance.</p>
 </body>
 </html>

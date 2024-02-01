@@ -6,7 +6,6 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-
     {% for flash_message in app.flashes('error') %}
     <script>
         Swal.fire({
@@ -16,7 +15,6 @@
         });
     </script>
 {% endfor %}
-
 {% for flash_message in app.flashes('success') %}
     <script>
         Swal.fire({
@@ -27,29 +25,27 @@
     </script>
 {% endfor %}
 
-<section class="login-page">
-    <div class="title gite-title center">
-        <h1>Inscription</h1>
-    </div>
-   
-    
-   <div class="registerForm">
-
-
-    {{ form_errors(registrationForm) }}
-
-        {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-    <div class="btn-register">
-        <button type="submit" class="btn register">S'inscrire</button>
-        <p class="p-link"> Déjà un compte? Connectez-vous <a class="link" href="{{ path('app_login')}}">ici</a></p>
-    </div>
-    {{ form_end(registrationForm) }}
-    </div>
-</section>
+    <section class="login-page">
+        <div class="title gite-title center">
+            <h1>Inscription</h1>
+        </div>
+        <div class="registerForm">
+            {{ form_errors(registrationForm) }}
+                {{ form_start(registrationForm) }}
+                {{ form_row(registrationForm.email) }}
+                {{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) }}
+                {{ form_row(registrationForm.agreeTerms, {
+                'label': "Cochez cette case pour accepter <a href='" ~ path('app_mentions_legales') ~ "'>les conditions d'utilisations</a>",
+                'attr': {'class': 'inputRegisterTerms'},
+                'label_html': true
+            }) }}
+            <div class="btn-register">
+                <button type="submit" class="btn register">S'inscrire</button>
+                <p class="p-link"> Déjà un compte? Connectez-vous <a class="link" href="{{ path('app_login')}}">ici</a></p>
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </section>
 {% endblock %}

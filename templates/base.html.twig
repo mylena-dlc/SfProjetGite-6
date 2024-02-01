@@ -3,9 +3,11 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <meta name="robots" content="index, follow">
+        
         <title> {% block title %}{% endblock %} </title>
         <meta name="description" content="{% block meta_description %}{% endblock %}">
+        
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tarteaucitronjs/1.15.0/tarteaucitron.js" integrity="sha512-62eOEgHMZUJrhPye67OGYDBdRtoGKAQ3R9e770/990JWPvW9PxVT019z7juVdSc6itOy+zZ3yYOUmeggwmbo7Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -82,8 +84,6 @@
 
             <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/plugins/rangePlugin.min.js" integrity="sha512-44bA1YzQUqHACfLj2v0wEdX9z6EmlALcta6ENgPZnxH/aIiuBw92he+M/51kTCueY/2DsqEYM7mCwGUyO2q79w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-            {# <link href="https://fonts.googleapis.com/css?family=Catamaran" rel="stylesheet">  #}
-            
             <link href="https://fonts.googleapis.com/css?family=Corinthia" rel="stylesheet"> 
 
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -97,15 +97,14 @@
         <header id="header-interne">
             <nav class="navbar base">
 
-                {# boutton menu burger #}
-                {# <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span class="navbar-toggler-icon"></span>
-                                </button> #}
+                <button class="burger">
+                    <span class="bar"></span>
+                </button>
 
                     <ul class="nav-items"> <li class="nav-item-logo">
                         <figure>
                             <a class="link-home" href="{{ path('app_home') }}">
-                                <img src="{{ asset( 'img/logook2.png' ) }}" alt="logo" class="navLogo">
+                                <img src="{{ asset( 'img/logo-gite-rain-du-pair.png' ) }}" alt="logo" class="navLogo">
                             </a>
                         </figure>
                     </li>

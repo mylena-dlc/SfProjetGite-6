@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
             $honeypot = $form->get('honeypot')->getData();
             // si le champs pot de miel est rempli, cela indique une soumission automatisé
             if(!empty($honeypot)) { 
-            // on rejete le formulaire et on ajoute une erreur au champ
+                // on rejete le formulaire et on ajoute une erreur au champ
                 $form->get('honeypot')->addError(new FormError('Ce champs doit être vide.'));
                 $this->addFlash('error', "Erreur lors de l'inscription !");
                 
@@ -50,7 +50,7 @@ class RegistrationController extends AbstractController
 
             } else {
 
-            // encode the plain password
+            // Hachage du mot de passe
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
