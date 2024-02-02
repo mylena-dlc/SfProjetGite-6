@@ -36,7 +36,12 @@
 
         <div class="title gite-title center">
             <h2>Mes réservations</h2>
+        </div>                
+        
+        <div class="center">      
+            <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id': user.id}) }}">Mes anciens séjours</a></button>
         </div>
+        
         <div class="resaContaint">     
             {% if upcomingReservations is not empty %}
                 <table class="tableGite">
@@ -46,8 +51,6 @@
                             <th>Date de réservation</th> 
                             <th>Date d'arrivée</th>
                             <th>Date de départ</th>
-                            <th>Nombre d'adulte(s)</th>
-                            <th>Nombre d'enfant(s)</th>
                             <th>Prix total</th>
                             <th>Détails</th>
                         </tr>
@@ -59,17 +62,13 @@
                                 <td>{{ upcomingReservation.reservationDate|date('d-m-Y') }}</td>
                                 <td>{{ upcomingReservation.arrivalDate|date('d-m-Y') }}</td>
                                 <td>{{ upcomingReservation.departureDate|date('d-m-Y') }}</td>
-                                <td>{{ upcomingReservation.numberAdult }}</td>
-                                <td>{{ upcomingReservation.numberKid }}</td>
                                 <td>{{ upcomingReservation.totalPrice }} €</td>
                                 <td><a href="{{ path('show_reservation', {'id': upcomingReservation.id}) }}"><i class="fa-solid fa-circle-info"></i></a></td>
                             </tr>   
                         {% endfor %}
                     </tbody>
                 </table>        
-                <div class="center">      
-                    <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id': user.id}) }}">Mes anciens séjours</a></button>
-                </div>
+
             {% else %}
                 <p class="profilResa">Vous n'avez aucune réservation.</p>
             {% endif %}

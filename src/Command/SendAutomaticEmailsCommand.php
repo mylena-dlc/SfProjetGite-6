@@ -47,7 +47,7 @@ class SendAutomaticEmailsCommand extends Command
        foreach ($reservations as $reservation) {
       
         // Générer l'URL pour écrire un avis
-        $reviewLink = "http://127.0.0.1:8000/security/writeReview".$reservation->getUser()."/".$reservation->getId();
+        $reviewLink = "http://127.0.0.1:8000/security/writeReview".$reservation->getUser()->getId()."/".$reservation->getId();
                // Envoyer l'e-mail automatique
                $this->sendMailService->send(
                    'ne-pas-repondre@giteraindupair.com',

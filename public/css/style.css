@@ -1824,7 +1824,6 @@ input:focus, textarea:focus  {
 
 .tableGite {
     margin: auto;
-
 }
 
 th, td {
@@ -2444,6 +2443,9 @@ footer a {
 @media only screen and (max-width: 1024px) {
     /* Styles pour les écrans de tailles inférieure à 768px */
 
+    .show-nav {
+        z-index: 2000;
+    }
      .burger {
         display: block;
         position: absolute;
@@ -2469,6 +2471,9 @@ footer a {
         width: 0;
         background: transparent;
     }
+    .show-nav .burger {
+        background: transparent;
+    }
     .bar::before,
     .bar::after {
         content: "";
@@ -2492,12 +2497,15 @@ footer a {
     .show-nav .bar::after {
         transform: rotate(-45deg);
     }
+    .show-nav .nav-item {
+        padding: 0px;
+    }
     .nav-items {
         display: flex;
         flex-direction: column;
         justify-content: center;
         width: 0;
-        min-height: 95vh;
+        min-height: 50vh;
         position: absolute;
         right: 0;
         background:linear-gradient(to bottom, var(--color4), var(--color2));
@@ -2518,7 +2526,7 @@ footer a {
     .nav-item>a {
         display: block;
         padding: 1rem;
-        font-size: 2.2rem;
+        font-size: 1.5rem;
         transition: all .4s ease-in-out;
     }
     .nav-item>a:hover {
@@ -2535,7 +2543,7 @@ footer a {
         font-size: 80px !important;
     }
     .first-section-person {
-        font-size: 30px;
+        font-size: 22px;
     }
     #first-section {
         top: -530px;
@@ -2550,7 +2558,7 @@ footer a {
         top: -845px;
     }
     #first-section h2 {
-        font-size: 30px;
+        font-size: 22px;
     }
     .gite-content {
         padding: 20px;
@@ -2558,6 +2566,10 @@ footer a {
     .pageaccueil .gite-title {
         left: 20px;
         top: 150px;
+    }
+    .giteFigure {
+        display: flex;
+        justify-content: center;
     }
     .picture01 {
         width: 360px;
@@ -2632,6 +2644,68 @@ footer a {
         
     }
 
+    /* Page réservation */
+    .confirm {
+        position: relative;
+        margin: 30px;
+        right: auto;
+    }
+    .confirmReservation {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+    .description02{
+        margin: 0;
+    }
+    .sectionSituations{
+        margin: 0;
+        margin-bottom: 30px;
+    }
+    h1 {
+        font-size: 25px;
+        text-align: center;
+    }
+    .recap{
+        width: 100%;
+        border-radius: 0px;
+    }
+    .resaForm{
+        width: 100%;
+    }
+    #reservation_lastName{
+        margin-bottom: 20px;
+    }
+    .resaContaint{
+        margin: 0;
+        width: 100%;
+    }
+    th, td {
+        padding: 10px 0px;
+    }
+    .btnReview{
+        font-size: 17px;
+        width: 130px;
+        height: 40px;
+    }
+    .showReservation{
+        margin: 100px 0px;
+        width: 100%;
+        border-radius: 0px;
+    }
+
+    .tableGite {
+        width: 100%;
+    }
+
+    .allReviews{
+        margin: 0;
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+
 
 
     
@@ -2652,11 +2726,9 @@ footer a {
         font-size: 50px !important;
     }
     #first-section {
-        left: 20px;
         top: -490px;
         width: 100%;
         transform: none;
-        text-align: left;
     }
     .averageRating {
         left: 20px;
@@ -2664,7 +2736,7 @@ footer a {
     }
     #search {
         border-radius:  20% 20% 0px 0px;
-        padding: 220px 0px 0px 0px;
+        padding: 165px 0px 0px 0px;
         top: -780px;
     }
     .background-image {
@@ -2693,6 +2765,7 @@ footer a {
         width: 250px;
         border-radius: 50%;
         margin-bottom: 50px;
+        margin-left: 0px;
     }
     .icon {
         margin: 10px;
@@ -2710,6 +2783,9 @@ footer a {
     }
     .banner2 {
         height: 600px;
+    }
+    .banner-p{
+        font-size: 23px;
     }
     #actualites {
         padding: 20px;
@@ -2734,6 +2810,49 @@ footer a {
     }
     .base {
         height: 200px;
+    }
+    
+
+
+    /* Détail réservation */
+
+    .description01{
+        margin: 0;
+    }
+    .confirm {
+        width: 100%;
+        border-radius: 0%;
+        height: 340px;
+    }
+    .detail{
+        margin: 40px;
+    }
+    .description01{
+        flex-direction: column-reverse;
+    }
+    .reservation-title{
+        font-size: 20px;
+    }
+    .descriptionLeft {
+        margin-left: 15px;
+    }
+    .descriptionLists{
+        margin: 0;
+    }
+    .situationFigure img{
+        height: 300px;
+    }
+    .descriptionRight{
+        margin-bottom: 30px;
+
+    }
+
+    td {
+        font-size: 12px;
+    }
+    .tableGite {        
+        overflow-x: scroll;
+        
     }
 
 
