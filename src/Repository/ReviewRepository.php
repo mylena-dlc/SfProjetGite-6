@@ -27,6 +27,7 @@ class ReviewRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('r')
             ->andWhere('r.is_verified = :isVerified')
+            ->andWhere('r.User IS NOT NULL') 
             ->setParameter('isVerified', 1)
             ->orderBy('r.creationDate', 'ASC')  
             ->getQuery()

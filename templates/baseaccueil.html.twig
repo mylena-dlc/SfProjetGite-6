@@ -140,14 +140,7 @@
                         contact
                     </a>
                 </li>
-                {% if is_granted('ROLE_ADMIN') %}
-                    {# Si je suis admin #}
-                    <li class="nav-item">
-                        <a aria-current="page" href="{{ path('app_dashboard') }}">
-                            Tableau de bord
-                        </a>
-                    </li>
-                {% endif %}
+    
 
                 {# Si je suis connecté: #}
                 {% if app.user %}           
@@ -156,6 +149,14 @@
                             Mon profil
                         </a>
                     </li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                            {# Si je suis admin #}
+                            <li class="nav-item">
+                                <a aria-current="page" href="{{ path('app_dashboard') }}">
+                                    Tableau de bord
+                                </a>
+                            </li>
+                        {% endif %}
                     <li class="nav-item">
                         <a aria-current="page" href="{{ path('app_logout') }}">
                             Se déconnecter
@@ -176,8 +177,6 @@
                 {% endif %}
                 </ul>
             </nav>
-
-
 
             <!-- Bouton scroll pour remonter en haut de la page -->
             <div class="btn-scroll-to-top">

@@ -88,7 +88,7 @@ class DashboardController extends AbstractController
 
     {
         // Recherche des 5 réservations les plus récentes pour l'index du dashboard
-        $reservations = $this->reservationRepository->findBy([], ['reservationDate' => 'ASC'], 5);
+        $reservations = $this->reservationRepository->findBy([], ['reservationDate' => 'DESC'], 5);
 
         return $this->render('dashboard/index.html.twig', [
             'reservations' => $reservations,
@@ -163,7 +163,7 @@ class DashboardController extends AbstractController
 
     public function newPeriod(Request $request): Response {
 
-        $periods = $this->periodRepository->findAll([], ['startDate' => 'ASC']);
+        $periods = $this->periodRepository->findBy([],['startDate' => 'ASC']);
 
         $newPeriod = new Period();
         
@@ -259,7 +259,7 @@ class DashboardController extends AbstractController
     * Fonction pour ajouter un avis
     */
 
-    #[Route('security/{id}/writeReview{reservation_id}', name: 'app_write_review')]
+    #[Route('/security/{id}/writeReview/{reservation_id}', name: 'app_write_review')]
     public function writeReview(User $user, Request $request, int $id, $reservation_id, SendMailService $mail): Response
     {
         $userSession = $this->getUser();
@@ -271,8 +271,7 @@ class DashboardController extends AbstractController
             $form = $this->createForm(ReviewType::class, $review);
             $form->handleRequest($request);
 
-            // On récupère l'id de l'utilisateur connecté
-            $user = $this->getUser();
+            // On modifie l'id de l'utilisateur
             $review->setUser($user);
 
             // On récupère l'id de la réservation concernée
@@ -280,11 +279,10 @@ class DashboardController extends AbstractController
             $review->setReservation($reservation);
 
             if ($form->isSubmitted() && $form->isValid()) {
-            
                 $review = $form->getData();
                 $this->em->persist($review);
                 $this->em->flush();
-                $this->addFlash('success', "Avis ajouté avec succès. Merci d\'avoir partagé votre expérience avec nous.", false);
+                $this->addFlash('success', "Avis ajouté avec succès. Merci d\'avoir partagé votre expérience avec nous.");
 
                 // Envoyer la notification à l'administrateur
                 $mail->sendAdminNotification(
@@ -296,11 +294,9 @@ class DashboardController extends AbstractController
                         'review' => $review,
                     ]
                 );
-
                 $userId = $user->getId();
                 return $this->redirectToRoute('app_profil', ['id' => $userId]); 
             }
-
             return $this->render('security/writeReview.html.twig', [
                 'form' => $form->createView(),
             ]);
@@ -310,8 +306,6 @@ class DashboardController extends AbstractController
             $this->addFlash('error', 'Accès refusé');
             return $this->redirectToRoute('app_home');
         }
-        
-        return $this->redirectToRoute('app_login');
     }
 
 

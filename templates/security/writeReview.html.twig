@@ -8,7 +8,11 @@
         <h1>Écrire un avis</h1>
     </div> 
 
-    <form class="cardReviews writeReview">
+    <div class="breadcrumb">
+        <a href="{{ path('app_profil', {'id': app.user.id}) }}"><button class="btn">Retour</button></a>
+    </div>
+
+    <div class="cardReviews writeReview">
         <h2 class="reviewTitle">Merci d'avoir choisi notre gîte pour votre séjour !</h2><br>
         <p class="reviewText">Votre retour nous aide à comprendre ce que vous avez aimé et comment nous pouvons améliorer notre service.<br> Que vous ayez eu une expérience exceptionnelle ou que vous ayez des suggestions pour nous aider à nous améliorer, nous sommes impatients de les entendre.</p>
         <p class="reviewText">Nous apprécions sincèrement le temps que vous prenez pour partager votre expérience.</p>
@@ -22,9 +26,9 @@
                 <p class="comment-label">{{ form_label(form.comment) }}</p>
                 {{ form_widget(form.comment) }}
             </div>
-            {{ form_row(form.Ajouter) }}
+            {{ form_row(form.ajouter) }}
             {{ form_end(form) }}    
-    </form>
+    </div>
 
 {% endblock %}
 

@@ -37,8 +37,8 @@
                     </div>
                     <div class="recapLeft">
                         <h3 class="recapTitle">Détails du prix</h3>
-                        <p>{{ nightPrice }}€ x {{ numberNight }} nuit(s) <strong>{{ totalPrice }} €</strong></p>
-                        <p>Frais de ménage </p>
+                        <p>{{ nightPrice }}€ x {{ numberNight }} nuit(s) : {{ nightPrice * numberNight }} €</p>
+                        <p>Frais de ménage: {{ cleaningCharge }} €</p>
                     </div>
                 </div>
 
@@ -51,8 +51,7 @@
                         <p>{{ numberKid }} enfant(s)</p>
                     </div>
                     <div class="recapLeft">
-                        <h3 class="recapTitle rigtht">Total</h3>
-                        <h3 class="recapTitle left"> {{ totalPrice }} €</h3>
+                        <h3 class="recapTitle rigtht">Total <strong>{{ totalPrice }} €</strong></h3>
                     </div>
                 </div>
             </section>
@@ -65,7 +64,7 @@
             <section class="resaForm">
                 <div class="row"> 
                     {{ form_start(form) }}
-                    {{ form_row(form.lastName) }}
+                    {{ form_row(form.lastName, {'attr': {'class': 'input-name'}}) }}
                     {{ form_row(form.firstName) }}
                 </div>
                 <div class="row">

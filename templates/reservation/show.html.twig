@@ -6,11 +6,16 @@
 
 {% block body %}
 
-    <section class="contain">
+    <section class="containt">
 
         <div class="title gite-title center">
             <h1>Réservation {{ reservation.reference }}</h1>
         </div>
+
+        <div class="breadcrumb">
+            <a href="{{ path('app_profil', {'id': app.user.id}) }}"><button class="btn">Voir mon profil</button></a>
+        </div>
+
 
         <div class="showReservation">
             <div class="actionButton">

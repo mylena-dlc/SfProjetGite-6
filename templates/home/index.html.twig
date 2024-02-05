@@ -252,7 +252,7 @@
 
             <div class="instagram_post" postid="C1-Bg99MpvF" width="width" height="500px" scrolling="no" style="overflow: hidden"></div>
 
-            <div class="instagram_post" postid="C1nBOjStKDe" width="width" height="500px"></div>
+            <div class="instagram_post" postid="C1sSsHzNAAF" width="width" height="500px"></div>
 
             <div class="instagram_post" postid="C1nBOjStKDe" width="width" height="500px"></div>
             
@@ -317,7 +317,8 @@
 
                 // Création du marqueur
                 var marker = L.marker([lat, lng], {icon: customIconActivity}).addTo(map);
-                marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + '" /><p>' + activityName + '</p>', {className: 'custom-popup-activity'});
+                marker.bindPopup('<img src="' + imageUrl + '" alt="Photo de ' + activityName + 
+                '" /><p>' + activityName + '</p>', {className: 'custom-popup-activity'});
 
                 // Gestion du clic sur la card
                 card.addEventListener('click', function () { 
@@ -350,7 +351,7 @@
                             });
                         </script>
                         <p class="reviewComment">{{ review.comment }}</p>
-                        <p class="reviewDate">Réponse du propriétaire :</p>
+                        <p class="reviewResponse">Réponse du propriétaire :</p>
                         <p class="reviewCommentAdmin">{{ review.response }}</p>
                     </div>
                 {% endfor %}

@@ -129,7 +129,6 @@ class ReservationController extends AbstractController
             $startDate = new \DateTime($startDate);
             $endDate = new \DateTime($endDate);
             
-
             // Vérifiez si les dates sélectionnées chevauchent d'autres réservations en BDD
             $overlappingReservations = $this->reservationRepository->findOverlappingReservations($startDate, $endDate);
 
@@ -147,10 +146,20 @@ class ReservationController extends AbstractController
 
             if (!empty($overlappingPeriods)) {
                 // Ajoutez le supplément au prix de la réservation
+                // foreach ($overlappingPeriods as $period) {
+                //     $supplement += $period->getSupplement(); 
+                // }
                 foreach ($overlappingPeriods as $period) {
-                    $supplement += $period->getSupplement(); 
-                }
+                    // Calculez le nombre de nuits qui chevauchent cette période
+                    $overlapStartDate = max($startDate, $period->getStartDate());
+                    $overlapEndDate = min($endDate, $period->getEndDate());
+                    $overlapDiff = $overlapStartDate->diff($overlapEndDate);
+                    $overlapNightCount = $overlapDiff->format('%a');
+            
+                    // Ajoutez le supplément au prix de la réservation pour les nuits chevauchant cette période
+                    $supplement += $overlapNightCount * $period->getSupplement();
             }
+        }
 
             // On recupère l'id du gite
             $gite = $this->giteRepository->find(4);
@@ -159,7 +168,7 @@ class ReservationController extends AbstractController
             $cleaningCharge = $gite->getCleaningCharge();
 
             // On recherche le prix de la nuit
-            $nightPrice = $gite->getPrice() + $supplement;
+            $nightPrice = $gite->getPrice();
 
             // On compte le nombre de nuit
             $diff = $startDate->diff($endDate);
@@ -226,6 +235,7 @@ class ReservationController extends AbstractController
     $numberNight = $session->get('reservation_details')['numberNight'];
     $nightPrice = $session->get('reservation_details')['nightPrice'];
     $totalPrice = $session->get('reservation_details')['totalPrice'];
+    $cleaningCharge = $session->get('reservation_details')['cleaningCharge'];
 
     // Créez une instance de l'entité Reservation 
     // et définissez les données initiales
@@ -277,6 +287,7 @@ class ReservationController extends AbstractController
             'numberKid' => $numberKid,
             'numberNight' => $numberNight,
             'nightPrice' => $nightPrice,
+            'cleaningCharge' => $cleaningCharge,
             'totalPrice' => $totalPrice,
             'description' => $description
         ]);

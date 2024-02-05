@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\User;
 use App\Entity\Reservation;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Reservation>
@@ -45,7 +46,7 @@ class ReservationRepository extends ServiceEntityRepository
 
 
 
-// Fonction pour rechercher les réservations passées
+// Fonction pour rechercher toutes les réservations passées
 
     public function findPreviousReservations()
     {
@@ -60,7 +61,7 @@ class ReservationRepository extends ServiceEntityRepository
     }
 
 
-// Fonction pour rechercher les réservations à venir
+// Fonction pour rechercher toutes les réservations à venir
 
     public function findUpcomingReservations()
     {
@@ -91,4 +92,36 @@ class ReservationRepository extends ServiceEntityRepository
 
         return $qb->getResult();
     }
+
+    // Fonction pour rechercher les réservations passées d'un utilisateur
+    public function findUserPreviousReservations(User $user)
+    {
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('r')
+            ->where('r.departureDate < :today')
+            ->andWhere('r.user = :user')
+            ->setParameter('today', $today)
+            ->setParameter('user', $user)
+            ->orderBy('r.departureDate', 'DESC')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+    // Fonction pour rechercher les réservations à venir d'un utilisateur
+    public function findUserUpcomingReservations(User $user)
+    {
+        $today = new \DateTime();
+        $qb = $this->createQueryBuilder('r')
+            ->where('r.departureDate > :today')
+            ->andWhere('r.user = :user')
+            ->setParameter('today', $today)
+            ->setParameter('user', $user)
+            ->orderBy('r.departureDate', 'ASC')
+            ->getQuery();
+
+        return $qb->getResult();
+    }
+
+
 }

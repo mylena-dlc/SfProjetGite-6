@@ -126,16 +126,12 @@ p {
 .btn {
     height: 50px;
     width: 150px;
-
     background:linear-gradient(to bottom, var(--color6), var(--color3));
     font-weight: var(--medium); 
-     color: var(--color4);
-     
+    color: var(--color4);
     border: none;
-   
     font-size: 1rem;
     text-transform: uppercase;
-    
     letter-spacing: 1px;
     box-shadow: var(--boxShadow2);
     transition-duration: 0.3s;
@@ -163,7 +159,6 @@ p {
     text-decoration: none;
     text-transform: uppercase;
     font-size: 12px;
-    /* font-weight: var(--medium); */
 }
 
 .fa-circle-arrow-right {
@@ -199,7 +194,7 @@ label {
     bottom: 6%;
     padding: 2px;
     cursor: pointer;
-    z-index: 200;
+    z-index: 2000;
     transition: 0.2s ease;
 }
 
@@ -1499,7 +1494,7 @@ a.ViewProfileButton, a.FollowButton
     box-shadow: var(--boxShadow2);
     position: fixed;
     right: 50px;
-    z-index: 100;
+    z-index: 1100;
     font-size: 22px;
     display: flex;
     flex-direction: column;
@@ -1517,6 +1512,11 @@ a.ViewProfileButton, a.FollowButton
     display: inline-block;
     padding: 5px;
     font-size: 30px;
+}
+
+.total-supp {
+    font-size: 15px !important;
+    font-style: italic;
 }
 
 .total-p .medium {
@@ -1572,7 +1572,6 @@ button > a {
 
 .descriptionIcon {
     font-size: 18px;
-    /* font-weight: var(--medium); */
     letter-spacing: 1.3px;
 }
 
@@ -1588,7 +1587,6 @@ button > a {
 
 .titleDescription {
     text-transform: uppercase;
-    /* font-weight: var(--medium); */
     text-align: center;
 }
 
@@ -1611,7 +1609,6 @@ button > a {
     text-align: center;
     margin: 100px;
     font-size: 25px;
-    /* font-weight: var(--bold); */
     color: var(--color2);
     letter-spacing: 1px;
 }
@@ -1625,7 +1622,6 @@ button > a {
 }
 .descriptionList {
     font-size: 20px;
-    /* font-weight: var(--medium); */
     color: var(--color1);
 }
 
@@ -1705,7 +1701,8 @@ margin: 0;
 }
 .recapTitle {
     margin: 0px !important;
-    font-size: 22px;
+    font-size: 27px;
+    font-weight: var(--medium);
 }
 
 .line {
@@ -1728,6 +1725,10 @@ margin: 0;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.input-name {
+    margin: 20px;
 }
 
 input {
@@ -1875,6 +1876,7 @@ th, td {
 .content {
     padding: 20px;
     width: calc(100% - 350px);
+    min-height: 80vh;
     margin-bottom: 70px;
     margin-left: 350px;
 }
@@ -2107,9 +2109,11 @@ th, td {
     width: 80%;
     margin: 20px;
 }
+
 #review_comment {
     padding: 10px;
     margin: 10px;
+    overflow-y: scroll;
 }
 
 .reviewComment {
@@ -2157,7 +2161,9 @@ th, td {
     padding: 10px;
 }
 
-
+.reviewResponse {
+    font-weight: var(--bold);
+}
 
 /* ********************************************** PAGE CONTACT ********************************************** */
 
@@ -2226,7 +2232,7 @@ th, td {
 }
 
 .profilContaint {
-    margin: 50px;
+    margin: 100px;
     text-align: center;
 }
 
@@ -2236,11 +2242,11 @@ th, td {
 }
 
 .resaContaint {
-    margin: 100px;
+    margin: 0px 0px 100px 0px;
 }
 
 .deleteAccount {
-    width: 240px;
+    width: 280px;
     height: 40px;
     display: block;
     margin: 50px auto;
@@ -2250,6 +2256,16 @@ th, td {
     text-decoration: none;
     color: white;
 }
+
+.previousResa {
+    width: 260px;
+}
+
+.btnprevious {
+    margin: 0px 100px 0px 0px;
+    justify-content: end;
+}
+
 /* ********************************************** VUE CONFIRMATION RESERVATION ********************************************** */
 
 .messageConfirm {
@@ -2272,26 +2288,6 @@ th, td {
     border-color: var(--color1) !important;
 }
 
-/* .swal2-loader {
-    border-color: var(--color1) !important;
-    outline: none !important;
-}
-
-.flatpickr-day.startRange,
-.flatpickr-day.endRange.endRange {
-    background-color: var(--color3) !important;
-    outline: none !important;
-}
-
-.swal2-styled.swal2-confirm, div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm  {
-    background-color: var(--color1) !important;
-    outline: none !important;
-}
-.swal2-confirm:active {
-    background-color: var(--color1) !important;
-    border-color: var(--color6) !important;
-
-} */
 div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm:focus {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.5) !important;
 }

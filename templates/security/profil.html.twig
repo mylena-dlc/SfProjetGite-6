@@ -38,8 +38,8 @@
             <h2>Mes réservations</h2>
         </div>                
         
-        <div class="center">      
-            <button class="btn btnReview"><a href="{{ path('app_profil_previous_reservations', {'id': user.id}) }}">Mes anciens séjours</a></button>
+        <div class="center btnprevious">      
+            <button class="btn btnReview previousResa"><a href="{{ path('app_profil_previous_reservations', {'id': user.id}) }}">Mes anciens séjours</a></button>
         </div>
         
         <div class="resaContaint">     
@@ -70,7 +70,7 @@
                 </table>        
 
             {% else %}
-                <p class="profilResa">Vous n'avez aucune réservation.</p>
+                <p class="profilResa">Vous n'avez aucune réservation à venir.</p>
             {% endif %}
     {% else %}
         <div class="section-profil">

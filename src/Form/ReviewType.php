@@ -39,7 +39,7 @@ class ReviewType extends AbstractType
                 ],
             ])
 
-            ->add('Ajouter', SubmitType::class, [
+            ->add('ajouter', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn submit'
                 ]

@@ -22,6 +22,8 @@
         <div class="confirm">
             <h2 class="reservation-title">Détails du prix</h2>
             <p class="total-p"> {{ nightPrice }} € x {{ numberNight }} nuit(s) <span class="medium">{{ nightPrice * numberNight }} €</span></p>
+            <p class="total-p">Supplément: <span class="medium"> {{ supplement }} € </span></p>
+            <p class="total-supp">(Un supplément peut s'ajouter en fonction des dates)</p>
             <p class="total-p">Forfait ménage : <span class="medium"> {{ cleaningCharge }}€</span></p>
             <hr class="confirmLine">
             <p class="total-p pBold">Total : <span class="medium">{{ totalPrice }} €</span></p>

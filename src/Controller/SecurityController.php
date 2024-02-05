@@ -9,6 +9,7 @@ use App\Repository\GiteRepository;
 use App\Repository\UserRepository;
 use App\Form\ResetPasswordFormType;
 use App\Repository\PeriodRepository;
+use App\Repository\ReviewRepository;
 use App\Repository\PictureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\ReservationRepository;
@@ -54,14 +55,20 @@ class SecurityController extends AbstractController
      */
     private $userRepository;
 
+    /**
+     * @var ReviewRepository
+     */
+    private $reviewRepository;
 
-    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, UserRepository $userRepository)
+
+    public function __construct(GiteRepository $giteRepository, EntityManagerInterface $em, PictureRepository $pictureRepository, ReservationRepository $reservationRepository, UserRepository $userRepository, ReviewRepository $reviewRepository)
     {
         $this->giteRepository = $giteRepository;
         $this->em = $em;
         $this->pictureRepository = $pictureRepository;
         $this->reservationRepository = $reservationRepository;
         $this->userRepository = $userRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
 
@@ -205,7 +212,7 @@ class SecurityController extends AbstractController
 
         if($userSession == $user) {
             // Récupérez les réservations à venir de l'utilisateur
-            $upcomingReservations = $this->reservationRepository->findUpcomingReservations();
+            $upcomingReservations = $this->reservationRepository->findUserUpcomingReservations($user);
 
             return $this->render('security/profil.html.twig', [
                 'user' => $user,
@@ -234,7 +241,7 @@ class SecurityController extends AbstractController
 
         if($userSession == $user) {
             // Récupérez les réservations passées de l'utilisateur
-            $previousReservations = $this->reservationRepository->findPreviousReservations();
+            $previousReservations = $this->reservationRepository->findUserPreviousReservations($user);
 
             return $this->render('security/previous-reservations.html.twig', [
                 'user' => $user,
@@ -258,40 +265,44 @@ class SecurityController extends AbstractController
     #[Route(path: '/delete-account', name: 'app_delete_account')]
     public function deleteAccount(Request $request): Response
     {
-        // Récupérer l'utilisateur actuellement connecté
+        // Récupération de l'utilisateur actuellement connecté
         $user = $this->getUser();
 
-        // Gérer la suppression du compte 
         if ($user) {
-            // Générer un token unique pour identifier de manière unique chaque compte supprimé
+            // Token pour identifier de manière unique chaque compte supprimé
             $deleteToken = md5(uniqid());
 
-            // Mettre à jour les champs de l'utilisateur
+            // Mise à jour des champs de l'utilisateur
             $user->setemail('utilisateur_supprime_' . $deleteToken);
-            
+            $user->setRoles(['role_supprime']);
+
             // Récupérer le mot de passe haché
             $password = $user->getPassword();
             $passwordHash = md5($password);
-
             $user->setpassword($passwordHash);
 
-            // Récupérez les réservations de l'utilisateur
+            // Récupération des réservations de l'utilisateur
             $reservations = $this->reservationRepository->findBy(['user' => $user]);
 
-            // Mettre à jour l'ID de l'utilisateur à NULL pour chaque réservation
+            // Récupération des commentaires de l'utilisateur
+            $reviews = $this->reviewRepository->findBy(['user' => $user]);
+
+            // Mise à jour l'ID de l'utilisateur à NULL pour chaque réservation
             foreach ($reservations as $reservation) {
                 $reservation->setUser(null);
                 $this->em->persist($reservation);
             }
 
-            $user->setRoles(['role_supprime']);
+            // Mise à jour l'ID de l'utilisateur à NULL pour chaque commentaire
+            foreach ($reviews as $review) {
+                $review->setUser(null);
+                $this->em->persist($review);
+            }
 
-            // Mettre à jour l'entité dans la base de données
+            // Mise à jour l'entité dans la base de données
             $this->em->persist($user);
             $this->em->flush();
-            
             $this->addFlash('success', 'Votre compte a été supprimé avec succès.');
-
         } else {
             $this->addFlash('error', 'Impossible de supprimer le compte. Utilisateur non trouvé.');
         }
