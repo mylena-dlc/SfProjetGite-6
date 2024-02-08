@@ -1727,6 +1727,10 @@ margin: 0;
     justify-content: center;
 }
 
+.row div {
+    margin: 10px;
+}
+
 .input-name {
     margin: 20px;
 }
@@ -1909,8 +1913,6 @@ th, td {
 .tableReservation {
     margin: 50px auto;
 }
-
-
 
 .custom-checkbox {
     position: relative;

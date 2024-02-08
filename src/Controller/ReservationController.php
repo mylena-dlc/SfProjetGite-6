@@ -115,7 +115,6 @@ class ReservationController extends AbstractController
             $supplement = $request->get('supplement'); 
             $totalPrice = $request->get('totalPrice'); 
 
-
             // Si les dates ne sont pas sélectionnées, redirection et message d'erreur
             if(!$startDate) {
                 $this->addFlash('error', 'Vous devez sélectionner vos dates.');
@@ -146,9 +145,6 @@ class ReservationController extends AbstractController
 
             if (!empty($overlappingPeriods)) {
                 // Ajoutez le supplément au prix de la réservation
-                // foreach ($overlappingPeriods as $period) {
-                //     $supplement += $period->getSupplement(); 
-                // }
                 foreach ($overlappingPeriods as $period) {
                     // Calculez le nombre de nuits qui chevauchent cette période
                     $overlapStartDate = max($startDate, $period->getStartDate());

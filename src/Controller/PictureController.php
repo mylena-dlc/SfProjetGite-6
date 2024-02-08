@@ -163,7 +163,9 @@ class PictureController extends AbstractController
             $pictureFile = $form->get('picture')->getData();
 
             if ($pictureFile) {
+
                 $newFilename = uniqid().'.'.$pictureFile->guessExtension();
+                
                 $newFilePath = $this->getParameter('pictures_directory').'/'.$newFilename;
 
                 try {
