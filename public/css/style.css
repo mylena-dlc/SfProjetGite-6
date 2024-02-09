@@ -2852,6 +2852,11 @@ footer a {
         overflow-x: scroll;
         
     }
+    .carousel__container {
+        width: 600% !important;
+    }
+        
+    
 
 
 }
