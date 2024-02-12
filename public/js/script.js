@@ -1,111 +1,114 @@
+/* MENU BURGER */ 
+    function toggleMenu() {
+        const navbar = document.querySelector(".navbar")
+        const burger = document.querySelector(".burger")
+        const navLinks = document.querySelectorAll(".nav-item a"); 
 
-function toggleMenu() {
-    const navbar = document.querySelector(".navbar")
-    const burger = document.querySelector(".burger")
-    burger.addEventListener('click', () => {
-        navbar.classList.toggle('show-nav')
-        behavior: "smooth"
-    })
-}
-toggleMenu();
-
+        burger.addEventListener('click', () => {
+            navbar.classList.toggle('show-nav')
+        })
 
 
-document.addEventListener('DOMContentLoaded', function() {
-
-// Récupérez les éléments HTML
- const numberAdultInput = document.getElementById('numberAdult');
- const numberKidInput = document.getElementById('numberKid');
- const totalPersonInput = document.getElementById('totalPerson');
-
- // Récupérez les boutons d'incrémentation et de décrémentation
- const incrementAdultButton = document.querySelector('.adult .increment');
- const decrementAdultButton = document.querySelector('.adult .decrement');
- const incrementKidButton = document.querySelector('.kid .increment');
- const decrementKidButton = document.querySelector('.kid .decrement');
-
-  // Vérifiez si les éléments existent avant d'attacher des écouteurs d'événements
-  if (numberAdultInput && numberKidInput && totalPersonInput && incrementAdultButton && decrementAdultButton && incrementKidButton && decrementKidButton) {
- // Ajoutez des gestionnaires d'événements pour les boutons
- incrementAdultButton.addEventListener('click', function() {
-     incrementInput(numberAdultInput);
- });
-
- decrementAdultButton.addEventListener('click', function() {
-     decrementInput(numberAdultInput);
- });
-
- incrementKidButton.addEventListener('click', function() {
-     incrementInput(numberKidInput);
- });
-
- decrementKidButton.addEventListener('click', function() {
-     decrementInput(numberKidInput);
- });
-  }
- // Fonction pour incrémenter l'input et mettre à jour totalPerson
- function incrementInput(inputElement) {
-     if (inputElement.value < inputElement.max && getTotalPersons() < 6) {
-         inputElement.value++;
-         updateTotalPerson();
-     }
- }
-
- // Fonction pour décrémenter l'input et mettre à jour totalPerson
- function decrementInput(inputElement) {
-     if (inputElement.value > inputElement.min) {
-         inputElement.value--;
-         updateTotalPerson();
-     }
- }
-
- // Fonction pour mettre à jour totalPerson en additionnant les valeurs d'adult et kid
- function updateTotalPerson() {
-     totalPersonInput.value = Number(numberAdultInput.value) + Number(numberKidInput.value);
- }
-
- // Fonction pour obtenir la valeur totale des personnes
- function getTotalPersons() {
-     return Number(numberAdultInput.value) + Number(numberKidInput.value);
- }
-
-
- // Fonction pour valider la soumission du formulaire
- function validateForm() {
-    var startDate = document.getElementById('start').value;
-    var endDate = document.getElementById('end').value;
-
-    // Vérifier si les dates d'arrivée et de départ sont sélectionnées
-    if (!startDate || !endDate) {
-        Swal.fire({
-            icon: "error",
-            title: "Erreur",
-            text: "Veuillez sélectionner les dates d'arrivée et de départ."
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navbar.classList.remove('show-nav'); 
+            });
         });
-        return false; // Empêcher la soumission du formulaire si les dates ne sont pas sélectionnées
+    }
+    toggleMenu();
+
+/* BOUTON SCROLL */
+    const btn = document.querySelector('.btn-scroll-to-top');
+    btn.addEventListener('click', () => {
+
+        window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "smooth" // pour adoucir l'effet
+        })
+    })
+
+
+/* NOMBRE VOYAGEURS */
+    document.addEventListener('DOMContentLoaded', function() {
+
+    // Récupérez les éléments HTML
+    const numberAdultInput = document.getElementById('numberAdult');
+    const numberKidInput = document.getElementById('numberKid');
+    const totalPersonInput = document.getElementById('totalPerson');
+
+    // Récupérez les boutons d'incrémentation et de décrémentation
+    const incrementAdultButton = document.querySelector('.adult .increment');
+    const decrementAdultButton = document.querySelector('.adult .decrement');
+    const incrementKidButton = document.querySelector('.kid .increment');
+    const decrementKidButton = document.querySelector('.kid .decrement');
+
+    // Vérifiez si les éléments existent avant d'attacher des écouteurs d'événements
+    if (numberAdultInput && numberKidInput && totalPersonInput && incrementAdultButton && decrementAdultButton && incrementKidButton && decrementKidButton) {
+    // Ajoutez des gestionnaires d'événements pour les boutons
+    incrementAdultButton.addEventListener('click', function() {
+        incrementInput(numberAdultInput);
+    });
+
+    decrementAdultButton.addEventListener('click', function() {
+        decrementInput(numberAdultInput);
+    });
+
+    incrementKidButton.addEventListener('click', function() {
+        incrementInput(numberKidInput);
+    });
+
+    decrementKidButton.addEventListener('click', function() {
+        decrementInput(numberKidInput);
+    });
+    }
+    // Fonction pour incrémenter l'input et mettre à jour totalPerson
+    function incrementInput(inputElement) {
+        if (inputElement.value < inputElement.max && getTotalPersons() < 6) {
+            inputElement.value++;
+            updateTotalPerson();
+        }
     }
 
-    return true; // Autoriser la soumission du formulaire si tout est valide
-}
+    // Fonction pour décrémenter l'input et mettre à jour totalPerson
+    function decrementInput(inputElement) {
+        if (inputElement.value > inputElement.min) {
+            inputElement.value--;
+            updateTotalPerson();
+        }
+    }
 
-});
+    // Fonction pour mettre à jour totalPerson en additionnant les valeurs d'adult et kid
+    function updateTotalPerson() {
+        totalPersonInput.value = Number(numberAdultInput.value) + Number(numberKidInput.value);
+    }
 
+    // Fonction pour obtenir la valeur totale des personnes
+    function getTotalPersons() {
+        return Number(numberAdultInput.value) + Number(numberKidInput.value);
+    }
 
-/* Bouton scroll haut de page */
-const btn = document.querySelector('.btn-scroll-to-top');
-btn.addEventListener('click', () => {
+    // Fonction pour valider la soumission du formulaire
+    function validateForm() {
+        var startDate = document.getElementById('start').value;
+        var endDate = document.getElementById('end').value;
 
-    window.scrollTo({
-        top: 0,
-        left: 0,
-        behavior: "smooth" // pour adoucir l'effet
-    })
-})
+        // Vérifier si les dates d'arrivée et de départ sont sélectionnées
+        if (!startDate || !endDate) {
+            Swal.fire({
+                icon: "error",
+                title: "Erreur",
+                text: "Veuillez sélectionner les dates d'arrivée et de départ."
+            });
+            return false; // Empêcher la soumission du formulaire si les dates ne sont pas sélectionnées
+        }
+        return true; // Autoriser la soumission du formulaire si tout est valide
+    }
 
+    });
 
 
 // Plugin Rate Yo pour l'affichage des étoiles de la notation des avis
-
     $(document).ready(function () {
         $("#rating").rateYo({
             rating: 0, // la valeur initiale
@@ -119,7 +122,7 @@ btn.addEventListener('click', () => {
         });
     });
   
-
+/* CAROUSEL */ 
     class Carousel {
 
         /**
@@ -128,7 +131,6 @@ btn.addEventListener('click', () => {
          * @callback moveCallback
          * @param {number} index
          */
-    
     
         /**
          * @param {HTMLElement} getElement
@@ -260,7 +262,6 @@ btn.addEventListener('click', () => {
         }
     });
     
-    
     // Carousel pour les activité
     document.addEventListener('DOMContentLoaded', function () {
         // Sélectionnez l'élément #carousel
@@ -281,62 +282,61 @@ btn.addEventListener('click', () => {
  * Images modales et carousel dans la galerie
  */
 
-var modalImages = []; // Tableau pour stocker les URL des images
-var currentImageIndex = 0; // Index de l'image actuelle
+    var modalImages = []; // Tableau pour stocker les URL des images
+    var currentImageIndex = 0; // Index de l'image actuelle
 
-// Fonction pour ouvrir la modal
-function openModal(imgSrc) {
-    var modal = document.getElementById('myModal');
-    var modalImg = document.getElementById('modalImg');
+    // Fonction pour ouvrir la modal
+    function openModal(imgSrc) {
+        var modal = document.getElementById('myModal');
+        var modalImg = document.getElementById('modalImg');
 
-    // Affiche la modal et définit l'URL de l'image à afficher
-    modal.style.display = 'block';
-    modalImg.src = imgSrc;
+        // Affiche la modal et définit l'URL de l'image à afficher
+        modal.style.display = 'block';
+        modalImg.src = imgSrc;
 
-    // Stocke les URL des images de la galerie dans le tableau modalImages
-    modalImages = document.querySelectorAll('.gallery-item img');
-    modalImages = Array.from(modalImages).map(img => img.src);
+        // Stocke les URL des images de la galerie dans le tableau modalImages
+        modalImages = document.querySelectorAll('.gallery-item img');
+        modalImages = Array.from(modalImages).map(img => img.src);
 
-    // Récupère le bouton de fermeture de la modal
-    var closeBtn = document.getElementsByClassName('close')[0];
-    closeBtn.onclick = function() {
-        closeModal();
-    };
-
-    // Définit le gestionnaire d'événements pour le clic en dehors de la modal
-    window.onclick = function(event) {
-        if (event.target === modal) {
+        // Récupère le bouton de fermeture de la modal
+        var closeBtn = document.getElementsByClassName('close')[0];
+        closeBtn.onclick = function() {
             closeModal();
-        }
-    };
-}
+        };
 
-// Fonction pour changer l'image affichée dans la modal
-function changeModalImage(direction) {
-
-    // Incrémente ou décrémente l'index de l'image actuelle
-    currentImageIndex += direction;
-    // Vérifie les limites du tableau
-    if (currentImageIndex < 0) {
-        currentImageIndex = modalImages.length - 1;
-    } else if (currentImageIndex >= modalImages.length) {
-        currentImageIndex = 0;
+        // Définit le gestionnaire d'événements pour le clic en dehors de la modal
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
     }
 
-    // Met à jour l'image dans la modal
-    var modalImg = document.getElementById('modalImg');
-    modalImg.src = modalImages[currentImageIndex];
-}
+    // Fonction pour changer l'image affichée dans la modal
+    function changeModalImage(direction) {
 
-// Fonction pour fermer la modal
-function closeModal() {
-    var modal = document.getElementById('myModal');
-    modal.style.display = 'none';
-}
+        // Incrémente ou décrémente l'index de l'image actuelle
+        currentImageIndex += direction;
+        // Vérifie les limites du tableau
+        if (currentImageIndex < 0) {
+            currentImageIndex = modalImages.length - 1;
+        } else if (currentImageIndex >= modalImages.length) {
+            currentImageIndex = 0;
+        }
+
+        // Met à jour l'image dans la modal
+        var modalImg = document.getElementById('modalImg');
+        modalImg.src = modalImages[currentImageIndex];
+    }
+
+    // Fonction pour fermer la modal
+    function closeModal() {
+        var modal = document.getElementById('myModal');
+        modal.style.display = 'none';
+    }
 
 
 // TIMER LORS D'UNE RÉSERVATION
-
 let searchStartTime = null; // Moment où la recherche commence
 let countdownInterval; // Intervalle de temps
 
@@ -376,54 +376,54 @@ function updateCountdown() {
 }
 
 
-    // Vérifiez si une recherche est en cours au chargement de la page
-        document.addEventListener('DOMContentLoaded', function () {
-        searchStartTime = localStorage.getItem('searchStartTime');
+// Vérifie si une recherche est en cours au chargement de la page
+    document.addEventListener('DOMContentLoaded', function () {
+    searchStartTime = localStorage.getItem('searchStartTime');
 
-        if (searchStartTime !== null) {
-            searchStartTime = parseInt(searchStartTime, 10);
-            updateCountdown();
+    if (searchStartTime !== null) {
+        searchStartTime = parseInt(searchStartTime, 10);
+        updateCountdown();
 
-            // Lancez un intervalle pour mettre à jour le compte à rebours toutes les secondes
-            countdownInterval = setInterval(updateCountdown, 1000);
-        }
-        });
-
-    // Fonction pour démarrer une nouvelle recherche
-    function startNewSearch() {
-        searchStartTime = new Date().getTime(); // Enregistre le temps actuel comme le début de recherche
-        localStorage.setItem('searchStartTime', searchStartTime); // Stocke le temps en session
-
-        // Lance un intervalle pour mettre à jour le compte à rebours toutes les secondes
+        // Lancez un intervalle pour mettre à jour le compte à rebours toutes les secondes
         countdownInterval = setInterval(updateCountdown, 1000);
+    }
+    });
 
-        // Simule le processus de recherche, then assure que le reste ne s'exécutera qu'après la fin de cete simulation
-        simulateSearch().then(function () {
-            // Arrête l'intervalle après la recherche
-            clearInterval(countdownInterval);
+// Fonction pour démarrer une nouvelle recherche
+function startNewSearch() {
+    searchStartTime = new Date().getTime(); // Enregistre le temps actuel comme le début de recherche
+    localStorage.setItem('searchStartTime', searchStartTime); // Stocke le temps en session
 
-            // Réinitiation des valeurs
-            searchStartTime = null;
-            localStorage.removeItem('searchStartTime');
-            document.getElementById('countdown').innerText = '';
-        });
+    // Lance un intervalle pour mettre à jour le compte à rebours toutes les secondes
+    countdownInterval = setInterval(updateCountdown, 1000);
+
+    // Simule le processus de recherche, then assure que le reste ne s'exécutera qu'après la fin de cete simulation
+    simulateSearch().then(function () {
+        // Arrête l'intervalle après la recherche
+        clearInterval(countdownInterval);
+
+        // Réinitiation des valeurs
+        searchStartTime = null;
+        localStorage.removeItem('searchStartTime');
+        document.getElementById('countdown').innerText = '';
+    });
+}
+
+
+// Vérifier si les cookies Instagram sont acceptés, afin de ne pas afficher la section "Actualités"
+    let cookieInsta = getCookie('tarteaucitron')
+
+    function getCookie(name) {
+        const cookies = document.cookie.split('; ')
+        const value = cookies
+            .find(c => c.startsWith(name + "="))
+            ?.split('=')[2]
+        if (value === undefined) {
+            return null
+        } 
+        return decodeURIComponent(value)
     }
 
-
-        let cookieInsta = getCookie('tarteaucitron')
-
-        function getCookie(name) {
-            const cookies = document.cookie.split('; ')
-            const value = cookies
-                .find(c => c.startsWith(name + "="))
-                ?.split('=')[2]
-            if (value === undefined) {
-                return null
-            } 
-            return decodeURIComponent(value)
-        }
-
-    // Vérifier si les cookies Instagram sont acceptés, afin de ne pas afficher la section "Actualités"
     var instagramSection = document.getElementById('actualites');
 
     if (cookieInsta == 'true') {
