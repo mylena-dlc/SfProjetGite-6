@@ -1343,7 +1343,7 @@ a.ViewProfileButton, a.FollowButton
 
 .reviewComment,
 .reviewCommentAdmin {
-    height: 150px;
+    height: 220px;
     overflow: hidden;
 }
 .carousel {
