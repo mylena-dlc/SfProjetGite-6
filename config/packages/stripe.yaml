@@ -1,4 +1,0 @@
-# # config/packages/stripe.yaml
-# parameters:
-#     stripe_secret_key: 'sk_test_51OL5DQAbkgcVVGZDKN6MS8EVZOGCJSGM5gXA53MGhMwtUV2RYQGjoaR7HHs5i7OFXuKBTlbIamEk0Hkb7DDDZg5P00IXHHv8tj'
-#     stripe_publishable_key: 'pk_test_51OL5DQAbkgcVVGZDaaIJ0EhOGETFrx8nwIUGG30hENW4eCgQfcc0jsm5uso9AUYrRcsgbZ3mOVtDfJoc2IePyLnB001Wl1md2k'
